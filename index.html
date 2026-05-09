@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VARAVI Global | Sovereign Command</title>
+    <title>VARAVI Global | Gateway</title>
     
-    <!-- DM Sans strictly enforced -->
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+    <!-- DM Sans for the Elite Aesthetic -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,400;9..40,700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -14,263 +14,178 @@
             --deep-black: #06080f;
             --pure-white: #ffffff;
             --font-main: 'DM Sans', sans-serif;
-            /* Removing visible borders for a seamless, floating luxury feel */
-            --glass-bg: rgba(255, 255, 255, 0.01);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            background-color: var(--deep-black);
-            color: var(--pure-white);
-            font-family: var(--font-main);
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden; /* Absolute full-window lock */
-        }
-
-        /* 
-           TOP NAVIGATION: The New Edge-to-Edge Header
-        */
-        header {
+        body, html {
+            height: 100%;
             width: 100%;
-            height: 100px;
-            padding: 0 4vw; /* Scales with screen size */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            background: transparent; /* No lines, no borders */
-        }
-
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-        }
-
-        .brand-logo-img {
-            /* Zoomed and fitted properly */
-            height: 45px; 
-            transform: scale(1.3);
-            transform-origin: left center;
-            display: block;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            margin-top: 4px; /* Optical alignment with logo */
-        }
-
-        .nav-link {
-            color: var(--pure-white);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            opacity: 0.5;
-            transition: all 0.4s ease;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            opacity: 1;
-            color: var(--gold);
-        }
-
-        /* Luxury Authentication Buttons */
-        .nav-right {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-        }
-
-        .btn {
+            background-color: var(--deep-black);
             font-family: var(--font-main);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 500;
-            font-size: 0.75rem;
-            padding: 14px 40px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            border-radius: 0; /* Brutalist luxury */
-        }
-
-        .btn-login {
-            background: transparent;
-            color: var(--pure-white);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-login:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-        }
-
-        .btn-signin {
-            background: var(--gold);
-            color: var(--deep-black);
-            border: 1px solid var(--gold);
-        }
-
-        .btn-signin:hover {
-            background: transparent;
-            color: var(--gold);
-        }
-
-        /* 
-           MAIN STAGE: Editorial Spacing
-        */
-        main {
-            flex-grow: 1;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            padding: 0 10vw; /* Massive breathing room on the sides */
-            position: relative;
+            cursor: none; /* Hide default cursor to show the Golden Dot */
         }
 
         /* 
-           THE HERO PANEL: 
-           Perfectly stacked. No overlapping.
+           INTERACTIVE BACKGROUND: 
+           This shifts colors based on cursor movement 
         */
-        .slogan-kicker {
-            font-size: 0.85rem;
-            color: var(--gold);
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            font-weight: 700;
-            margin-bottom: 25px;
-            display: block;
-        }
-
-        .hero-title {
-            font-size: 5.5rem; /* Massive, confident typography */
-            font-weight: 200;
-            letter-spacing: -2px;
-            line-height: 1;
-            color: var(--pure-white);
-            margin-bottom: 30px;
-        }
-
-        .brief-text {
-            color: var(--pure-white); /* Pure White */
-            font-size: 1.25rem;
-            line-height: 1.8;
-            max-width: 750px;
-            font-weight: 300;
-            opacity: 0.9;
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), #0a0e1a 0%, #06080f 100%);
+            transition: background 0.2s ease-out;
         }
 
         /* 
-           THE "SOMETHING DIFFERENT": 
-           The Imperial Neural Feed. Replacing the chaotic boxes.
+           THE GOLDEN SINGULARITY: 
+           The dot that follows the cursor 
         */
-        .neural-feed {
-            position: absolute;
-            bottom: 40px;
-            left: 10vw;
-            right: 10vw;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 215, 0, 0.2); /* Single, elegant gold line */
-        }
-
-        .feed-status {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .pulse-dot {
+        #cursor-dot {
+            position: fixed;
             width: 8px;
             height: 8px;
             background-color: var(--gold);
             border-radius: 50%;
-            box-shadow: 0 0 10px var(--gold);
-            animation: pulse 2s infinite;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 20px var(--gold), 0 0 40px var(--gold);
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
         }
 
-        @keyframes pulse {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1); }
+        /* 
+           CENTRAL COMMAND AREA 
+        */
+        .center-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
         }
 
-        .feed-text {
-            font-size: 0.8rem;
-            color: var(--pure-white);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-weight: 300;
-        }
-
-        .feed-text span {
+        .slogan {
             color: var(--gold);
-            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            font-weight: 700;
+            opacity: 0;
+            animation: fadeInDown 1.5s forwards;
+            margin-bottom: 5px;
         }
 
-        .founder-signature {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.4);
-            letter-spacing: 4px;
+        .welcome-title {
+            color: var(--pure-white);
+            font-size: 4.5rem;
+            font-weight: 200;
+            letter-spacing: -2px;
+            line-height: 1;
+            opacity: 0;
+            animation: fadeIn 2s forwards 0.5s;
+        }
+
+        .sub-welcome {
+            color: var(--pure-white);
+            font-size: 1.1rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: fadeInUp 1.5s forwards 1s;
+        }
+
+        /* 
+           ACTIVATE BUTTON 
+        */
+        .activate-btn {
+            margin-top: 60px;
+            background: transparent;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 18px 45px;
+            font-family: var(--font-main);
             text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            opacity: 0;
+            animation: fadeIn 2s forwards 1.5s;
+        }
+
+        .activate-btn:hover {
+            background: var(--gold);
+            color: var(--deep-black);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
 
     </style>
 </head>
 <body>
 
-    <!-- TOP NAVIGATION: Clean, Wide, Luxurious -->
-    <header>
-        <div class="nav-left">
-            <!-- Ensure your logo.png has a transparent background -->
-            <img src="logo.png" alt="VARAVI Logo" class="brand-logo-img">
-            
-            <nav class="nav-links">
-                <a href="#" class="nav-link active">Overview</a>
-                <a href="#" class="nav-link">Laura</a>
-            </nav>
-        </div>
+    <div id="bg-canvas"></div>
+    <div id="cursor-dot"></div>
 
-        <div class="nav-right">
-            <button class="btn btn-login">Login</button>
-            <button class="btn btn-signin">Sign In</button>
-        </div>
-    </header>
-
-    <!-- MAIN DASHBOARD -->
-    <main>
+    <div class="center-content">
+        <p class="slogan">Intelligence that Acts. Voice that Governs.</p>
+        <h1 class="welcome-title">Welcome to VARAVI Global</h1>
+        <p class="sub-welcome">VaraviGlobal welcomes to your automated world.</p>
         
-        <!-- Slogan correctly positioned right behind/above the Welcome message -->
-        <span class="slogan-kicker">Intelligence that Acts. Voice that Governs.</span>
-        
-        <h1 class="hero-title">Welcome to VARAVI Global.</h1>
-        
-        <p class="brief-text">
-            The absolute pinnacle of brand governance. Our infrastructure is engineered for the elite. 
-            We command the digital landscape with uncompromising precision and speed.
-        </p>
+        <button class="activate-btn" onclick="initializeImperialSystem()">Activate Dashboard</button>
+    </div>
 
-        <!-- THE NEURAL FEED: Replacing the messy boxes -->
-        <div class="neural-feed">
-            <div class="feed-status">
-                <div class="pulse-dot"></div>
-                <div class="feed-text">Protocol 2026: <span>Laura is Online and Monitoring Global Hubs</span></div>
-            </div>
-            
-            <div class="founder-signature">
-                PRINCE // AUTHORIZED
-            </div>
-        </div>
+    <script>
+        const dot = document.getElementById('cursor-dot');
+        const bg = document.getElementById('bg-canvas');
 
-    </main>
+        // Movement Logic
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
 
+            // Move the Golden Dot
+            dot.style.left = x + 'px';
+            dot.style.top = y + 'px';
+
+            // Update Background Gradient Position
+            const xPercent = (x / window.innerWidth) * 100;
+            const yPercent = (y / window.innerHeight) * 100;
+            bg.style.setProperty('--x', xPercent + '%');
+            bg.style.setProperty('--y', yPercent + '%');
+        });
+
+        function initializeImperialSystem() {
+            // Future logic for transition
+            alert("Imperial Systems Initializing... Welcome, Prince.");
+        }
+    </script>
 </body>
 </html>
