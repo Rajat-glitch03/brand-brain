@@ -1,5 +1,7 @@
 export default async function handler(req, res) {
-    // 1. Method Guard
+    // 1. Set headers for CORS and JSON
+    res.setHeader('Content-Type', 'application/json');
+
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
@@ -7,31 +9,19 @@ export default async function handler(req, res) {
     const { message, userData } = req.body;
     const apiKey = process.env.VARAVI_API_KEY;
 
-    // 2. API Key Guard (This is likely the 500 cause)
+    // 2. Immediate check for API Key
     if (!apiKey) {
-        console.error("CRITICAL: VARAVI_API_KEY is missing from Environment Variables.");
-        return res.status(500).json({ error: "API Key not configured in Vercel settings." });
+        return res.status(500).json({ error: 'API_KEY_MISSING_IN_VERCEL' });
     }
 
-    // 3. User Data Guard
-    const tz = userData?.timezone || 'UTC';
-    const name = userData?.name || 'Partner';
-    const city = userData?.city || 'Global Hub';
-
-    const now = new Date();
-    const userTime = now.toLocaleTimeString('en-US', { timeZone: tz, hour: '2-digit', minute: '2-digit' });
-    const userDate = now.toLocaleDateString('en-US', { timeZone: tz, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-
     try {
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`;
-
-        const response = await fetch(apiUrl, {
+        // 3. The Fetch Call
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 contents: [{
-                    parts: [{ 
-                        text: `[CORE IDENTITY]
+                    parts: [{ text: `[CORE IDENTITY]
                         You are Laura, the elite AI collaborator for VARAVI Global. 
                         Your creator is Prince. Address users personally using their name: ${userData?.name || 'Guest'}.
 
@@ -58,26 +48,23 @@ export default async function handler(req, res) {
 
                         -Always stay updated about what is happening in world.
 
-                        USER MESSAGE: ${message}` 
-                    }]
-                }],
-                generationConfig: { temperature: 0.4, maxOutputTokens: 1000 }
+                        USER MESSAGE: ${message}` }]
+                }]
             })
         });
 
         const data = await response.json();
 
-        // 4. Gemini Error Guard
+        // 4. Handle Gemini-specific errors (like invalid key or quota)
         if (data.error) {
-            console.error("Gemini API Error:", data.error);
-            return res.status(500).json({ error: `Gemini Error: ${data.error.message}` });
+            return res.status(500).json({ error: `Gemini_API_Error: ${data.error.message}` });
         }
 
+        // 5. Send successful reply
         const reply = data.candidates[0].content.parts[0].text;
         return res.status(200).json({ reply });
 
-    } catch (error) {
-        console.error("Fetch Exception:", error);
-        return res.status(500).json({ error: "Failed to connect to AI infrastructure." });
+    } catch (err) {
+        return res.status(500).json({ error: 'Infrastructure_Fetch_Failed', details: err.message });
     }
 }
