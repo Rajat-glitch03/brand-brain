@@ -155,6 +155,34 @@
         }
 
         #sendBtn:hover { filter: brightness(1.2); }
+
+        .location-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid rgba(212, 175, 55, 0.3); /* Gold border */
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none; /* Hidden by default */
+    border-radius: 0 0 10px 10px;
+}
+
+.location-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.location-item:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: #d4af37; /* Gold text on hover */
+}
     </style>
 </head>
 <body>
@@ -165,7 +193,12 @@
             <h1>VARAVI GLOBAL</h1>
             <input type="text" id="regName" placeholder="CLIENT NAME">
             <input type="email" id="regEmail" placeholder="SECURE EMAIL">
-            <input type="text" id="regCity" placeholder="LOCATION">
+            <div class="input-group" style="position: relative;">
+    <label>GLOBAL LOCATION</label>
+    <input type="text" id="userCity" class="luxury-input" placeholder="Start typing your city..." autocomplete="off">
+    <!-- This is where the dropdown will appear -->
+    <div id="locationDropdown" class="location-dropdown"></div>
+</div>
             <button onclick="initializeSystem()">Initialize Laura</button>
         </div>
     </div>
@@ -215,6 +248,52 @@
                 app.style.display = 'flex';
             }, 800);
         }
+
+        const cityInput = document.getElementById('userCity');
+const dropdown = document.getElementById('locationDropdown');
+
+cityInput.addEventListener('input', async (e) => {
+    const query = e.target.value;
+    if (query.length < 3) {
+        dropdown.style.display = 'none';
+        return;
+    }
+
+    try {
+        // Fetching from Photon OpenStreetMap API
+        const res = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=5`);
+        const data = await res.json();
+        
+        dropdown.innerHTML = '';
+        if (data.features.length > 0) {
+            data.features.forEach(feature => {
+                const city = feature.properties.name || '';
+                const country = feature.properties.country || '';
+                const state = feature.properties.state || '';
+                const fullLocation = `${city}${state ? ', ' + state : ''}, ${country}`;
+
+                const item = document.createElement('div');
+                item.className = 'location-item';
+                item.innerText = fullLocation;
+                item.onclick = () => {
+                    cityInput.value = fullLocation;
+                    dropdown.style.display = 'none';
+                };
+                dropdown.appendChild(item);
+            });
+            dropdown.style.display = 'block';
+        } else {
+            dropdown.style.display = 'none';
+        }
+    } catch (err) {
+        console.error("Location fetch error:", err);
+    }
+});
+
+// Close dropdown if user clicks away
+document.addEventListener('click', (e) => {
+    if (e.target !== cityInput) dropdown.style.display = 'none';
+});
 
         async function handleExecution() {
     const input = document.getElementById('userInput');
