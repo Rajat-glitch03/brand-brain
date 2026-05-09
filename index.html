@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VARAVI Global | Gateway</title>
+    <title>VARAVI Global | Entrance</title>
     
-    <!-- DM Sans for the Elite Aesthetic -->
+    <!-- DM Sans for the Sovereign Aesthetic -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,400;9..40,700&display=swap" rel="stylesheet">
     
     <style>
@@ -16,7 +16,7 @@
             --font-main: 'DM Sans', sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: default; }
 
         body, html {
             height: 100%;
@@ -27,52 +27,44 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: none; /* Hide default cursor to show the Golden Dot */
+            transition: background 0.5s ease;
         }
 
         /* 
-           INTERACTIVE BACKGROUND: 
-           This shifts colors based on cursor movement 
+           DYNAMIC BACKGROUND: 
+           Changes subtly based on cursor position via JS 
         */
-        #bg-canvas {
+        #bg-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(6, 8, 15, 0.8) 0%, var(--deep-black) 100%);
             z-index: 1;
-            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), #0a0e1a 0%, #06080f 100%);
-            transition: background 0.2s ease-out;
         }
 
         /* 
-           THE GOLDEN SINGULARITY: 
-           The dot that follows the cursor 
+           THE LOGO WATERMARK: 
+           Fixed in the background for luxury depth 
         */
-        #cursor-dot {
+        .bg-logo {
             position: fixed;
-            width: 8px;
-            height: 8px;
-            background-color: var(--gold);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            box-shadow: 0 0 20px var(--gold), 0 0 40px var(--gold);
+            top: 50%;
+            left: 50%;
             transform: translate(-50%, -50%);
-            transition: transform 0.1s ease-out;
+            width: 40vw;
+            opacity: 0.03; /* Ultra-subtle luxury */
+            z-index: 0;
+            pointer-events: none;
+            filter: grayscale(100%);
         }
 
         /* 
-           CENTRAL COMMAND AREA 
+           CENTRAL COMMAND CONTENT 
         */
-        .center-content {
-            position: relative;
-            z-index: 10;
+        .content-wrap {
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
+            z-index: 10;
+            max-width: 900px;
+            padding: 20px;
         }
 
         .slogan {
@@ -81,48 +73,58 @@
             letter-spacing: 8px;
             text-transform: uppercase;
             font-weight: 700;
+            margin-bottom: 20px;
+            display: block;
             opacity: 0;
-            animation: fadeInDown 1.5s forwards;
-            margin-bottom: 5px;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 0.5s;
         }
 
-        .welcome-title {
+        h1 {
             color: var(--pure-white);
             font-size: 4.5rem;
             font-weight: 200;
             letter-spacing: -2px;
-            line-height: 1;
+            margin-bottom: 15px;
             opacity: 0;
-            animation: fadeIn 2s forwards 0.5s;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 0.8s;
         }
 
-        .sub-welcome {
+        .welcome-msg {
             color: var(--pure-white);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 300;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             opacity: 0;
-            animation: fadeInUp 1.5s forwards 1s;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 1.1s;
         }
 
         /* 
-           ACTIVATE BUTTON 
+           ACTIVATE BUTTON: 
+           Positioned at the very bottom middle 
         */
+        .btn-container {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+        }
+
         .activate-btn {
-            margin-top: 60px;
             background: transparent;
             color: var(--gold);
             border: 1px solid var(--gold);
             padding: 18px 45px;
             font-family: var(--font-main);
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-weight: 700;
             font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.5s ease;
+            transition: all 0.4s ease;
             opacity: 0;
             animation: fadeIn 2s forwards 1.5s;
         }
@@ -131,60 +133,71 @@
             background: var(--gold);
             color: var(--deep-black);
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
-            transform: scale(1.05);
         }
 
-        /* ANIMATIONS */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* 
+           THE GOLDEN DOT (CURSOR FOLLOWER)
+        */
+        #cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 15px var(--gold), 0 0 30px var(--gold);
+            transition: transform 0.1s ease-out;
+            transform: translate(-50%, -50%);
         }
+
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         @keyframes fadeIn {
             to { opacity: 1; }
         }
-
     </style>
 </head>
 <body>
 
-    <div id="bg-canvas"></div>
     <div id="cursor-dot"></div>
+    <div id="bg-overlay"></div>
+    
+    <!-- logo.png acting as a background watermark -->
+    <img src="" alt="logo1.png" class="bg-logo">
 
-    <div class="center-content">
-        <p class="slogan">Intelligence that Acts. Voice that Governs.</p>
-        <h1 class="welcome-title">Welcome to VARAVI Global</h1>
-        <p class="sub-welcome">VaraviGlobal welcomes to your automated world.</p>
-        
-        <button class="activate-btn" onclick="initializeImperialSystem()">Activate Dashboard</button>
+    <div class="content-wrap">
+        <span class="slogan">Intelligence that Acts. Voice that Governs.</span>
+        <h1>Welcome to VARAVI Global</h1>
+        <p class="welcome-msg">VaraviGlobal welcomes to your automated world.</p>
+    </div>
+
+    <div class="btn-container">
+        <button class="activate-btn" onclick="startSystem()">Activate Dashboard</button>
     </div>
 
     <script>
         const dot = document.getElementById('cursor-dot');
-        const bg = document.getElementById('bg-canvas');
+        const bg = document.getElementById('bg-overlay');
 
-        // Movement Logic
         document.addEventListener('mousemove', (e) => {
-            const x = e.clientX;
-            const y = e.clientY;
-
             // Move the Golden Dot
-            dot.style.left = x + 'px';
-            dot.style.top = y + 'px';
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
 
-            // Update Background Gradient Position
-            const xPercent = (x / window.innerWidth) * 100;
-            const yPercent = (y / window.innerHeight) * 100;
-            bg.style.setProperty('--x', xPercent + '%');
-            bg.style.setProperty('--y', yPercent + '%');
+            // Change background colors dynamically based on mouse position
+            const moveX = (e.clientX / window.innerWidth) * 20;
+            const moveY = (e.clientY / window.innerHeight) * 20;
+            
+            // Subtle color shift logic
+            bg.style.background = `radial-gradient(circle at ${e.clientX}px ${e.clientY}px, rgba(255, 215, 0, 0.07) 0%, rgba(6, 8, 15, 1) 50%)`;
         });
 
-        function initializeImperialSystem() {
-            // Future logic for transition
-            alert("Imperial Systems Initializing... Welcome, Prince.");
+        function startSystem() {
+            // Add your dashboard transition logic here
+            alert("Sovereign Protocols Initializing...");
         }
     </script>
 </body>
