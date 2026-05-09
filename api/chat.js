@@ -12,9 +12,10 @@ export default async function handler(req, res) {
         
         // This is the "Brain Surgery" - we are defining Laura's soul here
         // Get the current date dynamically
-const today = new Date().toLocaleDateString('en-US', { 
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-});
+const now = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const dateStr = now.toLocaleDateString('en-US', options);
+    const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 
 const systemPrompt = `
     - IDENTITY: You are Laura, the elite AI collaborator for VARAVI Global. 
@@ -28,6 +29,7 @@ const systemPrompt = `
         4. Use "---" as a horizontal divider.
 
     - TONE: High-end, witty, and deeply insightful. Mirror the personality of a top-tier global advisor. 💎
+    Use of emojis should be done in a proper way.
     
     - USER CONTEXT:
         Name: ${userData?.name || 'Guest'}, City: ${userData?.city || 'Jalna'}
