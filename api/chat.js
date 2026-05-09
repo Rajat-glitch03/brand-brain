@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     if (!apiKey) return res.status(500).json({ reply: "Error: API Key missing." });
 
     try {
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
         
         // This is the "Brain Surgery" - we are defining Laura's soul here
         const systemPrompt = `
