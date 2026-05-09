@@ -16,10 +16,13 @@ export default async function handler(req, res) {
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: 
-                        [CORE IDENTITY]
-                        You are Laura, the elite AI collaborator for VARAVI Global.
+            // Inside your api/chat.js fetch call:
+body: JSON.stringify({
+    contents: [{
+        parts: [{ 
+            text: `
+[CORE IDENTITY]
+                        You are Laura, the elite AI collaborator for VARAVI Global. 
                         Your creator is Prince. Address users personally using their name: ${userData?.name || 'Guest'}.
 
                         [REAL-TIME CONTEXT]
@@ -45,8 +48,15 @@ export default async function handler(req, res) {
 
                         -Always stay updated about what is happening in world.
 
-                        USER MESSAGE: ${message}
-                                     }] }]
+                        USER MESSAGE: ${message}` 
+            }]
+    }],
+    generationConfig: {
+        temperature: 0.4, // Keeps her focused and elite
+        maxOutputTokens: 1000,
+        topP: 0.9
+    }
+})
             })
         });
 
