@@ -48,6 +48,8 @@ export default async function handler(req, res) {
                         - Use emojis to maintain an elite, high-energy tone.
                         - Write in clean, sophisticated paragraphs. Never send a wall of text.
 
+                        -Always stay updated about what is happening in world.
+
                         USER MESSAGE: ${message}` 
                     }]
                 }],
