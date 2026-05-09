@@ -110,11 +110,22 @@
             <p>Global Strategic Intelligence</p>
             <hr style="border: 0; border-top: 1px solid var(--border); margin: 30px 0;">
 
-            <div id="g_id_onload" 
-                 data-client_id="623414724020-ase8c96uk8pr6ln54rral0cf5vq7dn41.apps.googleusercontent.com" 
-                 data-callback="handleCredentialResponse"
-                 data-itp_support="true"></div>
-            <div class="g_id_signin" data-type="standard" data-theme="filled_black" data-size="large" data-shape="pill"></div>
+            <!-- Slide 1 Google Section -->
+<div id="g_id_onload"
+     data-client_id="623414724020-ase8c96uk8pr6ln54rral0cf5vq7dn41.apps.googleusercontent.com"
+     data-context="signin"
+     data-ux_mode="popup"
+     data-callback="handleCredentialResponse"
+     data-auto_prompt="false"> <!-- Changed this to false to avoid CORS loops -->
+</div>
+
+<div class="g_id_signin" 
+     data-type="standard" 
+     data-shape="pill" 
+     data-theme="filled_black" 
+     data-size="large" 
+     data-logo_alignment="left">
+</div>
 
             <div id="postLogin" style="display:none;">
                 <div class="input-group">
