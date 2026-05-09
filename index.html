@@ -59,14 +59,19 @@
             userInput.value = '';
 
             try {
-                const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: text })
-                });
-                
-                const data = await response.json();
-                addMessage(data.reply, 'ai');
+                // Example of how the frontend sends data to chat.js
+const response = await fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 
+        message: text,
+        userData: {
+            name: "Customer Name", // You'll get this from your Login form
+            email: "customer@gmail.com",
+            city: "Pune"
+        }
+    })
+});
             } catch (err) {
                 addMessage("Connection error. Ensure Vercel deployment is active.", 'ai');
             }
