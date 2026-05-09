@@ -1,27 +1,29 @@
 export default async function handler(req, res) {
-    if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+    // 1. Method Guard
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
 
     const { message, userData } = req.body;
     const apiKey = process.env.VARAVI_API_KEY;
 
-    // Calculate current time in user's specific city
+    // 2. API Key Guard (This is likely the 500 cause)
+    if (!apiKey) {
+        console.error("CRITICAL: VARAVI_API_KEY is missing from Environment Variables.");
+        return res.status(500).json({ error: "API Key not configured in Vercel settings." });
+    }
+
+    // 3. User Data Guard
+    const tz = userData?.timezone || 'UTC';
+    const name = userData?.name || 'Partner';
+    const city = userData?.city || 'Global Hub';
+
     const now = new Date();
-    const userTime = now.toLocaleTimeString('en-US', { 
-        timeZone: userData.timezone, 
-        hour: '2-digit', 
-        minute: '2-digit',
-        hour12: true 
-    });
-    const userDate = now.toLocaleDateString('en-US', { 
-        timeZone: userData.timezone, 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-    });
+    const userTime = now.toLocaleTimeString('en-US', { timeZone: tz, hour: '2-digit', minute: '2-digit' });
+    const userDate = now.toLocaleDateString('en-US', { timeZone: tz, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
     try {
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`;
 
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -29,8 +31,7 @@ export default async function handler(req, res) {
             body: JSON.stringify({
                 contents: [{
                     parts: [{ 
-                        text: `
-                        [CORE IDENTITY]
+                        text: `[CORE IDENTITY]
                         You are Laura, the elite AI collaborator for VARAVI Global. 
                         Your creator is Prince. Address users personally using their name: ${userData?.name || 'Guest'}.
 
@@ -60,15 +61,23 @@ export default async function handler(req, res) {
                         USER MESSAGE: ${message}` 
                     }]
                 }],
-                generationConfig: { temperature: 0.35, maxOutputTokens: 2000 }
+                generationConfig: { temperature: 0.4, maxOutputTokens: 1000 }
             })
         });
 
         const data = await response.json();
+
+        // 4. Gemini Error Guard
+        if (data.error) {
+            console.error("Gemini API Error:", data.error);
+            return res.status(500).json({ error: `Gemini Error: ${data.error.message}` });
+        }
+
         const reply = data.candidates[0].content.parts[0].text;
         return res.status(200).json({ reply });
 
     } catch (error) {
-        return res.status(500).json({ reply: "### System Pulse Offline\nRecalibrating 2026 sensors... 🥂" });
+        console.error("Fetch Exception:", error);
+        return res.status(500).json({ error: "Failed to connect to AI infrastructure." });
     }
 }
