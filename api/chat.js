@@ -4,13 +4,26 @@ export default async function handler(req, res) {
     const { message, userData } = req.body;
     const apiKey = process.env.VARAVI_API_KEY;
 
-    // Time Calculation
+    // Calculate current time in user's specific city
     const now = new Date();
-    const localTime = now.toLocaleTimeString('en-US', { timeZone: userData.tz, hour: '2-digit', minute: '2-digit' });
-    const localDate = now.toLocaleDateString('en-US', { timeZone: userData.tz, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    const userTime = now.toLocaleTimeString('en-US', { 
+        timeZone: userData.timezone, 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: true 
+    });
+    const userDate = now.toLocaleDateString('en-US', { 
+        timeZone: userData.timezone, 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
 
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
+
+        const response = await fetch(apiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -47,13 +60,15 @@ export default async function handler(req, res) {
                         USER MESSAGE: ${message}` 
                     }]
                 }],
-                generationConfig: { temperature: 0.4, maxOutputTokens: 2000 }
+                generationConfig: { temperature: 0.35, maxOutputTokens: 2000 }
             })
         });
 
         const data = await response.json();
-        res.status(200).json({ reply: data.candidates[0].content.parts[0].text });
-    } catch (e) {
-        res.status(500).json({ reply: "### System Pulse Offline\nRecalibrating 2026 sensors... 🥂" });
+        const reply = data.candidates[0].content.parts[0].text;
+        return res.status(200).json({ reply });
+
+    } catch (error) {
+        return res.status(500).json({ reply: "### System Pulse Offline\nRecalibrating 2026 sensors... 🥂" });
     }
 }
