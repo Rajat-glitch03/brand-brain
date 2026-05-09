@@ -1,22 +1,16 @@
-// /api/chat.js
 export default async function handler(req, res) {
     if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
     const { message, userData } = req.body;
     const apiKey = process.env.VARAVI_API_KEY;
 
-    // --- ETERNAL DATE LOGIC ---
+    // Time Calculation
     const now = new Date();
-    const dateStr = now.toLocaleDateString('en-US', { 
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-    });
-    const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    const localTime = now.toLocaleTimeString('en-US', { timeZone: userData.tz, hour: '2-digit', minute: '2-digit' });
+    const localDate = now.toLocaleDateString('en-US', { timeZone: userData.tz, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
     try {
-        // Using Gemini 1.5 Pro for maximum depth and reasoning
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
-
-        const response = await fetch(apiUrl, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -53,19 +47,13 @@ export default async function handler(req, res) {
                         USER MESSAGE: ${message}` 
                     }]
                 }],
-                generationConfig: {
-                    temperature: 0.4, // Allows for witty expansion while staying factual
-                    maxOutputTokens: 2048, // Increased for detailed responses
-                }
+                generationConfig: { temperature: 0.4, maxOutputTokens: 2000 }
             })
         });
 
         const data = await response.json();
-        const lauraReply = data.candidates[0].content.parts[0].text;
-        
-        return res.status(200).json({ reply: lauraReply });
-
-    } catch (error) {
-        return res.status(500).json({ reply: "### System Alert\nMy neural link is currently refreshing its global data streams. Stand by, Prince. 🥂" });
+        res.status(200).json({ reply: data.candidates[0].content.parts[0].text });
+    } catch (e) {
+        res.status(500).json({ reply: "### System Pulse Offline\nRecalibrating 2026 sensors... 🥂" });
     }
 }
