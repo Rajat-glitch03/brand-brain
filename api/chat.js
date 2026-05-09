@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     }
 
     const { message, userData } = req.body;
-    const apiKey = process.env.VARAVI_API_KEY;
+    const apiKey = AIzaSyBMUfagGk8xCeMQS5Usq4Ssk4qNEbIo5Sc;
 
     // 2. Immediate check for API Key
     if (!apiKey) {
