@@ -5,17 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VARAVI Global | Laura</title>
     <style>
+    /* Reset and Core Variables */
     :root {
-        --brand-cyan: #00d4ff;
-        --dark-bg: #050505;
-        --glass: rgba(255, 255, 255, 0.05);
+        --varavi-cyan: #00d4ff;
+        --ui-grey: #a0a0a0;
+        --input-bg: #111;
+        --app-bg: #050505;
+        --container-bg: #1a1a1a;
     }
 
-    * { box-sizing: border-box; transition: all 0.3s ease; }
+    * { box-sizing: border-box; transition: all 0.2s ease-out; }
     
     body { 
-        font-family: 'Inter', sans-serif; 
-        background: var(--dark-bg); 
+        font-family: 'Inter', -apple-system, sans-serif; 
+        background: var(--app-bg); 
         color: white; 
         margin: 0; 
         display: flex; 
@@ -25,135 +28,145 @@
         overflow: hidden;
     }
 
-    /* High-End Container */
-    #app-container {
-        width: 95%;
-        max-width: 1100px;
-        height: 90vh;
-        background: var(--glass);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 24px;
+    /* Main Centered Container (Fixes image_0.png collision) */
+    #main-container {
+        width: 90%;
+        max-width: 900px;
+        height: 80vh;
+        background: var(--container-bg);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
         display: flex;
         flex-direction: column;
         overflow: hidden;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.7);
     }
 
-    /* Branding Header */
+    /* Integrated Header (Fixes logo/text separation) */
     header {
-        padding: 20px 40px;
+        padding: 25px 35px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        background: rgba(0,0,0,0.2);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(0,0,0,0.1);
     }
 
-    .logo-container { display: flex; align-items: center; gap: 15px; }
+    .brand-section { display: flex; align-items: center; gap: 15px; }
     
-    /* THE LOGO SPOT */
+    /* YOUR LOGO SPOT - Updated size for professional fit */
     .brand-logo {
-        width: 45px; /* Adjust size as needed */
-        height: 45px;
+        width: 32px; 
+        height: 32px;
         object-fit: contain;
-        border-radius: 8px;
     }
 
     header h1 { 
-        font-size: 1.1rem; 
+        font-size: 1.2rem; 
         letter-spacing: 4px; 
-        color: var(--brand-cyan); 
+        color: var(--varavi-cyan); 
         margin: 0;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    .status-text {
+        font-size: 0.8rem;
+        color: var(--ui-grey);
         text-transform: uppercase;
     }
 
-    /* Chat Area */
+    /* Functional Chat Area */
     #chat-window {
         flex: 1;
         overflow-y: auto;
         padding: 30px;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 18px;
         scroll-behavior: smooth;
     }
 
-    /* Chat Bubbles */
+    /* Clean Chat Bubbles (Fixes Right-Text Block from image_0.png) */
     .msg {
-        max-width: 70%;
-        padding: 16px 20px;
-        border-radius: 18px;
+        max-width: 75%;
+        padding: 14px 18px;
+        border-radius: 12px;
         font-size: 0.95rem;
-        line-height: 1.6;
+        line-height: 1.5;
     }
 
     .user {
         align-self: flex-end;
-        background: var(--brand-cyan);
+        background: var(--varavi-cyan);
         color: #000;
         font-weight: 500;
-        border-bottom-right-radius: 4px;
+        border-bottom-right-radius: 2px;
     }
 
     .ai {
         align-self: flex-start;
-        background: rgba(255,255,255,0.08);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-bottom-left-radius: 4px;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-bottom-left-radius: 2px;
     }
 
-    /* Modern Input */
-    .input-area {
-        padding: 25px 40px;
-        background: rgba(0,0,0,0.3);
+    /* Consolidation Input (Fixes Left-Aligned Glitch from image_0.png) */
+    .input-bar {
+        padding: 20px 30px;
+        background: rgba(0,0,0,0.2);
         display: flex;
         gap: 15px;
+        border-top: 1px solid rgba(255,255,255,0.05);
     }
 
     input {
         flex: 1;
-        padding: 15px 20px;
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 12px;
+        padding: 16px;
+        background: var(--input-bg);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 8px;
         color: white;
         outline: none;
+        font-size: 0.9rem;
     }
 
-    input:focus { border-color: var(--brand-cyan); background: rgba(255,255,255,0.08); }
+    input:focus { border-color: rgba(0, 212, 255, 0.4); }
 
     button {
-        padding: 0 30px;
-        background: var(--brand-cyan);
+        padding: 0 28px;
+        background: var(--varavi-cyan);
         color: black;
-        border-radius: 12px;
+        border-radius: 8px;
         font-weight: bold;
         cursor: pointer;
         border: none;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
 
-    button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3); }
+    button:hover { transform: scale(1.03); background: #00b0d4; }
 
 </style>
 </head>
 <body>
 
-    <div id="app-container">
+    <div id="main-container">
     <header>
-        <div class="logo-container">
-            <!-- Replace 'logo.png' with your actual filename in GitHub -->
-            <img src="logo.png" alt="VARAVI Logo" class="brand-logo">
+        <div class="brand-section">
+            <!-- Ensure your logo.png is in the GitHub folder with this file -->
+            <img src="logo.png" alt="Logo" class="brand-logo">
             <h1>VARAVI GLOBAL</h1>
         </div>
-        <div style="font-size: 0.8rem; color: #555;">SYSTEM STATUS: ACTIVE</div>
+        <div class="status-text">SYSTEM STATUS: ACTIVE</div>
     </header>
 
     <div id="chat-window">
-        <!-- Messages appear here -->
+        <!-- Messages populate here -->
     </div>
 
-    <div class="input-area">
+    <!-- The Consolidated Input Area (Locked to Bottom) -->
+    <div class="input-bar">
         <input type="text" id="userInput" placeholder="Command Laura...">
         <button id="sendBtn">EXECUTE</button>
     </div>
