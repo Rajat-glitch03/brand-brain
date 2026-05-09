@@ -205,25 +205,47 @@
         }
 
         async function sendMessage() {
-            const input = document.getElementById('userInput');
-            const chat = document.getElementById('chat-window');
-            if (!input.value) return;
+    const input = document.getElementById('userInput');
+    const chat = document.getElementById('chat-window');
+    if (!input.value) return;
 
-            const text = input.value;
-            chat.innerHTML += `<div class="msg-container"><div class="msg user">${text}</div></div>`;
-            input.value = '';
-            chat.scrollTop = chat.scrollHeight;
+    const text = input.value;
+    chat.innerHTML += `<div class="msg-container"><div class="msg user">${text}</div></div>`;
+    input.value = '';
+    chat.scrollTop = chat.scrollHeight;
 
-            const response = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text, userData: currentUser })
-            });
-            const data = await response.json();
-            
-            chat.innerHTML += `<div class="msg-container"><div class="msg laura">${data.reply.replace(/\n/g, '<br>')}</div></div>`;
-            chat.scrollTop = chat.scrollHeight;
+    try {
+        console.log("Sending to Laura...", { message: text, userData: currentUser });
+
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text, userData: currentUser })
+        });
+
+        // Check if the server even responded
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Server Error:", errorData);
+            alert(`Laura's Brain is stalled: ${response.status} - ${errorData.error || 'Check Vercel Logs'}`);
+            return;
         }
+
+        const data = await response.json();
+        
+        if (data.reply) {
+            chat.innerHTML += `<div class="msg-container"><div class="msg laura">${data.reply.replace(/\n/g, '<br>')}</div></div>`;
+        } else {
+            alert("Laura responded, but the reply was empty.");
+        }
+        
+        chat.scrollTop = chat.scrollHeight;
+
+    } catch (error) {
+        console.error("Connection Error:", error);
+        alert("Failed to connect to the server. Check your internet or Vercel deployment.");
+    }
+}
     </script>
 </body>
 </html>
