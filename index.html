@@ -192,25 +192,6 @@
 
     <script>
 
-        function addMessage(text, side) {
-    const div = document.createElement('div');
-    div.className = `msg ${side}`;
-    
-    if (side === 'ai') {
-        // This logic converts **bold** to <b> and ### to <h3> and \n to <br>
-        let formattedText = text
-            .replace(/### (.*)/g, '<h3 style="color:#FFD700; margin:10px 0;">$1</h3>')
-            .replace(/\*\*(.*?)\*\*/g, '<b style="color:#FFD700;">$1</b>')
-            .replace(/\n/g, '<br>');
-        
-        div.innerHTML = formattedText;
-    } else {
-        div.innerText = text;
-    }
-
-    chatWindow.appendChild(div);
-    chatWindow.scrollTop = chatWindow.scrollHeight;
-}
         let currentUser = null;
 
         function initializeSystem() {
@@ -236,33 +217,48 @@
         }
 
         async function handleExecution() {
-            const input = document.getElementById('userInput');
-            const window = document.getElementById('chat-window');
-            const text = input.value.trim();
+    const input = document.getElementById('userInput');
+    const chatWindow = document.getElementById('chat-window');
+    const text = input.value.trim();
 
-            if (!text) return;
+    if (!text) return;
 
-            window.innerHTML += `<div class="msg user">${text}</div>`;
-            input.value = '';
-            window.scrollTop = window.scrollHeight;
+    // 1. Add User Message (Plain text)
+    chatWindow.innerHTML += `<div class="msg user">${text}</div>`;
+    input.value = '';
+    chatWindow.scrollTop = chatWindow.scrollHeight;
 
-            try {
-                const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        message: text,
-                        userData: currentUser 
-                    })
-                });
-                
-                const data = await response.json();
-                window.innerHTML += `<div class="msg ai">${data.reply}</div>`;
-                window.scrollTop = window.scrollHeight;
-            } catch (err) {
-                window.innerHTML += `<div class="msg ai">System Timeout. Verify your Vercel deployment, Prince.</div>`;
-            }
-        }
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                message: text,
+                userData: currentUser 
+            })
+        });
+        
+        const data = await response.json();
+        
+        // 2. Format Laura's Response (Luxury Markdown)
+        let rawReply = data.reply;
+        let formattedReply = rawReply
+            .replace(/### (.*)/g, '<h3 style="color:#FFD700; margin:15px 0; font-family:Cinzel, serif; letter-spacing:2px;">$1</h3>') // Headers
+            .replace(/\*\*(.*?)\*\*/g, '<b style="color:#FFD700; font-weight:700;">$1</b>') // Gold Bold
+            .replace(/---/g, '<hr style="border:0; border-top:1px solid rgba(255,215,0,0.2); margin:20px 0;">') // Dividers
+            .replace(/\n/g, '<br>'); // Line breaks for paragraphs
+
+        // 3. Add Laura's formatted message to the UI
+        const aiDiv = document.createElement('div');
+        aiDiv.className = 'msg ai';
+        aiDiv.innerHTML = formattedReply;
+        chatWindow.appendChild(aiDiv);
+        
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    } catch (err) {
+        chatWindow.innerHTML += `<div class="msg ai">System Error: Laura's core is unreachable. 🥂</div>`;
+    }
+}
 
         document.getElementById('sendBtn').addEventListener('click', handleExecution);
         document.getElementById('userInput').addEventListener('keypress', (e) => {
