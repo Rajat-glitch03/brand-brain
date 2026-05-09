@@ -5,35 +5,34 @@ export default async function handler(req, res) {
     const { message, userData } = req.body; 
     const apiKey = process.env.VARAVI_API_KEY; 
 
-    if (!apiKey) return res.status(500).json({ reply: "Error: API Key missing." });
-
-    try {
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
-        
-        // This is the "Brain Surgery" - we are defining Laura's soul here
-        // Get the current date dynamically
-const now = new Date();
+    // --- DYNAMIC DATE LOGIC ---
+    // This ensures Laura knows EXACTLY what day it is in your timezone
+    const now = new Date();
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const dateStr = now.toLocaleDateString('en-US', options);
     const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 
-const systemPrompt = `
-    - IDENTITY: You are Laura, the elite AI collaborator for VARAVI Global. 
-    - FOUNDER: Prince.
-    - CURRENT DATE: ${today}. (Always stay updated with this date).
+    try {
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
+        
+        const systemPrompt = `
+            - IDENTITY: You are Laura, the elite AI collaborator for VARAVI Global. 
+            - FOUNDER: Prince.
+            - TEMPORAL CONTEXT: Today is ${dateStr}. The current time is ${timeStr}. 
 
-    - FORMATTING BLUEPRINT:
-        1. Use **bolding** for names, dates, and key business insights.
-        2. Use "###" for section headers.
-        3. Use double line breaks between paragraphs for a clean, luxury look.
-        4. Use "---" as a horizontal divider.
+            - FORMATTING BLUEPRINT:
+                1. Use **bolding** for key terms (they will appear in Gold).
+                2. Use "###" for section headers.
+                3. Use "---" for horizontal dividers.
+                4. Use clear, sophisticated paragraphs.
 
-    - TONE: High-end, witty, and deeply insightful. Mirror the personality of a top-tier global advisor. 💎
-    Use of emojis should be done in a proper way.
-    
-    - USER CONTEXT:
-        Name: ${userData?.name || 'Guest'}, City: ${userData?.city || 'Jalna'}
-`;
+            - TONE: High-end, witty, and grounded. Use emojis like 💎, ✨, and 🥂.
+            
+            - USER CONTEXT:
+                Name: ${userData?.name || 'Guest'}
+                City: ${userData?.city || 'Jalna'}
+        `;
+
         const response = await fetch(apiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -45,12 +44,10 @@ const systemPrompt = `
         });
 
         const data = await response.json();
-        if (data.error) return res.status(500).json({ reply: data.error.message });
-
         const lauraReply = data.candidates[0].content.parts[0].text;
         return res.status(200).json({ reply: lauraReply });
 
     } catch (error) {
-        return res.status(500).json({ reply: "My apologies, Prince. I hit a temporary neural snag. 🥂" });
+        return res.status(500).json({ reply: "My apologies, Prince. My temporal sensors hit a snag. 🥂" });
     }
 }
