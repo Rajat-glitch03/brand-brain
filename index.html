@@ -3,267 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VARAVI Global | Laura</title>
+    <title>VARAVI GLOBAL | LAURA</title>
     <style>
-    /* Reset and Core Variables */
-    :root {
-        --varavi-cyan: #00d4ff;
-        --ui-grey: #a0a0a0;
-        --input-bg: #111;
-        --app-bg: #050505;
-        --container-bg: #1a1a1a;
-    }
+        /* Color Palette: #FFD700 (Gold), #ffffff (White), #06080f (Deep Black) */
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.3s ease; }
+        
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #06080f; 
+            color: #ffffff; 
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
 
-    * { box-sizing: border-box; transition: all 0.2s ease-out; }
-    
-    body { 
-        font-family: 'Inter', -apple-system, sans-serif; 
-        background: var(--app-bg); 
-        color: white; 
-        margin: 0; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        height: 100vh;
-        overflow: hidden;
-    }
+        /* 1. LOGIN GATEWAY - Full Screen Overlay */
+        #login-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #06080f;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            z-index: 9999;
+        }
 
-    /* Main Centered Container (Fixes image_0.png collision) */
-    #main-container {
-        width: 90%;
-        max-width: 900px;
-        height: 80vh;
-        background: var(--container-bg);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 20px;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.7);
-    }
+        .login-card {
+            background: #0d1117;
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid #FFD700;
+            text-align: center;
+            width: 350px;
+        }
 
-    /* Integrated Header (Fixes logo/text separation) */
-    header {
-        padding: 25px 35px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        background: rgba(0,0,0,0.1);
-    }
+        .login-card h1 { color: #FFD700; letter-spacing: 3px; margin-bottom: 20px; font-size: 1.5rem; }
+        
+        .login-card input {
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            background: #06080f; border: 1px solid #333;
+            color: white; border-radius: 5px; outline: none;
+        }
 
-    .brand-section { display: flex; align-items: center; gap: 15px; }
-    
-    /* YOUR LOGO SPOT - Updated size for professional fit */
-    .brand-logo {
-        width: 32px; 
-        height: 32px;
-        object-fit: contain;
-    }
+        .login-card button {
+            width: 100%; padding: 12px; background: #FFD700;
+            color: #06080f; border: none; border-radius: 5px;
+            font-weight: bold; cursor: pointer; text-transform: uppercase;
+        }
 
-    header h1 { 
-        font-size: 1.2rem; 
-        letter-spacing: 4px; 
-        color: var(--varavi-cyan); 
-        margin: 0;
-        text-transform: uppercase;
-        font-weight: 500;
-    }
+        /* 2. MAIN APP CONTAINER */
+        #app-container {
+            width: 95%;
+            max-width: 1000px;
+            height: 90vh;
+            background: #0d1117;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            display: none; /* Hidden until login */
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
 
-    .status-text {
-        font-size: 0.8rem;
-        color: var(--ui-grey);
-        text-transform: uppercase;
-    }
+        /* Header with Logo */
+        header {
+            padding: 20px 30px;
+            background: rgba(0,0,0,0.3);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            display: flex; align-items: center; justify-content: space-between;
+        }
 
-    /* Functional Chat Area */
-    #chat-window {
-        flex: 1;
-        overflow-y: auto;
-        padding: 30px;
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-        scroll-behavior: smooth;
-    }
+        .logo-box { display: flex; align-items: center; gap: 15px; }
+        .logo-box img { width: 35px; height: 35px; object-fit: contain; }
+        .logo-box h1 { color: #FFD700; font-size: 1.2rem; letter-spacing: 4px; }
 
-    /* Clean Chat Bubbles (Fixes Right-Text Block from image_0.png) */
-    .msg {
-        max-width: 75%;
-        padding: 14px 18px;
-        border-radius: 12px;
-        font-size: 0.95rem;
-        line-height: 1.5;
-    }
+        /* Chat Window */
+        #chat-window {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-    .user {
-        align-self: flex-end;
-        background: var(--varavi-cyan);
-        color: #000;
-        font-weight: 500;
-        border-bottom-right-radius: 2px;
-    }
+        .msg { max-width: 80%; padding: 12px 18px; border-radius: 12px; line-height: 1.5; font-size: 0.95rem; }
+        .user { align-self: flex-end; background: #FFD700; color: #06080f; font-weight: 500; }
+        .ai { align-self: flex-start; background: #1c2128; border: 1px solid #30363d; color: #ffffff; }
 
-    .ai {
-        align-self: flex-start;
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-bottom-left-radius: 2px;
-    }
+        /* Input Area */
+        .input-area {
+            padding: 20px 30px;
+            background: #06080f;
+            display: flex; gap: 15px;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+        }
 
-    /* Consolidation Input (Fixes Left-Aligned Glitch from image_0.png) */
-    .input-bar {
-        padding: 20px 30px;
-        background: rgba(0,0,0,0.2);
-        display: flex;
-        gap: 15px;
-        border-top: 1px solid rgba(255,255,255,0.05);
-    }
+        #userInput {
+            flex: 1; padding: 15px; background: #1c2128;
+            border: 1px solid #30363d; color: white;
+            border-radius: 8px; outline: none;
+        }
 
-    input {
-        flex: 1;
-        padding: 16px;
-        background: var(--input-bg);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 8px;
-        color: white;
-        outline: none;
-        font-size: 0.9rem;
-    }
-
-    input:focus { border-color: rgba(0, 212, 255, 0.4); }
-
-    button {
-        padding: 0 28px;
-        background: var(--varavi-cyan);
-        color: black;
-        border-radius: 8px;
-        font-weight: bold;
-        cursor: pointer;
-        border: none;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    button:hover { transform: scale(1.03); background: #00b0d4; }
-
-</style>
+        #sendBtn {
+            padding: 0 30px; background: #FFD700;
+            color: #06080f; border-radius: 8px;
+            font-weight: bold; border: none; cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
-    <div id="main-container">
-    <header>
-        <div class="brand-section">
-            <!-- Ensure your logo.png is in the GitHub folder with this file -->
-            <img src="logo.png" alt="Logo" class="brand-logo">
+    <!-- 1. LOGIN SECTION -->
+    <div id="login-overlay">
+        <div class="login-card">
             <h1>VARAVI GLOBAL</h1>
+            <input type="text" id="regName" placeholder="Your Name">
+            <input type="email" id="regEmail" placeholder="Your Email">
+            <input type="text" id="regCity" placeholder="Your City">
+            <button onclick="login()">Initialize Laura</button>
         </div>
-        <div class="status-text">SYSTEM STATUS: ACTIVE</div>
-    </header>
-
-    <div id="chat-window">
-        <!-- Messages populate here -->
     </div>
 
-    <!-- The Consolidated Input Area (Locked to Bottom) -->
-    <div class="input-bar">
-        <input type="text" id="userInput" placeholder="Command Laura...">
-        <button id="sendBtn">EXECUTE</button>
-    </div>
-</div>
+    <!-- 2. CHAT SECTION -->
+    <div id="app-container">
+        <header>
+            <div class="logo-box">
+                <img src="logo.png" alt="Logo">
+                <h1>VARAVI GLOBAL</h1>
+            </div>
+            <span style="color: #666; font-size: 0.8rem;">SYSTEM ACTIVE</span>
+        </header>
 
-    <!-- Login Overlay -->
-<!-- Login Overlay -->
-<div id="login-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#000; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:1000; transition: 0.5s;">
-    <h1 style="color:#00d4ff; letter-spacing:4px; margin-bottom: 10px;">VARAVI GLOBAL</h1>
-    <p style="color:#888; margin-bottom: 30px;">Access the Universal Hand Interface</p>
-    
-    <div style="display:flex; flex-direction:column; gap:15px; width: 300px;">
-        <input type="text" id="regName" placeholder="Full Name" style="padding:12px; border-radius:8px; border:1px solid #333; background:#111; color:white;">
-        <input type="email" id="regEmail" placeholder="Email Address" style="padding:12px; border-radius:8px; border:1px solid #333; background:#111; color:white;">
-        <input type="text" id="regCity" placeholder="City" style="padding:12px; border-radius:8px; border:1px solid #333; background:#111; color:white;">
-        
-        <button onclick="startExperience()" style="padding:15px; background:#00d4ff; color:#000; border-radius:8px; font-weight:bold; cursor:pointer; border:none; margin-top:10px;">
-            INITIALIZE LAURA
-        </button>
-    </div>
-</div>
+        <div id="chat-window">
+            <div class="msg ai">Welcome, Prince. System initialized. How shall we proceed?</div>
+        </div>
 
-    <header>
-        <h1>VARAVI GLOBAL</h1>
-    </header>
-
-    <div id="chat-window">
-        <div class="msg ai">Welcome back, Prince. I am Laura. How can we advance VARAVI today?</div>
-    </div>
-
-    <div class="input-area">
-        <input type="text" id="userInput" placeholder="Ask Laura anything..." autocomplete="off">
-        <button id="sendBtn">SEND</button>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type command...">
+            <button id="sendBtn">SEND</button>
+        </div>
     </div>
 
     <script>
-
         let currentUser = null;
 
-function startExperience() {
-    const name = document.getElementById('regName').value;
-    const email = document.getElementById('regEmail').value;
-    const city = document.getElementById('regCity').value;
+        // Function to handle Login
+        function login() {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const city = document.getElementById('regCity').value;
 
-    if (!name || !email) {
-        alert("Prince, please ensure name and email are provided for VARAVI records.");
-        return;
-    }
+            if (!name || !email) {
+                alert("Please provide credentials.");
+                return;
+            }
 
-    // Store the data
-    currentUser = { name, email, city };
-
-    // Hide the login screen with a fade-out
-    document.getElementById('login-overlay').style.opacity = '0';
-    setTimeout(() => {
-        document.getElementById('login-overlay').style.display = 'none';
-    }, 500);
-}
-        
-        const chatWindow = document.getElementById('chat-window');
-        const userInput = document.getElementById('userInput');
-        const sendBtn = document.getElementById('sendBtn');
-
-        async function handleSend() {
-    const text = userInput.value.trim();
-    if (!text) return;
-
-    addMessage(text, 'user');
-    userInput.value = '';
-
-    try {
-        const response = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                message: text,
-                userData: currentUser // This sends the name/email/city you just typed!
-            })
-        });
-        
-        const data = await response.json();
-        addMessage(data.reply, 'ai');
-    } catch (err) {
-        addMessage("Laura is offline. Check Vercel logs.", 'ai');
-    }
-}
-
-        function addMessage(text, side) {
-            const div = document.createElement('div');
-            div.className = `msg ${side}`;
-            div.innerText = text;
-            chatWindow.appendChild(div);
-            chatWindow.scrollTop = chatWindow.scrollHeight;
+            currentUser = { name, email, city };
+            document.getElementById('login-overlay').style.display = 'none';
+            document.getElementById('app-container').style.display = 'flex';
         }
 
-        sendBtn.addEventListener('click', handleSend);
-        userInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSend(); });
+        // Function to Send Message to API
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const chatWindow = document.getElementById('chat-window');
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            // Add User message
+            chatWindow.innerHTML += `<div class="msg user">${text}</div>`;
+            input.value = '';
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        message: text,
+                        userData: currentUser 
+                    })
+                });
+                
+                const data = await response.json();
+                chatWindow.innerHTML += `<div class="msg ai">${data.reply}</div>`;
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            } catch (err) {
+                chatWindow.innerHTML += `<div class="msg ai">Error connecting to core. Check Vercel logs.</div>`;
+            }
+        }
+
+        document.getElementById('sendBtn').addEventListener('click', sendMessage);
+        document.getElementById('userInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
     </script>
 </body>
 </html>
