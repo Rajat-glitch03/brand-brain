@@ -1,15 +1,31 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-
+// This is Laura's server-side logic
 export default async function handler(req, res) {
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
 
-  try {
-    const { prompt } = req.body;
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    res.status(200).json({ answer: response.text() });
-  } catch (error) {
-    res.status(500).json({ error: "Brain error" });
-  }
+    try {
+        const { message } = req.body;
+        
+        // This variable is pulled from your Vercel Environment Settings
+        const secretKey = process.env.VARAVI_API_KEY;
+
+        if (!secretKey) {
+            return res.status(500).json({ reply: "Laura's secret key is not configured in Vercel." });
+        }
+
+        /* 
+           Phase 2 logic will go here (connecting to your specific AI model).
+           For now, we confirm the handshake is working.
+        */
+        
+        const responseMessage = `System Check: Secure connection established. I am ready to build with you, Prince. You sent: "${message}"`;
+
+        return res.status(200).json({ 
+            reply: responseMessage 
+        });
+
+    } catch (error) {
+        return res.status(500).json({ reply: "An error occurred in my neural core." });
+    }
 }
