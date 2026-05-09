@@ -3,234 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VARAVI Global | Imperial AI</title>
-    <!-- Google Identity Services -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+    <title>VARAVI Global | Imperial Interface</title>
+    <!-- Importing Elite Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --gold: #d4af37;
             --dark-gold: #996515;
             --bg: #050505;
             --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(212, 175, 55, 0.3);
+            --border: rgba(212, 175, 55, 0.2);
         }
 
         body, html {
             margin: 0; padding: 0; height: 100%;
             background-color: var(--bg);
             color: #fff; font-family: 'Inter', sans-serif;
-            overflow: hidden;
+            overflow: hidden; /* Keep it elegant and focused */
         }
 
-        /* Luxury Background Animation */
-        .bg-overlay {
+        /* Animated background pulse */
+        .background-glow {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #050505 100%);
             z-index: -1;
         }
 
-        .slide {
+        /* Container for the UI */
+        .container {
             height: 100vh; display: flex; align-items: center; justify-content: center;
-            transition: transform 1s cubic-bezier(0.85, 0, 0.15, 1);
         }
 
         .luxury-card {
             background: var(--glass);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
             padding: 60px;
-            border-radius: 30px;
+            border-radius: 40px;
             border: 1px solid var(--border);
             width: 100%; max-width: 450px;
             text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+            transition: transform 0.5s ease;
         }
 
-        h1 { font-family: 'Cinzel', serif; color: var(--gold); letter-spacing: 8px; margin-bottom: 10px; }
-        p { font-weight: 300; opacity: 0.7; letter-spacing: 1px; }
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            letter-spacing: 10px;
+            margin: 0 0 10px 0;
+            font-size: 2.5rem;
+        }
 
-        .input-group { position: relative; margin: 30px 0; text-align: left; }
-        label { font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
+        p.subtitle {
+            font-weight: 300;
+            opacity: 0.5;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            margin-bottom: 40px;
+        }
+
+        /* Inputs and Buttons */
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        label {
+            font-size: 0.6rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-left: 5px;
+        }
 
         .luxury-input {
-            width: 100%; background: transparent; border: none;
+            width: 100%;
+            background: transparent;
+            border: none;
             border-bottom: 1px solid var(--border);
-            color: #fff; padding: 12px 0; font-size: 1rem;
-            outline: none; transition: 0.3s;
+            color: #fff;
+            padding: 15px 5px;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
         }
 
-        .luxury-input:focus { border-bottom: 1px solid var(--gold); }
-
-        .location-dropdown {
-            position: absolute; top: 100%; left: 0; right: 0;
-            background: #0f0f0f; border: 1px solid var(--border);
-            max-height: 200px; overflow-y: auto; z-index: 100; display: none;
-            border-radius: 0 0 15px 15px;
+        .luxury-input:focus {
+            border-bottom: 1px solid var(--gold);
         }
-
-        .location-item { padding: 15px; cursor: pointer; border-bottom: 1px solid #1a1a1a; transition: 0.2s; }
-        .location-item:hover { background: rgba(212, 175, 55, 0.1); color: var(--gold); }
 
         .gold-btn {
             background: linear-gradient(45deg, var(--dark-gold), var(--gold));
-            color: black; border: none; padding: 15px 40px;
-            border-radius: 40px; font-weight: bold; cursor: pointer;
-            text-transform: uppercase; letter-spacing: 2px;
-            transition: 0.4s; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+            color: #000;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+            transition: 0.4s;
         }
 
-        .gold-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4); }
-
-        /* Chat Interface */
-        #slide2 { display: none; flex-direction: column; justify-content: flex-end; }
-        #chat-window {
-            width: 100%; max-width: 800px; height: 70vh;
-            overflow-y: auto; padding: 40px; scroll-behavior: smooth;
-        }
-
-        .msg-container { margin-bottom: 30px; display: flex; flex-direction: column; }
-        .msg { max-width: 80%; padding: 15px 25px; border-radius: 20px; line-height: 1.6; }
-        .laura { align-self: flex-start; color: #eee; border-left: 2px solid var(--gold); background: var(--glass); }
-        .user { align-self: flex-end; color: var(--gold); font-weight: 500; text-align: right; }
-
-        .input-area {
-            width: 100%; padding: 30px; background: rgba(0,0,0,0.5);
-            display: flex; justify-content: center; backdrop-filter: blur(10px);
+        .gold-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
         }
     </style>
 </head>
 <body>
-    <div class="bg-overlay"></div>
+    <div class="background-glow"></div>
 
-    <!-- SLIDE 1: AUTH & HUB -->
-    <div id="slide1" class="slide">
-        <div class="luxury-card">
+    <div class="container">
+        <div class="luxury-card" id="mainCard">
             <h1>VARAVI</h1>
-            <p>Global Strategic Intelligence</p>
-            <hr style="border: 0; border-top: 1px solid var(--border); margin: 30px 0;">
+            <p class="subtitle">Global Intelligence 2026</p>
 
-            <!-- Slide 1 Google Section -->
-<div id="g_id_onload"
-     data-client_id="623414724020-ase8c96uk8pr6ln54rral0cf5vq7dn41.apps.googleusercontent.com"
-     data-context="signin"
-     data-ux_mode="popup"
-     data-callback="handleCredentialResponse"
-     data-auto_prompt="false"> <!-- Changed this to false to avoid CORS loops -->
-</div>
-
-<div class="g_id_signin" 
-     data-type="standard" 
-     data-shape="pill" 
-     data-theme="filled_black" 
-     data-size="large" 
-     data-logo_alignment="left">
-</div>
-
-            <div id="postLogin" style="display:none;">
-                <div class="input-group">
-                    <label>Verified Partner</label>
-                    <input type="text" id="userEmail" class="luxury-input" readonly>
-                </div>
-                <div class="input-group">
-                    <label>Global Hub</label>
-                    <input type="text" id="userCity" class="luxury-input" placeholder="Enter City (e.g. London)" autocomplete="off">
-                    <div id="locationDropdown" class="location-dropdown"></div>
-                </div>
-                <button onclick="startConsultation()" class="gold-btn">Enter 2026 Grid</button>
+            <div class="input-group">
+                <label>Access Key</label>
+                <input type="password" class="luxury-input" placeholder="••••••••">
             </div>
+
+            <div class="input-group">
+                <label>Operational Hub</label>
+                <input type="text" class="luxury-input" placeholder="e.g. Dubai, London, Tokyo">
+            </div>
+
+            <button class="gold-btn">Initialize Laura</button>
         </div>
     </div>
-
-    <!-- SLIDE 2: INTERFACE -->
-    <div id="slide2" class="slide">
-        <div id="chat-window"></div>
-        <div class="input-area">
-            <input type="text" id="userInput" class="luxury-input" style="width: 60%;" placeholder="Request briefing...">
-            <button onclick="sendMessage()" class="gold-btn" style="padding: 10px 30px; margin-left: 20px;">Send</button>
-        </div>
-    </div>
-
-    <script>
-        let currentUser = {};
-
-        function parseJwt(token) {
-            return JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
-        }
-
-        function handleCredentialResponse(response) {
-            const payload = parseJwt(response.credential);
-            if (!payload.email.endsWith('@gmail.com')) return alert("Access restricted to @gmail.com IDs.");
-            
-            currentUser = { name: payload.name, email: payload.email };
-            document.querySelector('.g_id_signin').style.display = 'none';
-            document.getElementById('postLogin').style.display = 'block';
-            document.getElementById('userEmail').value = payload.email;
-        }
-
-        // Location Autocomplete + Timezone
-        const cityInput = document.getElementById('userCity');
-        const dropdown = document.getElementById('locationDropdown');
-
-        cityInput.addEventListener('input', async () => {
-            if (cityInput.value.length < 3) return dropdown.style.display = 'none';
-            const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${cityInput.value}&addressdetails=1&limit=5`);
-            const data = await res.json();
-            
-            dropdown.innerHTML = data.map(item => `
-                <div class="location-item" onclick="selectCity('${item.display_name}', ${item.lat}, ${item.lon})">
-                    ${item.display_name}
-                </div>`).join('');
-            dropdown.style.display = 'block';
-        });
-
-        async function selectCity(name, lat, lon) {
-            cityInput.value = name;
-            dropdown.style.display = 'none';
-            
-            // Fetch Timezone based on coordinates
-            const tzRes = await fetch(`https://timeapi.io/api/Time/current/coordinate?latitude=${lat}&longitude=${lon}`);
-            const tzData = await tzRes.json();
-            currentUser.city = name;
-            currentUser.timezone = tzData.timeZone;
-        }
-
-        function startConsultation() {
-            if (!currentUser.city) return alert("Select a Global Hub.");
-            document.getElementById('slide1').style.display = 'none';
-            document.getElementById('slide2').style.display = 'flex';
-            
-            const chat = document.getElementById('chat-window');
-            chat.innerHTML += `<div class="msg-container"><div class="msg laura">### Secure Link Established 🥂<br>Welcome, **${currentUser.name}**. My 2026 systems are synced to **${currentUser.city}**.</div></div>`;
-        }
-
-        async function sendMessage() {
-    const input = document.getElementById('userInput');
-    const chat = document.getElementById('chat-window');
-    const text = input.value;
-    if (!text) return;
-
-    chat.innerHTML += `<div class="user">${text}</div>`;
-    input.value = '';
-
-    try {
-        const response = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: text })
-        });
-
-        const data = await response.json();
-        
-        if (data.reply) {
-            chat.innerHTML += `<div class="laura">${data.reply}</div>`;
-        } else {
-            alert("Error: " + (data.error || "Unknown failure"));
-        }
-    } catch (e) {
-        alert("Connection failed: " + e.message);
-    }
-}
-    </script>
 </body>
 </html>
