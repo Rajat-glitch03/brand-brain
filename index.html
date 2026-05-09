@@ -3,127 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VARAVI Global | 2026 Elite AI</title>
+    <title>VARAVI Global | Imperial AI</title>
+    <!-- Google Identity Services -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --bg: #0a0a0a; --glass: rgba(255, 255, 255, 0.05); }
-        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; }
-        .slide { height: 100vh; display: flex; align-items: center; justify-content: center; transition: 0.8s ease-in-out; }
-        .luxury-card { background: var(--glass); padding: 40px; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.2); width: 400px; backdrop-filter: blur(10px); text-align: center; }
-        .gold-text { color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
-        .luxury-input { width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--gold); color: white; padding: 10px 0; margin: 20px 0; outline: none; font-size: 1rem; }
-        .location-dropdown { position: absolute; background: #111; border: 1px solid var(--gold); border-top: none; width: 100%; z-index: 100; display: none; text-align: left; border-radius: 0 0 10px 10px; }
-        .location-item { padding: 10px; cursor: pointer; border-bottom: 1px solid #222; }
-        .location-item:hover { background: rgba(212, 175, 55, 0.1); }
-        #slide2 { display: none; flex-direction: column; }
-        #chat-window { flex-grow: 1; overflow-y: auto; padding: 20px; width: 80%; max-width: 900px; margin: 0 auto; }
-        .msg { margin-bottom: 20px; line-height: 1.6; }
-        .laura { color: #e0e0e0; }
-        .user { color: var(--gold); text-align: right; font-weight: bold; }
-        .gold-btn { background: var(--gold); color: black; border: none; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-weight: bold; margin-top: 20px; }
+        :root {
+            --gold: #d4af37;
+            --dark-gold: #996515;
+            --bg: #050505;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(212, 175, 55, 0.3);
+        }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            background-color: var(--bg);
+            color: #fff; font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Luxury Background Animation */
+        .bg-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #050505 100%);
+            z-index: -1;
+        }
+
+        .slide {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            transition: transform 1s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+
+        .luxury-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            padding: 60px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            width: 100%; max-width: 450px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 { font-family: 'Cinzel', serif; color: var(--gold); letter-spacing: 8px; margin-bottom: 10px; }
+        p { font-weight: 300; opacity: 0.7; letter-spacing: 1px; }
+
+        .input-group { position: relative; margin: 30px 0; text-align: left; }
+        label { font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
+
+        .luxury-input {
+            width: 100%; background: transparent; border: none;
+            border-bottom: 1px solid var(--border);
+            color: #fff; padding: 12px 0; font-size: 1rem;
+            outline: none; transition: 0.3s;
+        }
+
+        .luxury-input:focus { border-bottom: 1px solid var(--gold); }
+
+        .location-dropdown {
+            position: absolute; top: 100%; left: 0; right: 0;
+            background: #0f0f0f; border: 1px solid var(--border);
+            max-height: 200px; overflow-y: auto; z-index: 100; display: none;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .location-item { padding: 15px; cursor: pointer; border-bottom: 1px solid #1a1a1a; transition: 0.2s; }
+        .location-item:hover { background: rgba(212, 175, 55, 0.1); color: var(--gold); }
+
+        .gold-btn {
+            background: linear-gradient(45deg, var(--dark-gold), var(--gold));
+            color: black; border: none; padding: 15px 40px;
+            border-radius: 40px; font-weight: bold; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px;
+            transition: 0.4s; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .gold-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4); }
+
+        /* Chat Interface */
+        #slide2 { display: none; flex-direction: column; justify-content: flex-end; }
+        #chat-window {
+            width: 100%; max-width: 800px; height: 70vh;
+            overflow-y: auto; padding: 40px; scroll-behavior: smooth;
+        }
+
+        .msg-container { margin-bottom: 30px; display: flex; flex-direction: column; }
+        .msg { max-width: 80%; padding: 15px 25px; border-radius: 20px; line-height: 1.6; }
+        .laura { align-self: flex-start; color: #eee; border-left: 2px solid var(--gold); background: var(--glass); }
+        .user { align-self: flex-end; color: var(--gold); font-weight: 500; text-align: right; }
+
+        .input-area {
+            width: 100%; padding: 30px; background: rgba(0,0,0,0.5);
+            display: flex; justify-content: center; backdrop-filter: blur(10px);
+        }
     </style>
 </head>
 <body>
+    <div class="bg-overlay"></div>
 
-<!-- SLIDE 1: ACCESS -->
-<div id="slide1" class="slide">
-    <div class="luxury-card">
-        <h1 class="gold-text">VARAVI GLOBAL</h1>
-        <p>Verified Elite Access Only</p>
-        
-        <!-- Google Sign-In -->
-        <div id="g_id_onload"
-     data-client_id="623414724020-ase8c96uk8pr6ln54rral0cf5vq7dn41.apps.googleusercontent.com"
-     data-context="signin"
-     data-ux_mode="popup"
-     data-callback="handleCredentialResponse"
-     data-auto_select="true"
-     data-itp_support="true"> 
-</div>
-        <div class="g_id_signin" data-type="standard" data-theme="outline" data-size="large"></div>
+    <!-- SLIDE 1: AUTH & HUB -->
+    <div id="slide1" class="slide">
+        <div class="luxury-card">
+            <h1>VARAVI</h1>
+            <p>Global Strategic Intelligence</p>
+            <hr style="border: 0; border-top: 1px solid var(--border); margin: 30px 0;">
 
-        <div id="postLogin" style="display:none;">
-            <input type="text" id="userEmail" class="luxury-input" readonly>
-            <div style="position: relative;">
-                <input type="text" id="userCity" class="luxury-input" placeholder="Enter Global Hub..." autocomplete="off">
-                <div id="locationDropdown" class="location-dropdown"></div>
+            <div id="g_id_onload" 
+                 data-client_id="623414724020-ase8c96uk8pr6ln54rral0cf5vq7dn41.apps.googleusercontent.com" 
+                 data-callback="handleCredentialResponse"
+                 data-itp_support="true"></div>
+            <div class="g_id_signin" data-type="standard" data-theme="filled_black" data-size="large" data-shape="pill"></div>
+
+            <div id="postLogin" style="display:none;">
+                <div class="input-group">
+                    <label>Verified Partner</label>
+                    <input type="text" id="userEmail" class="luxury-input" readonly>
+                </div>
+                <div class="input-group">
+                    <label>Global Hub</label>
+                    <input type="text" id="userCity" class="luxury-input" placeholder="Enter City (e.g. London)" autocomplete="off">
+                    <div id="locationDropdown" class="location-dropdown"></div>
+                </div>
+                <button onclick="startConsultation()" class="gold-btn">Enter 2026 Grid</button>
             </div>
-            <button onclick="startConsultation()" class="gold-btn">INITIALIZE LAURA</button>
         </div>
     </div>
-</div>
 
-<!-- SLIDE 2: CHAT -->
-<div id="slide2" class="slide">
-    <div id="chat-window"></div>
-    <div style="padding: 20px; background: #000; width: 100%; display: flex; justify-content: center;">
-        <input type="text" id="userInput" class="luxury-input" style="width: 60%;" placeholder="Command Laura...">
-        <button onclick="sendMessage()" class="gold-btn" style="margin-top: 0; margin-left: 10px;">SEND</button>
+    <!-- SLIDE 2: INTERFACE -->
+    <div id="slide2" class="slide">
+        <div id="chat-window"></div>
+        <div class="input-area">
+            <input type="text" id="userInput" class="luxury-input" style="width: 60%;" placeholder="Request briefing...">
+            <button onclick="sendMessage()" class="gold-btn" style="padding: 10px 30px; margin-left: 20px;">Send</button>
+        </div>
     </div>
-</div>
 
-<script>
-    let currentUser = {};
+    <script>
+        let currentUser = {};
 
-    function parseJwt(token) {
-        return JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
-    }
+        function parseJwt(token) {
+            return JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+        }
 
-    function handleCredentialResponse(response) {
-        const payload = parseJwt(response.credential);
-        if (!payload.email.endsWith('@gmail.com')) return alert("Use a personal Gmail account.");
-        
-        currentUser = { name: payload.name, email: payload.email };
-        document.querySelector('.g_id_signin').style.display = 'none';
-        document.getElementById('postLogin').style.display = 'block';
-        document.getElementById('userEmail').value = payload.email;
-    }
+        function handleCredentialResponse(response) {
+            const payload = parseJwt(response.credential);
+            if (!payload.email.endsWith('@gmail.com')) return alert("Access restricted to @gmail.com IDs.");
+            
+            currentUser = { name: payload.name, email: payload.email };
+            document.querySelector('.g_id_signin').style.display = 'none';
+            document.getElementById('postLogin').style.display = 'block';
+            document.getElementById('userEmail').value = payload.email;
+        }
 
-    // Location Autocomplete
-    const cityInput = document.getElementById('userCity');
-    const dropdown = document.getElementById('locationDropdown');
-    cityInput.addEventListener('input', async () => {
-        if (cityInput.value.length < 3) return dropdown.style.display = 'none';
-        const res = await fetch(`https://photon.komoot.io/api/?q=${cityInput.value}&limit=5`);
-        const data = await res.json();
-        dropdown.innerHTML = data.features.map(f => `
-            <div class="location-item" onclick="selectCity('${f.properties.name}, ${f.properties.country}')">
-                ${f.properties.name}, ${f.properties.country}
-            </div>`).join('');
-        dropdown.style.display = 'block';
-    });
+        // Location Autocomplete + Timezone
+        const cityInput = document.getElementById('userCity');
+        const dropdown = document.getElementById('locationDropdown');
 
-    function selectCity(val) {
-        cityInput.value = val;
-        dropdown.style.display = 'none';
-    }
-
-    function startConsultation() {
-        if (!cityInput.value) return alert("Select a location.");
-        currentUser.city = cityInput.value;
-        currentUser.tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        document.getElementById('slide1').style.display = 'none';
-        document.getElementById('slide2').style.display = 'flex';
-    }
-
-    async function sendMessage() {
-        const input = document.getElementById('userInput');
-        const chat = document.getElementById('chat-window');
-        const msg = input.value;
-        if (!msg) return;
-
-        chat.innerHTML += `<div class="user">${msg}</div>`;
-        input.value = '';
-
-        const response = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: msg, userData: currentUser })
+        cityInput.addEventListener('input', async () => {
+            if (cityInput.value.length < 3) return dropdown.style.display = 'none';
+            const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${cityInput.value}&addressdetails=1&limit=5`);
+            const data = await res.json();
+            
+            dropdown.innerHTML = data.map(item => `
+                <div class="location-item" onclick="selectCity('${item.display_name}', ${item.lat}, ${item.lon})">
+                    ${item.display_name}
+                </div>`).join('');
+            dropdown.style.display = 'block';
         });
-        const data = await response.json();
-        chat.innerHTML += `<div class="laura">${data.reply.replace(/\n/g, '<br>')}</div>`;
-        chat.scrollTop = chat.scrollHeight;
-    }
-</script>
+
+        async function selectCity(name, lat, lon) {
+            cityInput.value = name;
+            dropdown.style.display = 'none';
+            
+            // Fetch Timezone based on coordinates
+            const tzRes = await fetch(`https://timeapi.io/api/Time/current/coordinate?latitude=${lat}&longitude=${lon}`);
+            const tzData = await tzRes.json();
+            currentUser.city = name;
+            currentUser.timezone = tzData.timeZone;
+        }
+
+        function startConsultation() {
+            if (!currentUser.city) return alert("Select a Global Hub.");
+            document.getElementById('slide1').style.display = 'none';
+            document.getElementById('slide2').style.display = 'flex';
+            
+            const chat = document.getElementById('chat-window');
+            chat.innerHTML += `<div class="msg-container"><div class="msg laura">### Secure Link Established 🥂<br>Welcome, **${currentUser.name}**. My 2026 systems are synced to **${currentUser.city}**.</div></div>`;
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const chat = document.getElementById('chat-window');
+            if (!input.value) return;
+
+            const text = input.value;
+            chat.innerHTML += `<div class="msg-container"><div class="msg user">${text}</div></div>`;
+            input.value = '';
+            chat.scrollTop = chat.scrollHeight;
+
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text, userData: currentUser })
+            });
+            const data = await response.json();
+            
+            chat.innerHTML += `<div class="msg-container"><div class="msg laura">${data.reply.replace(/\n/g, '<br>')}</div></div>`;
+            chat.scrollTop = chat.scrollHeight;
+        }
+    </script>
 </body>
 </html>
