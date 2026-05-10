@@ -32,7 +32,7 @@
     width: 0; /* Starts at 0 for an entry animation */
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 25px auto;
+    margin: 60px auto;
     animation: expandLine 1.5s ease-out forwards;
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
 }
@@ -90,45 +90,57 @@
         }
 
         /* --- CLEAN TAB LOGIC --- */
-.nav-center a {
-    text-decoration: none;
-    color: var(--pure-white);
-    font-size: 0.75rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    opacity: 0.4;
-    position: relative;
-    padding: 8px 0;
-    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-}
+        .nav-center a {
+            text-decoration: none;
+            color: var(--pure-white);
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.4;
+            position: relative;
+            padding: 8px 0;
+            transition: 0.4s;
+        }
 
-/* The Animated Line Base */
-.nav-center a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0; 
-    height: 1.5px;
-    background: var(--gold);
-    box-shadow: 0 0 10px var(--gold);
-    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    transform: translateX(-50%);
-}
+        .nav-center a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%;
+            width: 0; height: 1.5px;
+            background: var(--gold);
+            box-shadow: 0 0 10px var(--gold);
+            transition: 0.4s;
+            transform: translateX(-50%);
+        }
 
-/* THE ONLY WAY THE LINE SHOWS IS THE ACTIVE CLASS */
-.nav-center a.active {
-    opacity: 1;
-    color: var(--gold);
-}
+        .nav-center a.active, .nav-center a:hover {
+            opacity: 1; color: var(--gold);
+        }
 
-.nav-center a.active::after {
-    width: 100%; /* Only the active link gets the full line */
-}
+        .nav-center a.active::after, .nav-center a:hover::after { width: 100%; }
 
-.nav-center a:hover {
-    opacity: 1;
-}
+        /* AUTH BUTTONS */
+        .auth-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-auth {
+            padding: 10px 24px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 0;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-login { background: transparent; color: var(--pure-white); border: 1px solid rgba(255,255,255,0.2); }
+        .btn-signin { background: var(--gold); color: var(--deep-black); border: 1px solid var(--gold); }
+        .btn-auth:hover { transform: translateY(-2px); }
 
         /* AUTH BUTTONS */
         .auth-group {
