@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VARAVI Global | Dashboard</title>
+    <title>VARAVI Global | Overview</title>
     
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,700&display=swap" rel="stylesheet">
     
@@ -12,19 +12,24 @@
             --gold: #FFD700;
             --deep-black: #06080f;
             --pure-white: #ffffff;
+            --subtle-grey: rgba(255, 255, 255, 0.4);
             --font-main: 'DM Sans', sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body, html {
-            width: 100%;
+        body {
             background-color: var(--deep-black);
-            font-family: var(--font-main);
             color: var(--pure-white);
+            font-family: var(--font-main);
             overflow-x: hidden;
-            scroll-behavior: smooth;
+            /* Allows scrolling while keeping background logic */
         }
+
+        /* THE IMPERIAL SCROLLBAR */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--deep-black); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); }
 
         /* FIXED BACKGROUND LOGO */
         .bg-logo-fixed {
@@ -32,295 +37,293 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover; /* Covers the whole page */
-            opacity: 0.02;     /* Extreme luxury watermark */
+            width: 80%;
+            max-width: 700px;
+            opacity: 0.03;
             pointer-events: none;
             z-index: -1;
         }
 
-        /* HEADER & NAVIGATION */
+        /* CURSOR FOLLOWER */
+        #cursor-dot {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 20px var(--gold);
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* HEADER NAVIGATION */
         header {
             position: fixed;
             top: 0; left: 0; width: 100%;
-            height: 90px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 5%;
-            background: rgba(6, 8, 15, 0.8);
-            backdrop-filter: blur(15px); /* Glass effect when scrolling */
-            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            padding: 30px 5%;
             z-index: 100;
+            background: linear-gradient(to bottom, rgba(6, 8, 15, 0.9) 0%, rgba(6, 8, 15, 0) 100%);
         }
 
-        .nav-group {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .brand-logo {
-            height: 35px;
-            /* Placeholder styling if image is missing */
+        .nav-left { display: flex; align-items: center; gap: 40px; }
+        
+        .brand-logo-text {
             color: var(--gold);
             font-weight: 700;
-            letter-spacing: 3px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-item {
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-size: 1rem;
             text-decoration: none;
+        }
+
+        .nav-links { display: flex; gap: 30px; }
+        
+        .nav-item {
             color: var(--pure-white);
+            text-decoration: none;
             font-size: 0.75rem;
             letter-spacing: 3px;
             text-transform: uppercase;
-            opacity: 0.5;
-            transition: 0.4s;
+            font-weight: 300;
+            opacity: 0.6;
+            transition: 0.3s;
         }
 
-        .nav-item.active, .nav-item:hover {
-            opacity: 1;
-            color: var(--gold);
-        }
+        .nav-item:hover, .nav-item.active { opacity: 1; color: var(--gold); }
 
-        /* AUTH BUTTONS (Same structure as Activate, different colors) */
-        .auth-buttons {
-            display: flex;
-            gap: 15px;
-        }
+        .nav-right { display: flex; gap: 15px; }
 
-        .btn-auth {
+        /* AUTH BUTTONS (Platinum styling, identical structure to gold button) */
+        .auth-btn {
+            background: transparent;
+            color: var(--pure-white);
+            border: 1px solid var(--subtle-grey);
+            padding: 12px 35px;
             font-family: var(--font-main);
             font-weight: 700;
             font-size: 0.7rem;
             letter-spacing: 4px;
             text-transform: uppercase;
-            padding: 12px 30px;
-            border-radius: 0;
             cursor: pointer;
-            background: transparent;
-            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        .btn-login {
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: var(--pure-white);
-        }
-
-        .btn-login:hover {
+        .auth-btn:hover {
+            background: var(--pure-white);
+            color: var(--deep-black);
             letter-spacing: 6px;
             border-color: var(--pure-white);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.1);
         }
 
-        .btn-signin {
-            border: 1px solid var(--gold);
-            color: var(--gold);
-        }
-
-        .btn-signin:hover {
-            letter-spacing: 6px;
-            background: var(--gold);
-            color: var(--deep-black);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
-        }
-
-        /* FULL SCREEN HERO SECTION */
+        /* SECTION 1: HERO CANVAS */
         .hero-section {
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 5%;
+            padding: 0 20px;
         }
 
-        .hero-kicker {
-            font-size: clamp(0.7rem, 2vw, 0.9rem);
-            color: var(--gold);
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            font-weight: 700;
+        .main-slogan {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 200;
+            color: var(--pure-white);
+            line-height: 1.1;
+            letter-spacing: -1px;
             margin-bottom: 20px;
         }
 
-        .hero-title {
-            font-size: clamp(2.5rem, 6vw, 5.5rem);
-            font-weight: 200;
-            letter-spacing: -2px;
-            line-height: 1.1;
-            max-width: 1200px;
+        .sub-slogan {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--gold);
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
 
-        /* SCROLLABLE INTELLIGENCE SECTION */
-        .intelligence-section {
+        /* SECTION 2: INTELLIGENCE MODULES */
+        .intel-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 100px 5%;
             text-align: center;
         }
 
-        .section-title {
+        .section-header {
             font-size: clamp(2rem, 4vw, 3.5rem);
-            font-weight: 300;
+            font-weight: 200;
+            letter-spacing: -1px;
             margin-bottom: 15px;
         }
 
-        .section-subtitle {
+        .section-desc {
             font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: var(--subtle-grey);
             font-weight: 300;
-            opacity: 0.7;
+            letter-spacing: 1px;
             max-width: 600px;
-            margin: 0 auto 60px auto;
-            line-height: 1.6;
+            margin-bottom: 60px;
         }
 
-        /* THE THREE BOXES */
-        .boxes-grid {
+        /* THE 3 BOXES GRID */
+        .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 30px;
+            width: 100%;
             max-width: 1200px;
-            margin: 0 auto;
+            margin-bottom: 60px;
         }
 
         .intel-box {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 50px 30px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            padding: 40px 30px;
             text-align: left;
-            transition: all 0.5s ease;
+            transition: 0.5s ease;
         }
 
         .intel-box:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 215, 0, 0.3);
-            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.5);
+            background: rgba(255, 215, 0, 0.02);
+            transform: translateY(-10px);
         }
 
-        .box-heading {
+        .box-title {
             color: var(--gold);
-            font-size: 1.5rem;
-            font-weight: 400;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             margin-bottom: 20px;
-            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            padding-bottom: 10px;
         }
 
         .box-desc {
-            font-size: 0.95rem;
-            line-height: 1.7;
+            color: var(--pure-white);
+            font-size: 0.85rem;
+            line-height: 1.8;
             font-weight: 300;
             opacity: 0.8;
         }
 
         .explore-text {
-            margin-top: 60px;
+            color: var(--gold);
             font-size: 0.8rem;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            opacity: 0.6;
+            font-weight: 700;
         }
 
-        /* BRAND CONFIRMATION FOOTER */
+        /* FOOTER BRANDING */
         footer {
             text-align: center;
             padding: 40px 20px;
-            color: #555555; /* Imperial Grey */
+            color: rgba(255, 255, 255, 0.3);
             font-size: 0.65rem;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* MOBILE OPTIMIZATION */
-        @media (max-width: 900px) {
-            header {
-                flex-direction: column;
-                height: auto;
-                padding: 20px;
-                gap: 20px;
-            }
-            .nav-group {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .auth-buttons {
-                width: 100%;
-                justify-content: center;
-            }
-            .btn-auth {
-                padding: 10px 20px;
-                font-size: 0.6rem;
-            }
-            .hero-section {
-                padding-top: 150px; /* Account for taller mobile header */
-            }
-            .boxes-grid {
-                grid-template-columns: 1fr; /* Stacks perfectly on phones */
-            }
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 1024px) {
+            .grid-container { grid-template-columns: repeat(1, 1fr); max-width: 500px; }
+            header { flex-direction: column; gap: 20px; padding: 20px; background: var(--deep-black); }
+            .nav-left { flex-direction: column; gap: 15px; }
+            .nav-right { width: 100%; justify-content: center; }
         }
+
+        @media (pointer: coarse) { #cursor-dot { display: none; } }
     </style>
 </head>
 <body>
 
-    <img src="logo1.png" class="bg-logo-fixed" alt="">
+    <div id="cursor-dot"></div>
+
+    <img src="logo.png" alt="VARAVI Logo" class="bg-logo-fixed">
 
     <header>
-        <div class="nav-group">
-            <img src="logo.png" alt="VARAVI Global" class="brand-logo">
-            <nav class="nav-links">
+        <div class="nav-left">
+            <a href="#" class="brand-logo-text">VARAVI Global</a>
+            <div class="nav-links">
                 <a href="#" class="nav-item active">Overview</a>
                 <a href="#" class="nav-item">Intelligence</a>
                 <a href="#" class="nav-item">Contact Us</a>
-            </nav>
+            </div>
         </div>
-        <div class="auth-buttons">
-            <button class="btn-auth btn-login">Login</button>
-            <button class="btn-auth btn-signin">Sign In</button>
+        <div class="nav-right">
+            <button class="auth-btn">Login</button>
+            <button class="auth-btn">Sign In</button>
         </div>
     </header>
 
-    <section class="hero-section">
-        <span class="hero-kicker">Intelligence that Acts. Voice that Governs.</span>
-        <h1 class="hero-title">Universal hand for Global Executions.</h1>
-    </section>
+    <main>
+        <section class="hero-section">
+            <h1 class="main-slogan">Intelligence that Acts.<br>Voice that Governs.</h1>
+            <p class="sub-slogan">Universal hand for Global Executions.</p>
+        </section>
 
-    <section class="intelligence-section">
-        <h2 class="section-title">The Intelligence</h2>
-        <p class="section-subtitle">We here come with an intelligence which works, acts, deliver whatever you want.</p>
+        <section class="intel-section">
+            <h2 class="section-header">The Intelligence</h2>
+            <p class="section-desc">We here come with an intelligence which works, acts, deliver whatever you want.</p>
+            
+            <div class="grid-container">
+                <div class="intel-box">
+                    <h3 class="box-title">Laura</h3>
+                    <p class="box-desc">Here for your general inquires, navigation and will guide according to your consultion. Free to use.</p>
+                </div>
 
-        <div class="boxes-grid">
-            <div class="intel-box">
-                <h3 class="box-heading">Laura</h3>
-                <p class="box-desc">Here for your general inquires, navigation and will guide according to your consultion. Free to use.</p>
+                <div class="intel-box">
+                    <h3 class="box-title">Laura v2.4bb</h3>
+                    <p class="box-desc">Here for business, will generate report, risk analysis and steps to take. I am high-end consultant.</p>
+                </div>
+
+                <div class="intel-box">
+                    <h3 class="box-title">Laura v2.4s</h3>
+                    <p class="box-desc">24/7 Scanner. Enroll brand name, I will be scanning deep web for leaks, impersonations, market shifts and will keep you updated. Works even while you sleep.</p>
+                </div>
             </div>
 
-            <div class="intel-box">
-                <h3 class="box-heading">Laura v2.4bb</h3>
-                <p class="box-desc">Here for business, will generate report, risk analysis and steps to take. I am high-end consultant.</p>
-            </div>
-
-            <div class="intel-box">
-                <h3 class="box-heading">Laura v2.4s</h3>
-                <p class="box-desc">24/7 Scanner. Enroll brand name, I will be scanning deep web for leaks, impersonations, market shifts and will keep you updated. Works even while you sleep.</p>
-            </div>
-        </div>
-
-        <p class="explore-text">Explore Intelligence page to Start.</p>
-    </section>
+            <p class="explore-text">Explore Intelligence page to Start.</p>
+        </section>
+    </main>
 
     <footer>
-        © VARAVI Global ----- Imperial Obsidian
+        &copy; VARAVI Global ----- Imperial Obsidian
     </footer>
 
+    <script>
+        // Cursor Logic
+        const dot = document.getElementById('cursor-dot');
+        const body = document.body;
+        let hasMoved = false;
+
+        document.addEventListener('mousemove', (e) => {
+            if (!hasMoved) {
+                dot.style.opacity = "1";
+                hasMoved = true;
+            }
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+
+            // Background dynamic shift relative to viewport
+            const xShift = (e.clientX / window.innerWidth) * 10;
+            const yShift = (e.clientY / window.innerHeight) * 10;
+            body.style.backgroundColor = `rgb(${6 + xShift}, ${8 + yShift}, 15)`;
+        });
+    </script>
 </body>
 </html>
