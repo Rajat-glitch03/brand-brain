@@ -45,10 +45,10 @@
 nav {
     position: fixed;
     top: 0; width: 100%;
-    height: 100px; /* Precise height for alignment */
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* This vertically centers everything */
+    height: 100px;
+    display: grid; /* Use Grid for perfect three-column alignment */
+    grid-template-columns: 1fr 2fr 1fr; /* Logo | Tabs | Buttons */
+    align-items: center;
     padding: 0 5%;
     background: rgba(6, 8, 15, 0.95);
     backdrop-filter: blur(15px);
@@ -56,53 +56,40 @@ nav {
     z-index: 1000;
 }
 
-/* --- TAB ALIGNMENT & LUXURY STYLE --- */
-/* --- LUXURY FILAMENT NAVIGATION --- */
+.nav-logo-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.nav-logo {
+    height: 45px; /* Scaled for prominence */
+    width: auto;
+}
+
+.nav-center {
+    display: flex;
+    justify-content: center; /* Centers tabs in the middle column */
+    gap: 50px;
+}
+
+.auth-group {
+    display: flex;
+    justify-content: flex-end; /* Pushes buttons to the far right */
+    gap: 15px;
+}
+
+/* Ensure the links don't wrap and keep their luxury spacing */
 .nav-center a {
+    white-space: nowrap;
     text-decoration: none;
     color: var(--pure-white);
     font-size: 0.75rem;
     letter-spacing: 4px;
     text-transform: uppercase;
-    font-weight: 400;
     opacity: 0.4;
     position: relative;
     padding: 10px 0;
-    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-/* The Animated Line Base */
-.nav-center a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;         /* Start at the center */
-    width: 0;          /* Start with zero width */
-    height: 2px;
-    background: var(--gold);
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-    transform: translateX(-50%); /* Keeps it centered as it grows */
-}
-
-/* Hover State: The Line Expands */
-.nav-center a:hover {
-    opacity: 1;
-    color: var(--gold);
-}
-
-.nav-center a:hover::after {
-    width: 100%;       /* Expands to full text width */
-}
-
-/* Active State: The Line Stays Fixed for Overview */
-.nav-center a.active {
-    opacity: 1;
-    color: var(--gold);
-}
-
-.nav-center a.active::after {
-    width: 100%;       /* Always full width for the current page */
+    transition: all 0.5s ease;
 }
 /* --- AUTH BUTTON ALIGNMENT --- */
 .auth-group {
