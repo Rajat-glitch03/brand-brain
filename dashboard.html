@@ -27,6 +27,21 @@
             scroll-behavior: smooth;
         }
 
+        /* THE SOVEREIGN SLOGAN DIVIDER */
+.slogan-divider {
+    width: 0; /* Starts at 0 for an entry animation */
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 25px auto;
+    animation: expandLine 1.5s ease-out forwards;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+@keyframes expandLine {
+    from { width: 0; opacity: 0; }
+    to { width: 150px; opacity: 1; }
+}
+
         /* GHOST BACKGROUND LOGO */
         .fixed-bg {
             position: fixed;
@@ -64,6 +79,7 @@
         .nav-logo {
             height: 30px; 
             transform-origin: left center;
+            zoom: 2.5;
         }
 
         /* CENTER TABS (PC ONLY) */
@@ -240,7 +256,7 @@
     <section class="hero">
         <h1>Intelligence that Acts.<br>Voice that Governs.</h1>
         <p>Universal hand for Global Executions.</p>
-        <h1 color= "#ffd700">---------------------</h1>
+        <div class="slogan-divider"></div>
     </section>
 
     <section class="intel-section">
@@ -288,6 +304,31 @@
         if (window.innerWidth < 768) {
             document.getElementById('mobile-stack').style.flexDirection = 'column';
         }
+
+        // --- TAB NAVIGATION CONTROLLER ---
+const navLinks = document.querySelectorAll('.nav-center a');
+
+navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        // Prevent jumping to top if using '#'
+        if(this.getAttribute('href') === '#') e.preventDefault();
+
+        // 1. Remove 'active' class from all links (Hides the Overview line)
+        navLinks.forEach(l => l.classList.remove('active'));
+
+        // 2. Add 'active' class to the one you just clicked
+        this.classList.add('active');
+    });
+});
+
+// Mobile Menu Toggle (Keep this part)
+const menuBtn = document.getElementById('menuBtn');
+const navMenu = document.getElementById('navMenu');
+if(menuBtn) {
+    menuBtn.addEventListener('click', () => {
+        navMenu.classList.toggle('mobile-active');
+    });
+}
     </script>
 </body>
 </html>
