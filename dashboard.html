@@ -73,43 +73,53 @@ nav {
 }
 
         /* --- LUXURY TAB STYLING --- */
+/* --- TIGHTENED LUXURY TABS --- */
 .nav-center a {
     text-decoration: none;
-    color: var(--pure-white); /* High-contrast white */
+    color: var(--pure-white);
     font-size: 0.75rem;
     letter-spacing: 4px;
     text-transform: uppercase;
     font-weight: 400;
     position: relative;
-    padding: 10px 0;
-    opacity: 0.4; /* Dimmed initially for luxury hierarchy */
-    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    padding: 5px 0; /* Reduced padding to bring the line closer */
+    opacity: 0.4;
+    transition: all 0.4s ease;
 }
 
-/* The Animated Golden Line (Filament) */
+/* The Corrected Line (Filament) */
 .nav-center a::after {
     content: '';
     position: absolute;
-    bottom: -2px;      /* Positioned slightly below the text */
+    bottom: -2px;      /* Brought up closer to the text */
     left: 50%;
-    width: 0;          /* Hidden by default */
-    height: 2px;
+    width: 0;
+    height: 1.5px;     /* Slightly thinner for a sharper look */
     background: var(--gold);
-    box-shadow: 0 0 12px rgba(255, 215, 0, 0.5); /* Imperial Glow */
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.6); /* Glow concentrated on the line */
     transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
     transform: translateX(-50%);
 }
 
-/* HOVER STATE: Turn Golden + Show Line */
+/* Active State Correction (Overview) */
+.nav-center a.active {
+    opacity: 1;
+    color: var(--gold);
+}
+
+.nav-center a.active::after {
+    width: 100%;       /* Line matches the width of the text exactly */
+}
+
+/* Hover Interaction */
 .nav-center a:hover {
     opacity: 1;
     color: var(--gold);
 }
 
 .nav-center a:hover::after {
-    width: 100%; /* Line grows to match text width */
+    width: 100%;
 }
-
 /* ACTIVE STATE: Fixed Overview Style */
 .nav-center a.active {
     opacity: 1;
