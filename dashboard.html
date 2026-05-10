@@ -72,82 +72,82 @@ nav {
     gap: 50px;
 }
 
+/* --- THE IMPERIAL AUTHENTICATION SUITE --- */
 .auth-group {
     display: flex;
-    justify-content: flex-end; /* Pushes buttons to the far right */
-    gap: 15px;
-}
-
-/* Ensure the links don't wrap and keep their luxury spacing */
-.nav-center a {
-    white-space: nowrap;
-    text-decoration: none;
-    color: var(--pure-white);
-    font-size: 0.75rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    opacity: 0.4;
-    position: relative;
-    padding: 10px 0;
-    transition: all 0.5s ease;
-}
-/* --- AUTH BUTTON ALIGNMENT --- */
-.auth-group {
-    display: flex;
+    justify-content: flex-end;
     align-items: center;
-    gap: 20px;
+    gap: 25px; /* Wider gap for elegance */
 }
 
-/* --- LUXURY AUTH BUTTONS --- */
 .btn-auth {
     font-family: var(--font-main);
     text-transform: uppercase;
-    letter-spacing: 3px;
-    font-size: 0.7rem;
+    letter-spacing: 4px; /* Wide tracking = Luxury */
+    font-size: 0.65rem;
     font-weight: 700;
-    padding: 12px 32px; /* Precise luxury padding */
+    padding: 16px 40px;
     cursor: pointer;
-    border-radius: 0; /* Sharp architectural corners */
-    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 0; /* Architectural sharp corners */
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    overflow: hidden;
+    outline: none;
 }
 
-/* LOGIN: The Golden Frame */
+/* LOGIN - THE SOVEREIGN GHOST */
 .btn-login {
     background: transparent;
-    color: var(--gold);
-    border: 1px solid var(--gold);
-    margin-right: 5px; /* Slight gap between buttons */
+    color: var(--pure-white);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+}
+
+.btn-login::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+    transition: 0.5s;
 }
 
 .btn-login:hover {
-    background: rgba(255, 215, 0, 0.1);
-    box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.1);
-    transform: translateY(-2px);
+    border-color: var(--gold);
+    color: var(--gold);
+    box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.05);
 }
 
-/* SIGNIN: The Solid Gold Block */
+.btn-login:hover::before {
+    left: 100%;
+}
+
+/* SIGNIN - THE BRUSHED GOLD BLOCK */
 .btn-signin {
     background: var(--gold);
     color: var(--deep-black);
     border: 1px solid var(--gold);
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.1);
 }
 
 .btn-signin:hover {
-    background: #e6c200; /* Slightly deeper gold on hover */
-    border-color: #e6c200;
+    background: transparent;
+    color: var(--gold);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.2);
 }
 
-/* Mobile Tweak for Buttons */
+/* Luxury Click Effect for both */
+.btn-auth:active {
+    transform: scale(0.97);
+    filter: brightness(0.8);
+}
+
+/* MOBILE FIX FOR BUTTONS */
 @media (max-width: 768px) {
     .btn-auth {
-        padding: 10px 20px;
+        padding: 12px 25px;
         font-size: 0.6rem;
-        letter-spacing: 2px;
     }
 }
 /* MOBILE RECALIBRATION */
