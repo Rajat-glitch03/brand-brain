@@ -42,12 +42,14 @@
 
        /* HEADER ARCHITECTURE */
 /* --- REFINED NAV CONTAINER --- */
+/* --- IMPERIAL NAVIGATION LAYOUT --- */
 nav {
     position: fixed;
-    top: 0; width: 100%;
+    top: 0; 
+    width: 100%;
     height: 100px;
-    display: grid; /* Use Grid for perfect three-column alignment */
-    grid-template-columns: 1fr 2fr 1fr; /* Logo | Tabs | Buttons */
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr; /* Logo | Center Tabs | Auth Buttons */
     align-items: center;
     padding: 0 5%;
     background: rgba(6, 8, 15, 0.95);
@@ -56,62 +58,56 @@ nav {
     z-index: 1000;
 }
 
+/* --- LOGO ALIGNMENT --- */
 .nav-logo-container {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
 }
 
 .nav-logo {
-    height: 45px; /* Scaled for prominence */
+    height: 40px; /* Precise luxury scale */
     width: auto;
-    zoom: 4.5;
+    transition: transform 0.3s ease;
 }
 
+/* --- THE TABS (THE CORE FIX) --- */
 .nav-center {
     display: flex;
-    justify-content: center; /* Centers tabs in the middle column */
-    gap: 50px;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
 }
 
-        /* --- LUXURY TAB STYLING --- */
-/* --- TIGHTENED LUXURY TABS --- */
 .nav-center a {
     text-decoration: none;
-    font-size: 1rem;
     color: var(--pure-white);
+    font-size: 0.75rem;
     letter-spacing: 4px;
+    text-transform: uppercase;
     font-weight: 400;
     position: relative;
-    padding: 5px 0; /* Reduced padding to bring the line closer */
+    padding: 8px 0;
     opacity: 0.4;
-    transition: all 0.4s ease;
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    white-space: nowrap;
 }
 
-/* The Corrected Line (Filament) */
+/* The Animated Line Base */
 .nav-center a::after {
     content: '';
     position: absolute;
-    bottom: -2px;      /* Brought up closer to the text */
+    bottom: 0;
     left: 50%;
     width: 0;
-    height: 1.5px;     /* Slightly thinner for a sharper look */
+    height: 1.5px;
     background: var(--gold);
-    box-shadow: 0 0 8px rgba(255, 215, 0, 0.6); /* Glow concentrated on the line */
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
     transform: translateX(-50%);
 }
 
-/* Active State Correction (Overview) */
-.nav-center a.active {
-    opacity: 1;
-    color: var(--gold);
-}
-
-.nav-center a.active::after {
-    width: 100%;       /* Line matches the width of the text exactly */
-}
-
-/* Hover Interaction */
+/* Hover State for Intelligence & Contact */
 .nav-center a:hover {
     opacity: 1;
     color: var(--gold);
@@ -120,93 +116,63 @@ nav {
 .nav-center a:hover::after {
     width: 100%;
 }
-/* ACTIVE STATE: Fixed Overview Style */
+
+/* THE OVERVIEW ACTIVE FIX - Forced Perfection */
 .nav-center a.active {
-    opacity: 1;
-    color: var(--gold); /* Overview is gold by default */
+    opacity: 1 !important;
+    color: var(--gold) !important;
 }
 
 .nav-center a.active::after {
-    width: 100%; /* Line is permanently visible for Overview */
+    width: 100% !important;
+    left: 0 !important;
+    transform: none !important; /* Locks the line in place */
 }
 
-/* --- THE IMPERIAL AUTHENTICATION SUITE --- */
+/* --- AUTH BUTTONS (LOGIN/SIGNIN) --- */
 .auth-group {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 25px; /* Wider gap for elegance */
+    gap: 15px;
 }
 
 .btn-auth {
     font-family: var(--font-main);
     text-transform: uppercase;
-    letter-spacing: 4px; /* Wide tracking = Luxury */
-    font-size: 0.65rem;
+    letter-spacing: 3px;
+    font-size: 0.7rem;
     font-weight: 700;
-    padding: 16px 40px;
+    padding: 12px 30px;
     cursor: pointer;
-    border-radius: 0; /* Architectural sharp corners */
-    position: relative;
-    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-    overflow: hidden;
-    outline: none;
+    transition: all 0.3s ease;
 }
 
-/* LOGIN - THE SOVEREIGN GHOST */
 .btn-login {
     background: transparent;
-    color: var(--pure-white);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(5px);
-}
-
-.btn-login::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-    transition: 0.5s;
-}
-
-.btn-login:hover {
-    border-color: var(--gold);
     color: var(--gold);
-    box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.05);
+    border: 1px solid var(--gold);
 }
 
-.btn-login:hover::before {
-    left: 100%;
-}
-
-/* SIGNIN - THE BRUSHED GOLD BLOCK */
 .btn-signin {
     background: var(--gold);
     color: var(--deep-black);
     border: 1px solid var(--gold);
-    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.1);
 }
 
-.btn-signin:hover {
-    background: transparent;
-    color: var(--gold);
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+.btn-auth:hover {
     transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
 }
 
-/* Luxury Click Effect for both */
-.btn-auth:active {
-    transform: scale(0.97);
-    filter: brightness(0.8);
-}
-
-/* MOBILE FIX FOR BUTTONS */
+/* MOBILE FIX */
 @media (max-width: 768px) {
-    .btn-auth {
-        padding: 12px 25px;
-        font-size: 0.6rem;
+    nav {
+        grid-template-columns: 1fr 1fr;
+        height: auto;
+        padding: 20px;
     }
+    .nav-center { display: none; } /* Standard for mobile luxury - clean view */
 }
 /* MOBILE RECALIBRATION */
 @media (max-width: 1024px) {
