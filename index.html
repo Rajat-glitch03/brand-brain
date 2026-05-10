@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VARAVI Global | The Triad</title>
+    <title>VARAVI Global</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,400;9..40,700&display=swap" rel="stylesheet">
     
     <style>
@@ -22,9 +23,10 @@
             font-family: var(--font-main);
             overflow: hidden;
             display: flex; align-items: center; justify-content: center;
+            touch-action: none; /* Prevents mobile jitter */
         }
 
-        /* Subliminal Logo Background - Scaled for Mobile */
+        /* Subliminal Logo Background - Optimized for Mobile */
         .bg-logo {
             position: absolute;
             top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -32,114 +34,105 @@
             opacity: 0.1; pointer-events: none; z-index: 0;
         }
 
-        /* The Moving Golden Dot - Hidden until movement */
+        /* The Golden Dot - Hidden until movement */
         #cursor-dot {
-            position: fixed; width: 10px; height: 10px;
+            position: fixed; width: 12px; height: 12px;
             background-color: var(--gold); border-radius: 50%;
             pointer-events: none; z-index: 9999;
-            box-shadow: 0 0 15px var(--gold);
+            box-shadow: 0 0 20px var(--gold);
             transform: translate(-50%, -50%);
-            opacity: 0; /* Hidden initially */
+            opacity: 0; /* INVISIBLE AT START */
             transition: opacity 0.5s ease;
         }
 
-        /* Content Container - Responsive Padding */
-        .content {
+        .portal-content {
             text-align: center; z-index: 10;
-            width: 90%; max-width: 900px;
+            width: 90%; max-width: 1000px;
             padding: 20px;
         }
 
-        .slogan-top {
-            color: var(--gold); font-weight: 700;
-            letter-spacing: 5px; text-transform: uppercase;
-            font-size: 0.65rem; margin-bottom: 20px;
+        .welcome-msg {
+            font-size: clamp(0.6rem, 2vw, 0.85rem);
+            color: var(--gold); letter-spacing: 5px;
+            text-transform: uppercase; font-weight: 700;
+            margin-bottom: 15px;
         }
 
-        /* Responsive Header */
-        .main-header {
-            font-size: clamp(2.5rem, 8vw, 4.5rem); 
-            font-weight: 200;
+        .main-title {
+            /* Responsive Font: Scales between 2.5rem and 5rem */
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 200; letter-spacing: -1px;
             color: var(--pure-white); line-height: 1.1;
-            margin-bottom: 30px; letter-spacing: -1px;
+            margin-bottom: 20px;
         }
 
-        /* Responsive Triad Pillars */
-        .triad-labels {
-            display: flex; 
-            justify-content: center; 
-            gap: 20px;
-            margin-bottom: 40px;
-            flex-wrap: wrap; /* Allows stacking on small screens */
-        }
-
-        .pillar {
-            color: var(--pure-white); font-size: 0.6rem;
-            letter-spacing: 2px; text-transform: uppercase;
-            opacity: 0.4; border-left: 1px solid var(--gold);
-            padding-left: 10px; transition: 0.5s;
-            white-space: nowrap;
-        }
-
-        /* Mobile specific adjustments */
-        @media (max-width: 600px) {
-            .triad-labels { flex-direction: column; align-items: center; gap: 15px; }
-            .pillar { border-left: none; border-bottom: 1px solid var(--gold); padding: 0 0 5px 0; width: fit-content; }
-            #cursor-dot { display: none; } /* Custom cursors don't work on touch screens */
+        .slogan {
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
+            color: var(--pure-white); font-weight: 300;
+            letter-spacing: 1px; opacity: 0.8;
+            max-width: 600px; margin: 0 auto;
         }
 
         .activate-btn {
+            margin-top: clamp(40px, 10vh, 80px);
             background: var(--gold); color: var(--deep-black);
-            border: none; padding: 20px 45px;
+            border: none; 
+            padding: clamp(15px, 2vw, 20px) clamp(40px, 5vw, 60px);
             font-family: var(--font-main); font-weight: 700;
-            letter-spacing: 4px; text-transform: uppercase;
-            font-size: 0.75rem; cursor: pointer;
-            transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            width: 100%; max-width: 320px; /* Full width on mobile, capped on desktop */
+            font-size: 0.75rem; letter-spacing: 4px;
+            text-transform: uppercase; cursor: pointer;
+            transition: all 0.4s ease;
         }
 
         .activate-btn:hover {
-            letter-spacing: 6px; transform: scale(1.02);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
+            letter-spacing: 6px;
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.2);
         }
 
+        /* Remove dot on mobile/touch screens to avoid "stuck" dot */
+        @media (pointer: coarse) {
+            #cursor-dot { display: none; }
+        }
     </style>
 </head>
 <body>
 
     <div id="cursor-dot"></div>
-    <img src="logo1.png" class="bg-logo">
+    
+    <img src="logo1.png" class="bg-logo" alt="VARAVI">
 
-    <div class="content">
-        <p class="slogan-top">Intelligence that Acts. Voice that Governs.</p>
-        
-        <h1 class="main-header">Welcome to VARAVI Global</h1>
-        
-        <p style="color: white; font-weight: 200; letter-spacing: 1px; margin-bottom: 40px; opacity: 0.7; font-size: 0.9rem;">
-            Welcome to your automated world.
-        </p>
-
+    <div class="portal-content">
+        <p class="welcome-msg">Welcome to VARAVI Global</p>
+        <h1 class="main-title">Intelligence that Acts.<br>Voice that Governs.</h1>
+        <p class="slogan">Welcome to your automated world.</p>
         <button class="activate-btn">Activate Dashboard</button>
     </div>
 
     <script>
         const dot = document.getElementById('cursor-dot');
+        const body = document.body;
         let hasMoved = false;
 
         document.addEventListener('mousemove', (e) => {
-            // Show dot only on first move
-            if(!hasMoved) {
+            // Show dot only after first movement
+            if (!hasMoved) {
                 dot.style.opacity = "1";
                 hasMoved = true;
             }
 
+            // Smooth dot follow
             dot.style.left = e.clientX + 'px';
             dot.style.top = e.clientY + 'px';
-            
-            // Subtle Dynamic Background
-            const x = (e.clientX / window.innerWidth) * 10;
-            const y = (e.clientY / window.innerHeight) * 10;
-            document.body.style.backgroundColor = `rgb(${6 + x}, ${8 + y}, ${15})`;
+
+            // Background dynamic shift (Subtle)
+            const xShift = (e.clientX / window.innerWidth) * 10;
+            const yShift = (e.clientY / window.innerHeight) * 10;
+            body.style.backgroundColor = `rgb(${6 + xShift}, ${8 + yShift}, 15)`;
+        });
+
+        // Handle Window Resize to keep elements centered
+        window.addEventListener('resize', () => {
+            // Layout handles itself via CSS Flex and Clamp
         });
     </script>
 </body>
