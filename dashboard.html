@@ -55,14 +55,55 @@
             z-index: 1000;
         }
 
-        .nav-center { display: flex; gap: 40px; }
-        .nav-center a {
-            text-decoration: none; color: var(--pure-white);
-            font-size: 0.75rem; letter-spacing: 3px;
-            text-transform: uppercase; font-weight: 300; opacity: 0.6;
-            transition: 0.3s;
-        }
-        .nav-center a:hover { opacity: 1; color: var(--gold); }
+        /* --- VARAVI NAVIGATION ENHANCEMENT --- */
+
+/* 1. Base style for all nav items */
+.nav-center a {
+    text-decoration: none;
+    color: var(--pure-white);
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 300;
+    opacity: 0.5;
+    position: relative;
+    padding: 10px 15px;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); /* Luxury smooth timing */
+}
+
+/* 2. Animation: The 'Rising' Effect on hover */
+.nav-center a:hover {
+    opacity: 1;
+    color: var(--gold);
+    transform: translateY(-3px); /* Subtle lift */
+    text-shadow: 0 0 10px rgba(255, 214, 0, 0.3);
+}
+
+/* 3. The ACTIVE State (Specifically for Overview) */
+.nav-center a.active-tab {
+    opacity: 1;
+    color: var(--gold);
+    font-weight: 700;
+    transform: scale(1.15); /* Zoomed as requested */
+    border-bottom: 1px solid var(--gold); /* Thin filament line below */
+}
+
+/* 4. Underline Reveal Animation for non-active buttons */
+.nav-center a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: all 0.4s ease;
+    transform: translateX(-50%);
+}
+
+.nav-center a:hover::after {
+    width: 70%;
+}
 
         .nav-logo { height: 35px; zoom: 3;}
 
@@ -172,10 +213,10 @@
     <nav>
         <img src="logo.png" class="nav-logo" alt="VARAVI Global">
         <div class="nav-center">
-            <a href="#">Overview</a>
-            <a href="#">Intelligence</a>
-            <a href="#">Contact Us</a>
-        </div>
+    <a href="dashboard.html" class="active-tab">Overview</a> 
+    <a href="intelligence.html">Intelligence</a>
+    <a href="contact.html">Contact Us</a>
+</div>
         <div class="auth-group">
             <button class="btn-auth btn-login">Login</button>
             <button class="btn-auth btn-signin">Signin</button>
