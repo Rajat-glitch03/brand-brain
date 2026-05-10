@@ -116,43 +116,42 @@ nav {
 
 /* AUTH BUTTONS (IMPERIAL STYLE) */
 /* --- THE IMPERIAL AUTH BUTTONS --- */
+/* --- IMPERIAL AUTH BUTTONS --- */
 .auth-group {
     display: flex;
     justify-content: flex-end;
-    gap: 20px;
+    gap: 15px;
+    align-items: center;
 }
 
 .btn-auth {
-    /* Same font and weight as Activate Dashboard */
     font-family: var(--font-main);
-    font-size: 0.7rem; 
-    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 3px;
-    
-    /* Exact sizing and shape */
-    padding: 16px 40px;
+    letter-spacing: 4px; /* Matches the "Activate" button style */
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 14px 32px;
     cursor: pointer;
-    border-radius: 0; /* Keep it architectural and sharp */
+    border-radius: 0; /* Sharp, architectural edges */
     transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    position: relative;
-    overflow: hidden;
+    display: inline-block;
 }
 
-/* LOGIN - The 'Ghost Gold' Version */
+/* LOGIN: The "Ghost" Luxury Button */
 .btn-login {
     background: transparent;
-    color: var(--gold);
-    border: 1px solid var(--gold);
+    color: var(--pure-white);
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle white border */
 }
 
 .btn-login:hover {
-    background: rgba(255, 215, 0, 0.05); /* Very subtle gold tint */
-    letter-spacing: 5px; /* Expands like the Activate button */
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+    color: var(--gold);
+    border-color: var(--gold);
+    background: rgba(255, 215, 0, 0.05); /* Very faint golden tint */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* SIGNIN - The 'Solid Imperial' Version */
+/* SIGNIN: The "Solid" Imperial Button */
 .btn-signin {
     background: var(--gold);
     color: var(--deep-black);
@@ -160,12 +159,10 @@ nav {
 }
 
 .btn-signin:hover {
-    background: transparent;
-    color: var(--gold);
-    letter-spacing: 5px; /* Expands like the Activate button */
-    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+    background: #e6c200; /* Slightly darker gold for press effect */
+    transform: translateY(-2px); /* Subtle lift */
+    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
 }
-
 /* Hover Scaling for both */
 .btn-auth:hover {
     transform: scale(1.05);
