@@ -98,36 +98,58 @@ nav {
     gap: 20px;
 }
 
+/* --- LUXURY AUTH BUTTONS --- */
 .btn-auth {
     font-family: var(--font-main);
     text-transform: uppercase;
     letter-spacing: 3px;
     font-size: 0.7rem;
     font-weight: 700;
-    padding: 14px 35px;
+    padding: 12px 32px; /* Precise luxury padding */
     cursor: pointer;
-    border: none;
-    transition: all 0.3s ease;
+    border-radius: 0; /* Sharp architectural corners */
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* LOGIN - Thin Outline Style */
+/* LOGIN: The Golden Frame */
 .btn-login {
     background: transparent;
     color: var(--gold);
-    border: 1px solid var(--gold) !important;
+    border: 1px solid var(--gold);
+    margin-right: 5px; /* Slight gap between buttons */
 }
 
-/* SIGNIN - Solid Block Style */
+.btn-login:hover {
+    background: rgba(255, 215, 0, 0.1);
+    box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+/* SIGNIN: The Solid Gold Block */
 .btn-signin {
     background: var(--gold);
     color: var(--deep-black);
+    border: 1px solid var(--gold);
 }
 
-.btn-auth:hover {
+.btn-signin:hover {
+    background: #e6c200; /* Slightly deeper gold on hover */
+    border-color: #e6c200;
     transform: translateY(-2px);
-    filter: brightness(1.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.2);
 }
 
+/* Mobile Tweak for Buttons */
+@media (max-width: 768px) {
+    .btn-auth {
+        padding: 10px 20px;
+        font-size: 0.6rem;
+        letter-spacing: 2px;
+    }
+}
 /* MOBILE RECALIBRATION */
 @media (max-width: 1024px) {
     .nav-logo {
