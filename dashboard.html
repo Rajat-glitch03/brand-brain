@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VARAVI Global | Overview</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,700&display=swap" rel="stylesheet">
+    <title>VARAVI Global | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,400;9..40,700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --gold: #FFD700;
             --deep-black: #06080f;
             --pure-white: #ffffff;
-            --subtle-grey: rgba(255, 255, 255, 0.4);
             --font-main: 'DM Sans', sans-serif;
         }
+
+        /* CUSTOM GOLDEN SCROLLBAR */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--deep-black); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -23,306 +26,176 @@
             color: var(--pure-white);
             font-family: var(--font-main);
             overflow-x: hidden;
-            /* Allows scrolling while keeping background logic */
+            scroll-behavior: smooth;
         }
 
-        /* THE IMPERIAL SCROLLBAR */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--deep-black); }
-        ::-webkit-scrollbar-thumb { background: var(--gold); }
-
-        /* FIXED BACKGROUND LOGO */
-        .bg-logo-fixed {
+        /* NON-SCROLLABLE FULLSCREEN LOGO BACKGROUND */
+        .fixed-bg {
             position: fixed;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 80%;
-            max-width: 700px;
+            width: 70%; max-width: 800px;
             opacity: 0.03;
-            pointer-events: none;
             z-index: -1;
-        }
-
-        /* CURSOR FOLLOWER */
-        #cursor-dot {
-            position: fixed;
-            width: 12px;
-            height: 12px;
-            background-color: var(--gold);
-            border-radius: 50%;
             pointer-events: none;
-            z-index: 9999;
-            box-shadow: 0 0 20px var(--gold);
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
         }
 
         /* HEADER NAVIGATION */
-        header {
+        nav {
             position: fixed;
-            top: 0; left: 0; width: 100%;
+            top: 0; width: 100%;
+            height: 100px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 30px 5%;
-            z-index: 100;
-            background: linear-gradient(to bottom, rgba(6, 8, 15, 0.9) 0%, rgba(6, 8, 15, 0) 100%);
+            padding: 0 5%;
+            background: rgba(6, 8, 15, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            z-index: 1000;
         }
 
-        .nav-left { display: flex; align-items: center; gap: 40px; }
-        
-        .brand-logo-text {
-            color: var(--gold);
-            font-weight: 700;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            font-size: 1rem;
-            text-decoration: none;
-        }
-
-        .nav-links { display: flex; gap: 30px; }
-        
-        .nav-item {
-            color: var(--pure-white);
-            text-decoration: none;
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-weight: 300;
-            opacity: 0.6;
+        .nav-center { display: flex; gap: 40px; }
+        .nav-center a {
+            text-decoration: none; color: var(--pure-white);
+            font-size: 0.75rem; letter-spacing: 3px;
+            text-transform: uppercase; font-weight: 300; opacity: 0.6;
             transition: 0.3s;
         }
+        .nav-center a:hover { opacity: 1; color: var(--gold); }
 
-        .nav-item:hover, .nav-item.active { opacity: 1; color: var(--gold); }
+        .nav-logo { height: 35px; }
 
-        .nav-right { display: flex; gap: 15px; }
-
-        /* AUTH BUTTONS (Platinum styling, identical structure to gold button) */
-        .auth-btn {
-            background: transparent;
-            color: var(--pure-white);
-            border: 1px solid var(--subtle-grey);
-            padding: 12px 35px;
+        /* LOGIN/SIGNIN BUTTONS */
+        .auth-group { display: flex; gap: 15px; }
+        .btn-auth {
+            padding: 12px 25px;
             font-family: var(--font-main);
-            font-weight: 700;
-            font-size: 0.7rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            font-size: 0.7rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 2px;
+            border: 1px solid var(--gold);
+            cursor: pointer; transition: 0.4s;
         }
+        .btn-login { background: transparent; color: var(--gold); }
+        .btn-signin { background: var(--gold); color: var(--deep-black); }
+        .btn-auth:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2); }
 
-        .auth-btn:hover {
-            background: var(--pure-white);
-            color: var(--deep-black);
-            letter-spacing: 6px;
-            border-color: var(--pure-white);
-            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.1);
-        }
-
-        /* SECTION 1: HERO CANVAS */
-        .hero-section {
+        /* HERO SECTION */
+        .section-hero {
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; padding: 0 10%;
         }
 
-        .main-slogan {
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: 200;
-            color: var(--pure-white);
-            line-height: 1.1;
-            letter-spacing: -1px;
-            margin-bottom: 20px;
-        }
+        .hero-main { font-size: clamp(2rem, 6vw, 4.5rem); font-weight: 200; letter-spacing: -2px; margin-bottom: 10px; }
+        .hero-sub { font-size: clamp(1rem, 3vw, 1.5rem); font-weight: 300; opacity: 0.7; letter-spacing: 2px; }
 
-        .sub-slogan {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            color: var(--gold);
-            font-weight: 300;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        /* SECTION 2: INTELLIGENCE MODULES */
-        .intel-section {
+        /* SCROLL CONTENT */
+        .section-intel {
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            padding: 100px 10%;
+            display: flex; flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 100px 5%;
-            text-align: center;
         }
 
-        .section-header {
-            font-size: clamp(2rem, 4vw, 3.5rem);
-            font-weight: 200;
-            letter-spacing: -1px;
-            margin-bottom: 15px;
+        .divider-line { width: 100px; height: 1px; background: var(--gold); margin: 40px 0; }
+
+        .intel-header { font-size: 3rem; font-weight: 200; margin-bottom: 20px; }
+        .intel-desc { max-width: 600px; text-align: center; opacity: 0.7; line-height: 1.6; margin-bottom: 60px; }
+
+        /* THE THREE BOXES */
+        .box-container {
+            display: flex; gap: 30px; width: 100%;
+            margin-bottom: 50px;
         }
 
-        .section-desc {
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
-            color: var(--subtle-grey);
-            font-weight: 300;
-            letter-spacing: 1px;
-            max-width: 600px;
-            margin-bottom: 60px;
-        }
-
-        /* THE 3 BOXES GRID */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            width: 100%;
-            max-width: 1200px;
-            margin-bottom: 60px;
-        }
-
-        .intel-box {
+        .laura-box {
+            flex: 1; padding: 40px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 215, 0, 0.1);
-            padding: 40px 30px;
-            text-align: left;
-            transition: 0.5s ease;
+            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        .intel-box:hover {
-            border-color: rgba(255, 215, 0, 0.5);
-            background: rgba(255, 215, 0, 0.02);
-            transform: translateY(-10px);
-        }
+        .laura-box:hover { border-color: var(--gold); background: rgba(255, 215, 0, 0.03); transform: translateY(-10px); }
+        .laura-box h2 { color: var(--gold); margin-bottom: 20px; font-size: 1.5rem; letter-spacing: 2px; }
+        .laura-box p { font-size: 0.9rem; line-height: 1.7; opacity: 0.8; font-weight: 300; }
 
-        .box-title {
-            color: var(--gold);
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-            padding-bottom: 10px;
-        }
+        .explore-text { color: var(--gold); text-transform: uppercase; letter-spacing: 5px; font-size: 0.8rem; margin-top: 40px; }
 
-        .box-desc {
-            color: var(--pure-white);
-            font-size: 0.85rem;
-            line-height: 1.8;
-            font-weight: 300;
-            opacity: 0.8;
-        }
-
-        .explore-text {
-            color: var(--gold);
-            font-size: 0.8rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        /* FOOTER BRANDING */
+        /* FOOTER */
         footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 0.65rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
+            padding: 50px 0; text-align: center;
+            color: grey; font-size: 0.65rem;
+            letter-spacing: 3px; text-transform: uppercase;
         }
 
-        /* MOBILE RESPONSIVENESS */
-        @media (max-width: 1024px) {
-            .grid-container { grid-template-columns: repeat(1, 1fr); max-width: 500px; }
-            header { flex-direction: column; gap: 20px; padding: 20px; background: var(--deep-black); }
-            .nav-left { flex-direction: column; gap: 15px; }
-            .nav-right { width: 100%; justify-content: center; }
+        /* MOBILE OPTIMIZATION */
+        @media (max-width: 768px) {
+            nav { height: auto; padding: 20px; flex-direction: column; gap: 20px; }
+            .nav-center { gap: 15px; }
+            .box-container { flex-direction: column; }
+            .section-hero { height: auto; padding-top: 180px; padding-bottom: 100px; }
+            .hero-main { line-height: 1.2; }
+            .fixed-bg { width: 90%; }
         }
-
-        @media (pointer: coarse) { #cursor-dot { display: none; } }
     </style>
 </head>
 <body>
 
-    <div id="cursor-dot"></div>
+    <img src="logo.png" class="fixed-bg" alt="VARAVI">
 
-    <img src="logo.png" alt="VARAVI Logo" class="bg-logo-fixed">
+    <nav>
+        <img src="logo.png" class="nav-logo" alt="VARAVI Global">
+        <div class="nav-center">
+            <a href="#">Overview</a>
+            <a href="#">Intelligence</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <div class="auth-group">
+            <button class="btn-auth btn-login">Login</button>
+            <button class="btn-auth btn-signin">Signin</button>
+        </div>
+    </nav>
 
-    <header>
-        <div class="nav-left">
-            <a href="#" class="brand-logo-text">VARAVI Global</a>
-            <div class="nav-links">
-                <a href="#" class="nav-item active">Overview</a>
-                <a href="#" class="nav-item">Intelligence</a>
-                <a href="#" class="nav-item">Contact Us</a>
+    <div class="section-hero">
+        <h1 class="hero-main">Intelligence that Acts.<br>Voice that Governs.</h1>
+        <p class="hero-sub">Universal hand for Global Executions.</p>
+        <div class="divider-line"></div>
+    </div>
+
+    <div class="section-intel">
+        <h2 class="intel-header">The Intelligence</h2>
+        <p class="intel-desc">We here come with an intelligence which works, acts, deliver whatever you want.</p>
+
+        <div class="box-container">
+            <div class="laura-box">
+                <h2>Laura</h2>
+                <p>Here for your general inquires, navigation and will guide according to your consultion. Free to use.</p>
+            </div>
+            <div class="laura-box">
+                <h2>Laura v2.4bb</h2>
+                <p>Here for business, will generate report, risk analysis and steps to take. I am high-end consultant.</p>
+            </div>
+            <div class="laura-box">
+                <h2>Laura v2.4s</h2>
+                <p>24/7 Scanner. Enroll brand name, I will be scanning deep web for leaks, impersonations, market shifts and will keep you updated. Works even while you sleep.</p>
             </div>
         </div>
-        <div class="nav-right">
-            <button class="auth-btn">Login</button>
-            <button class="auth-btn">Sign In</button>
-        </div>
-    </header>
 
-    <main>
-        <section class="hero-section">
-            <h1 class="main-slogan">Intelligence that Acts.<br>Voice that Governs.</h1>
-            <p class="sub-slogan">Universal hand for Global Executions.</p>
-        </section>
-
-        <section class="intel-section">
-            <h2 class="section-header">The Intelligence</h2>
-            <p class="section-desc">We here come with an intelligence which works, acts, deliver whatever you want.</p>
-            
-            <div class="grid-container">
-                <div class="intel-box">
-                    <h3 class="box-title">Laura</h3>
-                    <p class="box-desc">Here for your general inquires, navigation and will guide according to your consultion. Free to use.</p>
-                </div>
-
-                <div class="intel-box">
-                    <h3 class="box-title">Laura v2.4bb</h3>
-                    <p class="box-desc">Here for business, will generate report, risk analysis and steps to take. I am high-end consultant.</p>
-                </div>
-
-                <div class="intel-box">
-                    <h3 class="box-title">Laura v2.4s</h3>
-                    <p class="box-desc">24/7 Scanner. Enroll brand name, I will be scanning deep web for leaks, impersonations, market shifts and will keep you updated. Works even while you sleep.</p>
-                </div>
-            </div>
-
-            <p class="explore-text">Explore Intelligence page to Start.</p>
-        </section>
-    </main>
+        <p class="explore-text">Explore Intelligence page to Start.</p>
+    </div>
 
     <footer>
-        &copy; VARAVI Global ----- Imperial Obsidian
+        © VARAVI Global ----- Imperial Obsidian
     </footer>
 
     <script>
-        // Cursor Logic
-        const dot = document.getElementById('cursor-dot');
-        const body = document.body;
-        let hasMoved = false;
-
+        // Cursor-responsive background color shift (retained from portal)
         document.addEventListener('mousemove', (e) => {
-            if (!hasMoved) {
-                dot.style.opacity = "1";
-                hasMoved = true;
-            }
-            dot.style.left = e.clientX + 'px';
-            dot.style.top = e.clientY + 'px';
-
-            // Background dynamic shift relative to viewport
-            const xShift = (e.clientX / window.innerWidth) * 10;
-            const yShift = (e.clientY / window.innerHeight) * 10;
-            body.style.backgroundColor = `rgb(${6 + xShift}, ${8 + yShift}, 15)`;
+            const x = (e.clientX / window.innerWidth) * 10;
+            const y = (e.clientY / window.innerHeight) * 10;
+            document.body.style.backgroundColor = `rgb(${6 + x}, ${8 + y}, 15)`;
         });
     </script>
 </body>
