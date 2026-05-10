@@ -125,6 +125,32 @@ nav {
         justify-content: center;
     }
 }
+
+        /* ACTIVE TAB INDICATOR */
+.nav-center a.active {
+    opacity: 1;
+    color: var(--gold);
+    position: relative;
+}
+
+/* THE UNDERLINE FILAMENT */
+.nav-center a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px; /* Positioned just above the header border */
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--gold);
+    box-shadow: 0 0 10px var(--gold); /* Subtle glow for the active path */
+}
+
+/* HOVER TRANSITION FOR OTHER TABS */
+.nav-center a:not(.active):hover {
+    opacity: 0.8;
+    color: var(--pure-white);
+    transition: 0.3s ease;
+}
         /* LOGIN/SIGNIN BUTTONS */
         .auth-group { display: flex; gap: 15px; }
         .btn-auth {
@@ -231,9 +257,9 @@ nav {
     <nav>
         <img src="logo.png" class="nav-logo" alt="VARAVI Global">
         <div class="nav-center">
-    <a href="dashboard.html" class="active-tab">Overview</a> 
-    <a href="intelligence.html">Intelligence</a>
-    <a href="contact.html">Contact Us</a>
+    <a href="#" class="active">Overview</a>
+    <a href="#">Intelligence</a>
+    <a href="#">Contact Us</a>
 </div>
         <div class="auth-group">
             <button class="btn-auth btn-login">Login</button>
