@@ -64,36 +64,94 @@ nav {
 }
 
 /* 2. CENTERED NAVIGATION */
+/* --- LUXURY NAVIGATION TABS --- */
 .nav-center {
     display: flex;
-    justify-content: center; /* Perfectly centers links in the middle column */
-    gap: 60px; /* Elegant spacing between items */
+    gap: 50px; /* Increased breathing room */
 }
 
 .nav-center a {
     text-decoration: none;
-    color: #ffffff;
-    font-size: 0.75rem;
-    letter-spacing: 4px;
+    color: var(--pure-white);
+    font-size: 0.7rem;
+    letter-spacing: 4px; /* Wide tracking for high-end feel */
     text-transform: uppercase;
-    font-weight: 300;
-    opacity: 0.5;
-    transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    font-weight: 400;
+    opacity: 0.4;
+    position: relative;
+    padding-bottom: 8px;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* The 'Active' and 'Hover' State */
+.nav-center a:hover, 
+.nav-center a.active {
+    opacity: 1;
+    color: var(--gold);
+    letter-spacing: 6px; /* Expands slightly when active/hovered */
+}
+
+/* The Golden Underline Indicator */
+.nav-center a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background-color: var(--gold);
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    transform: translateX(-50%);
+}
+
+.nav-center a:hover::after,
+.nav-center a.active::after {
+    width: 100%; /* Line grows from center */
+}
+
+/* --- THE IMPERIAL AUTH BUTTONS --- */
+.auth-group {
+    display: flex;
+    gap: 20px;
+}
+
+.btn-auth {
+    font-family: var(--font-main);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 14px 35px;
+    cursor: pointer;
+    border-radius: 0; /* Sharp, architectural corners */
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     position: relative;
 }
 
-/* The Hover Design stays the same but with a smoother lift */
-.nav-center a:hover {
-    opacity: 1;
-    color: #FFD700;
-    transform: translateY(-1px);
+/* Login - Ghost Luxury Style */
+.btn-login {
+    background: transparent;
+    color: var(--pure-white);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* 3. AUTH GROUP (Right Most) */
-.auth-group {
-    display: flex;
-    justify-content: flex-end;
-    gap: 20px;
+.btn-login:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(255, 215, 0, 0.05);
+}
+
+/* Signin - Solid Gold Imperial Style */
+.btn-signin {
+    background: var(--gold);
+    color: var(--deep-black);
+    border: 1px solid var(--gold);
+}
+
+.btn-signin:hover {
+    background: transparent;
+    color: var(--gold);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.15);
 }
 
 /* MOBILE RECALIBRATION */
