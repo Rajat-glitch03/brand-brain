@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VARAVI | Command Center</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,400;9..40,700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gold: #FFD700;
+            --deep-black: #06080f;
+            --pure-white: #ffffff;
+            --border: rgba(255, 215, 0, 0.1);
+            --font-main: 'DM Sans', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--deep-black);
+            color: var(--pure-white);
+            font-family: var(--font-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* HEADER NAVIGATION */
+        header {
+            height: 100px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .brand-logo {
+            height: 40px; /* Zoomed and fitted */
+            transform: scale(1.4);
+            transform-origin: left center;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--pure-white);
+            font-size: 0.85rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.5;
+            transition: 0.4s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* AUTH BUTTONS - LUXURY MINIMALISM */
+        .btn-auth {
+            font-family: var(--font-main);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 12px 30px;
+            cursor: pointer;
+            border-radius: 0;
+            transition: 0.3s;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: var(--pure-white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-signin {
+            background: var(--gold);
+            color: var(--deep-black);
+            border: 1px solid var(--gold);
+        }
+
+        .btn-auth:hover {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* MAIN DASHBOARD CANVAS */
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 8%;
+            position: relative;
+        }
+
+        .hero-section {
+            max-width: 900px;
+        }
+
+        .slogan-kicker {
+            color: var(--gold);
+            font-size: 0.8rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 200;
+            letter-spacing: -2px;
+            margin-bottom: 25px;
+            line-height: 1.1;
+        }
+
+        .brief-text {
+            color: var(--pure-white);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            font-weight: 300;
+            max-width: 650px;
+            opacity: 0.9;
+        }
+
+        /* INTERACTIVE BACKGROUND ELEMENTS */
+        .bg-watermark {
+            position: absolute;
+            bottom: -5%;
+            right: -5%;
+            width: 60%;
+            opacity: 0.02;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* CURSOR FOLLOW (Invisible on load) */
+        #cursor-dot {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 15px var(--gold);
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* MOBILE OPTIMIZATION */
+        @media (max-width: 768px) {
+            header { height: 80px; padding: 0 20px; }
+            .main-nav { display: none; } /* Mobile usually hides nav in a menu, but for now we keep it simple */
+            .nav-left { gap: 20px; }
+            .brand-logo { transform: scale(1.1); }
+            main { padding: 0 20px; text-align: center; }
+            .brief-text { margin: 0 auto; }
+            .btn-auth { padding: 10px 20px; }
+        }
+
+        @media (pointer: coarse) { #cursor-dot { display: none; } }
+    </style>
+</head>
+<body>
+
+    <div id="cursor-dot"></div>
+
+    <header>
+        <div class="nav-left">
+            <img src="logo.png" alt="VARAVI" class="brand-logo">
+            <nav class="main-nav">
+                <a href="#" class="nav-item active">Overview</a>
+                <a href="#" class="nav-item">Laura</a>
+            </nav>
+        </div>
+
+        <div class="nav-right">
+            <button class="btn btn-auth btn-login">Login</button>
+            <button class="btn btn-auth btn-signin">Sign In</button>
+        </div>
+    </header>
+
+    <main>
+        <img src="logo.png" alt="" class="bg-watermark">
+
+        <section class="hero-section">
+            <span class="slogan-kicker">Intelligence that Acts. Voice that Governs.</span>
+            <h1 class="hero-title">Welcome to VARAVI Global</h1>
+            <p class="brief-text">
+                This is your automated world. Experience the pinnacle of brand governance, where every directive is engineered for global dominance and every voice is synchronized with the 2026 grid.
+            </p>
+        </section>
+    </main>
+
+    <script>
+        const dot = document.getElementById('cursor-dot');
+        const body = document.body;
+        let moved = false;
+
+        document.addEventListener('mousemove', (e) => {
+            if (!moved) {
+                dot.style.opacity = "1";
+                moved = true;
+            }
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+
+            const x = (e.clientX / window.innerWidth) * 12;
+            const y = (e.clientY / window.innerHeight) * 12;
+            body.style.backgroundColor = `rgb(${6 + x}, ${8 + y}, 15)`;
+        });
+    </script>
+</body>
+</html>
