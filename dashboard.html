@@ -117,41 +117,40 @@ nav {
 /* AUTH BUTTONS (IMPERIAL STYLE) */
 /* --- THE IMPERIAL AUTH BUTTONS --- */
 /* --- IMPERIAL AUTH BUTTONS --- */
+/* --- LUXURY AUTH BUTTONS --- */
 .auth-group {
     display: flex;
     justify-content: flex-end;
     gap: 15px;
-    align-items: center;
 }
 
 .btn-auth {
     font-family: var(--font-main);
     text-transform: uppercase;
-    letter-spacing: 4px; /* Matches the "Activate" button style */
+    letter-spacing: 3px;
     font-size: 0.7rem;
     font-weight: 700;
-    padding: 14px 32px;
+    padding: 12px 30px;
     cursor: pointer;
-    border-radius: 0; /* Sharp, architectural edges */
+    border-radius: 0; /* Keep it sharp and architectural */
     transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    display: inline-block;
+    outline: none;
 }
 
-/* LOGIN: The "Ghost" Luxury Button */
+/* LOGIN: The Ghost Variant */
 .btn-login {
     background: transparent;
     color: var(--pure-white);
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle white border */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
 }
 
 .btn-login:hover {
-    color: var(--gold);
-    border-color: var(--gold);
-    background: rgba(255, 215, 0, 0.05); /* Very faint golden tint */
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--pure-white);
+    transform: translateY(-2px);
 }
 
-/* SIGNIN: The "Solid" Imperial Button */
+/* SIGNIN: The Solid Executive Variant */
 .btn-signin {
     background: var(--gold);
     color: var(--deep-black);
@@ -159,9 +158,18 @@ nav {
 }
 
 .btn-signin:hover {
-    background: #e6c200; /* Slightly darker gold for press effect */
-    transform: translateY(-2px); /* Subtle lift */
-    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+    background: transparent;
+    color: var(--gold);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); /* Depth without the gold "hype" */
+    transform: translateY(-2px);
+}
+
+/* Sync with Mobile */
+@media (max-width: 768px) {
+    .btn-auth {
+        padding: 10px 20px;
+        font-size: 0.65rem;
+    }
 }
 /* Hover Scaling for both */
 .btn-auth:hover {
