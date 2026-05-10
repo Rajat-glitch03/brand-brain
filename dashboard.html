@@ -3,418 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VARAVI Global | Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,400;9..40,700&display=swap" rel="stylesheet">
+    <title>VARAVI Global | Sovereign Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-    --gold: #FFD700;
-    --deep-black: #06080f;
-    --pure-white: #ffffff;
-    --font-main: 'DM Sans', sans-serif;
-}
+            --gold: #FFD700;
+            --deep-black: #06080f;
+            --pure-white: #ffffff;
+            --font-main: 'DM Sans', sans-serif;
+        }
 
-/* CUSTOM GOLDEN SCROLLBAR */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--deep-black); }
-::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+        /* RESET & SCROLLBAR */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-thumb { background: var(--gold); }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--deep-black);
+            color: var(--pure-white);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
 
-body {
-    background-color: var(--deep-black);
-    color: var(--pure-white);
-    font-family: var(--font-main);
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    transition: background 0.5s ease;
-}
+        /* GHOST BACKGROUND LOGO */
+        .fixed-bg {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%; max-width: 800px;
+            opacity: 0.03;
+            z-index: -1;
+            pointer-events: none;
+        }
 
-/* FIXED LOGO BACKGROUND */
-.fixed-bg {
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70%; max-width: 800px;
-    opacity: 0.2;
-    z-index: -1;
-    pointer-events: none;
-    zoom: 2;
-}
+        /* NAVIGATION BAR */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            height: 90px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            background: rgba(6, 8, 15, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            z-index: 1000;
+        }
 
-/* NAVIGATION STRUCTURE (GRID ALIGNMENT) */
-nav {
-    position: fixed;
-    top: 0; width: 100%;
-    height: 110px; /* Slightly taller for the zoomed logo */
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    align-items: center;
-    padding: 0 5%;
-    background: rgba(6, 8, 15, 0.9);
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-    z-index: 1000;
-}
+        /* LOGO ALIGNMENT */
+        .nav-logo-container {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
 
-/* LOGO ZOOM LOGIC */
-.nav-logo-container { display: flex; justify-content: flex-start; }
-.nav-logo {
-    height: 45px; /* Base height */
-    transform: scale(3.5); /* AS REQUESTED: 3.5x Zoom */
-    transform-origin: left center;
-    transition: 0.3s;
-    margin-left: -60px;
-}
+        .nav-logo {
+            height: 30px; 
+            transform: scale(3.5); /* Imperial Zoom */
+            transform-origin: left center;
+        }
 
-/* CENTER TABS */
-.nav-center {
-    display: flex;
-    justify-content: center;
-    gap: 60px;
-    margin-left: -120px;
-}
+        /* CENTER TABS (PC ONLY) */
+        .nav-center {
+            display: flex;
+            gap: 50px;
+        }
 
-.nav-center a {
-    text-decoration: none;
-    color: var(--pure-white);
-    font-size: 0.75rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    font-weight: 400;
-    position: relative;
-    padding: 8px 0;
-    opacity: 0.4;
-    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-}
+        .nav-center a {
+            text-decoration: none;
+            color: var(--pure-white);
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.4;
+            position: relative;
+            padding: 8px 0;
+            transition: 0.4s;
+        }
 
-/* THE FILAMENT (GROWTH LINE) */
-.nav-center a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 1.5px;
-    background: var(--gold);
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-    transform: translateX(-50%);
-}
+        .nav-center a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%;
+            width: 0; height: 1.5px;
+            background: var(--gold);
+            box-shadow: 0 0 10px var(--gold);
+            transition: 0.4s;
+            transform: translateX(-50%);
+        }
 
-/* ACTIVE & HOVER STATES */
-.nav-center a:hover, 
-.nav-center a.active {
-    opacity: 1;
-    color: var(--gold);
-}
+        .nav-center a.active, .nav-center a:hover {
+            opacity: 1; color: var(--gold);
+        }
 
-.nav-center a:hover::after,
-.nav-center a.active::after {
-    width: 100%;
-}
+        .nav-center a.active::after, .nav-center a:hover::after { width: 100%; }
 
-/* AUTH BUTTONS (IMPERIAL STYLE) */
-/* --- THE IMPERIAL AUTH BUTTONS --- */
-/* --- IMPERIAL AUTH BUTTONS --- */
-/* --- LUXURY AUTH BUTTONS --- */
-.auth-group {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-}
+        /* AUTH BUTTONS */
+        .auth-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-.btn-auth {
-    font-family: var(--font-main);
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 12px 30px;
-    cursor: pointer;
-    border-radius: 0; /* Keep it sharp and architectural */
-    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    outline: none;
-}
+        .btn-auth {
+            padding: 10px 24px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 0;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
 
-/* LOGIN: The Ghost Variant */
-.btn-login {
-    background: transparent;
-    color: var(--pure-white);
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
-}
+        .btn-login { background: transparent; color: var(--pure-white); border: 1px solid rgba(255,255,255,0.2); }
+        .btn-signin { background: var(--gold); color: var(--deep-black); border: 1px solid var(--gold); }
+        .btn-auth:hover { transform: translateY(-2px); }
 
-.btn-login:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: var(--pure-white);
-    transform: translateY(-2px);
-}
+        /* MOBILE MENU TOGGLE */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
 
-/* SIGNIN: The Solid Executive Variant */
-.btn-signin {
-    background: var(--gold);
-    color: var(--deep-black);
-    border: 1px solid var(--gold);
-}
+        .menu-toggle span { width: 22px; height: 2px; background: var(--gold); }
 
-.btn-signin:hover {
-    background: transparent;
-    color: var(--gold);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); /* Depth without the gold "hype" */
-    transform: translateY(-2px);
-}
+        /* --- MOBILE STYLES --- */
+        @media (max-width: 1024px) {
+            .nav-logo { transform: scale(2); } /* Adjusted for mobile view */
+            
+            .nav-center {
+                position: fixed;
+                top: 0; right: -100%;
+                width: 75%; height: 100vh;
+                background: var(--deep-black);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                border-left: 1px solid rgba(255, 215, 0, 0.1);
+                transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            }
 
-/* --- MOBILE NAVIGATION DRAWER --- */
-.menu-toggle {
-    display: none; /* Hidden on PC */
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    z-index: 1001;
-}
+            .nav-center.mobile-active { right: 0; }
 
-.menu-toggle span {
-    display: block;
-    width: 25px;
-    height: 2px;
-    background: var(--gold);
-    transition: 0.3s;
-}
+            .menu-toggle { display: flex; }
 
-/* MOBILE RESPONSIVE OVERRIDE */
-@media (max-width: 1024px) {
-    nav {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: space-between !important;
-        align-items: center !important; /* Forces the vertical center */
-        height: 70px !important; /* Keeps the bar slim */
-        padding: 0 15px !important;
-    }
+            .btn-auth { padding: 8px 14px; font-size: 0.6rem; }
+        }
 
-    .nav-logo-container {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        width: auto;
-        overflow: visible; /* Allows zoomed logo to bleed out without pushing bar height */
-    }
+        /* SECTIONS */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .hero h1 { font-size: clamp(1.8rem, 5vw, 4rem); font-weight: 200; margin-bottom: 15px; }
+        .hero p { opacity: 0.6; letter-spacing: 3px; }
 
-    .nav-logo {
-        height: 20px; /* Base height is small */
-        transform: scale(2.5); /* Zoomed, but not enough to break the screen */
-        transform-origin: left center;
-    }
+        .intel-section { padding: 80px 10%; display: flex; flex-direction: column; align-items: center; }
+        .box-grid { display: flex; gap: 20px; width: 100%; margin: 50px 0; }
+        .box { flex: 1; padding: 40px; border: 1px solid rgba(255,215,0,0.1); background: rgba(255,255,255,0.01); transition: 0.4s; }
+        .box:hover { border-color: var(--gold); transform: translateY(-10px); }
+        .box h2 { color: var(--gold); margin-bottom: 15px; font-size: 1.2rem; }
 
-    .auth-group {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        gap: 8px;
-    }
+        footer { padding: 40px; text-align: center; color: grey; font-size: 0.6rem; letter-spacing: 2px; }
 
-    .btn-auth {
-        padding: 6px 12px !important; /* Smaller buttons for mobile */
-        font-size: 0.55rem !important;
-        letter-spacing: 1px !important;
-        white-space: nowrap;
-    }
-
-    /* Menu Toggle Alignment */
-    .menu-toggle {
-        display: flex !important;
-        margin-left: 5px;
-    }
-
-    /* The Hidden Menu Drawer */
-    .nav-center {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 80%; /* Don't take full screen, looks more luxury */
-        height: 100vh;
-        background: rgba(6, 8, 15, 0.98);
-        flex-direction: column;
-        justify-content: center;
-        gap: 40px;
-        transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-        border-left: 1px solid rgba(255, 215, 0, 0.1);
-    }
-
-    .nav-center.active {
-        right: 0;
-    }
-}
-/* Hover Scaling for both */
-.btn-auth:hover {
-    transform: scale(1.05);
-} 
-        
-
-/* SECTION CONTENT */
-.section-hero {
-    height: 100vh;
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-    text-align: center; padding: 0 10%;
-}
-
-.hero-main { font-size: clamp(2rem, 6vw, 4.5rem); font-weight: 200; letter-spacing: -2px; margin-bottom: 10px; }
-.hero-sub { font-size: clamp(1rem, 3vw, 1.5rem); font-weight: 300; opacity: 0.7; letter-spacing: 2px; }
-
-.divider-line { width: 100px; height: 1px; background: var(--gold); margin: 40px 0; }
-
-.section-intel { padding: 100px 10%; display: flex; flex-direction: column; align-items: center; }
-.intel-header { font-size: 3rem; font-weight: 200; margin-bottom: 20px; }
-.intel-desc { max-width: 600px; text-align: center; opacity: 0.7; line-height: 1.6; margin-bottom: 60px; }
-
-.box-container { display: flex; gap: 30px; width: 100%; margin-bottom: 50px; }
-.laura-box {
-    flex: 1; padding: 40px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 215, 0, 0.1);
-    transition: 0.5s;
-}
-.laura-box:hover { border-color: var(--gold); background: rgba(255, 215, 0, 0.03); transform: translateY(-10px); }
-.laura-box h2 { color: var(--gold); margin-bottom: 20px; font-size: 1.5rem; letter-spacing: 2px; }
-.laura-box p { font-size: 0.9rem; line-height: 1.7; opacity: 0.8; font-weight: 300; }
-
-footer { padding: 50px 0; text-align: center; color: grey; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; }
-
-/* MOBILE */
-@media (max-width: 768px) {
-    nav { height: auto; padding: 20px; grid-template-columns: 1fr; gap: 20px; }
-    .nav-logo { transform: scale(1.5); transform-origin: center; }
-    .nav-center { gap: 15px; }
-    .box-container { flex-direction: column; }
-    .section-hero { height: auto; padding-top: 250px; padding-bottom: 100px; }
-}
-
-        /* THE GOLDEN DOT - Sovereign Pointer */
-#cursor-dot {
-    position: fixed;
-    width: 12px;
-    height: 12px;
-    background-color: var(--gold);
-    border-radius: 50%;
-    pointer-events: none; /* Allows clicks to pass through the dot */
-    z-index: 10001; /* Above the navigation */
-    box-shadow: 0 0 20px var(--gold), 0 0 40px rgba(255, 215, 0, 0.3);
-    transform: translate(-50%, -50%);
-    opacity: 0; /* Invisible until movement */
-    transition: opacity 0.5s ease;
-}
-
-/* Ensure no dot on touch devices to maintain luxury performance */
-@media (pointer: coarse) {
-    #cursor-dot { display: none; }
-}
+        /* CURSOR DOT */
+        #cursor-dot {
+            position: fixed; width: 10px; height: 10px; background: var(--gold);
+            border-radius: 50%; pointer-events: none; z-index: 10001;
+            box-shadow: 0 0 15px var(--gold); transform: translate(-50%, -50%);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        @media (pointer: coarse) { #cursor-dot { display: none; } }
     </style>
 </head>
 <body>
 
     <div id="cursor-dot"></div>
-
-    <img src="logo1.png" class="fixed-bg" alt="VARAVI BACKGROUND">
+    <img src="logo.png" class="fixed-bg" alt="VARAVI">
 
     <nav>
-    <div class="nav-logo-container">
-        <img src="logo.png" class="nav-logo" alt="VARAVI">
-    </div>
-
-    <div class="nav-center" id="nav-menu">
-        <a href="#" class="active">Overview</a>
-        <a href="#">Intelligence</a>
-        <a href="#">Contact Us</a>
-    </div>
-
-    <div class="auth-group">
-        <button class="btn-auth btn-login">Login</button>
-        <button class="btn-auth btn-signin">Signin</button>
-        
-        <div class="menu-toggle" id="mobile-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="nav-logo-container">
+            <img src="logo.png" class="nav-logo" alt="VARAVI">
         </div>
-    </div>
-</nav>
 
-    <div class="section-hero">
-        <h1 class="hero-main">Intelligence that Acts.<br>Voice that Governs.</h1>
-        <p class="hero-sub">Universal hand for Global Executions.</p>
-        <div class="divider-line"></div>
-    </div>
+        <div class="nav-center" id="navMenu">
+            <a href="#" class="active">Overview</a>
+            <a href="#">Intelligence</a>
+            <a href="#">Contact Us</a>
+        </div>
 
-    <div class="section-intel">
-        <h2 class="intel-header">The Intelligence</h2>
-        <p class="intel-desc">We here come with an intelligence which works, acts, deliver whatever you want.</p>
+        <div class="auth-group">
+            <button class="btn-auth btn-login">Login</button>
+            <button class="btn-auth btn-signin">Signin</button>
+            <div class="menu-toggle" id="menuBtn">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
 
-        <div class="box-container">
-            <div class="laura-box">
+    <section class="hero">
+        <h1>Intelligence that Acts.<br>Voice that Governs.</h1>
+        <p>Universal hand for Global Executions.</p>
+    </section>
+
+    <section class="intel-section">
+        <h2>The Intelligence</h2>
+        <div class="box-grid" id="mobile-stack">
+            <div class="box">
                 <h2>Laura</h2>
-                <p>Here for your general inquires, navigation and will guide according to your consultion. Free to use.</p>
+                <p>General inquiries, navigation, and guidance. Free to use.</p>
             </div>
-            <div class="laura-box">
+            <div class="box">
                 <h2>Laura v2.4bb</h2>
-                <p>Here for business, will generate report, risk analysis and steps to take. I am high-end consultant.</p>
+                <p>Business reports, risk analysis, and strategic steps. High-end consultant.</p>
             </div>
-            <div class="laura-box">
+            <div class="box">
                 <h2>Laura v2.4s</h2>
-                <p>24/7 Scanner. Enroll brand name, I will be scanning deep web for leaks, impersonations, market shifts and will keep you updated. Works even while you sleep.</p>
+                <p>24/7 Deep web scanner. Monitors leaks and market shifts while you sleep.</p>
             </div>
         </div>
+        <p style="color: var(--gold); letter-spacing: 4px; font-size: 0.7rem;">EXPLORE INTELLIGENCE PAGE TO START</p>
+    </section>
 
-        <p class="explore-text">Explore Intelligence page to Start.</p>
-    </div>
-
-    <footer>
-        © VARAVI Global ----- Imperial Obsidian
-    </footer>
+    <footer>© VARAVI Global ----- Imperial Obsidian</footer>
 
     <script>
-        // Cursor-responsive background color shift (retained from portal)
+        // Cursor Dot logic
+        const dot = document.getElementById('cursor-dot');
         document.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth) * 10;
-            const y = (e.clientY / window.innerHeight) * 10;
-            document.body.style.backgroundColor = `rgb(${6 + x}, ${8 + y}, 15)`;
+            dot.style.opacity = "1";
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+            // Subliminal background shift
+            const x = (e.clientX / window.innerWidth) * 5;
+            const y = (e.clientY / window.innerHeight) * 5;
+            document.body.style.backgroundColor = `rgb(${6+x}, ${8+y}, 15)`;
         });
 
-        const dot = document.getElementById('cursor-dot');
-let hasMoved = false;
+        // Mobile Menu Toggle logic
+        const menuBtn = document.getElementById('menuBtn');
+        const navMenu = document.getElementById('navMenu');
+        menuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('mobile-active');
+        });
 
-document.addEventListener('mousemove', (e) => {
-    // Reveal the dot only when the user first interacts
-    if (!hasMoved) {
-        dot.style.opacity = "1";
-        hasMoved = true;
-    }
-
-    // Follow the cursor
-    dot.style.left = e.clientX + 'px';
-    dot.style.top = e.clientY + 'px';
-});
-
-// Subtle "Click" reaction for the dot
-document.addEventListener('mousedown', () => {
-    dot.style.transform = 'translate(-50%, -50%) scale(0.6)';
-});
-document.addEventListener('mouseup', () => {
-    dot.style.transform = 'translate(-50%, -50%) scale(1)';
-});
-
-        const menuToggle = document.getElementById('mobile-toggle');
-const navMenu = document.getElementById('nav-menu');
-
-menuToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    
-    // Optional: Animate the burger into an 'X'
-    const spans = menuToggle.querySelectorAll('span');
-    spans[0].style.transform = navMenu.classList.contains('active') ? 'rotate(45deg) translate(5px, 5px)' : 'none';
-    spans[1].style.opacity = navMenu.classList.contains('active') ? '0' : '1';
-    spans[2].style.transform = navMenu.classList.contains('active') ? 'rotate(-45deg) translate(5px, -5px)' : 'none';
-});
+        // Fix for mobile stacking logic
+        if (window.innerWidth < 768) {
+            document.getElementById('mobile-stack').style.flexDirection = 'column';
+        }
     </script>
 </body>
 </html>
