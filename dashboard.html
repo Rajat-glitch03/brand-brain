@@ -281,31 +281,8 @@
     <footer>© VARAVI Global ----- Imperial Obsidian</footer>
 
     <script>
-        // Cursor Dot logic
-        const dot = document.getElementById('cursor-dot');
-        document.addEventListener('mousemove', (e) => {
-            dot.style.opacity = "1";
-            dot.style.left = e.clientX + 'px';
-            dot.style.top = e.clientY + 'px';
-            // Subliminal background shift
-            const x = (e.clientX / window.innerWidth) * 5;
-            const y = (e.clientY / window.innerHeight) * 5;
-            document.body.style.backgroundColor = `rgb(${6+x}, ${8+y}, 15)`;
-        });
 
-        // Mobile Menu Toggle logic
-        const menuBtn = document.getElementById('menuBtn');
-        const navMenu = document.getElementById('navMenu');
-        menuBtn.addEventListener('click', () => {
-            navMenu.classList.toggle('mobile-active');
-        });
-
-        // Fix for mobile stacking logic
-        if (window.innerWidth < 768) {
-            document.getElementById('mobile-stack').style.flexDirection = 'column';
-        }
-
-        // --- TAB NAVIGATION CONTROLLER ---
+                // --- TAB NAVIGATION CONTROLLER ---
 const navLinks = document.querySelectorAll('.nav-center a');
 
 navLinks.forEach(link => {
@@ -329,6 +306,29 @@ if(menuBtn) {
         navMenu.classList.toggle('mobile-active');
     });
 }
+        // Cursor Dot logic
+        const dot = document.getElementById('cursor-dot');
+        document.addEventListener('mousemove', (e) => {
+            dot.style.opacity = "1";
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+            // Subliminal background shift
+            const x = (e.clientX / window.innerWidth) * 5;
+            const y = (e.clientY / window.innerHeight) * 5;
+            document.body.style.backgroundColor = `rgb(${6+x}, ${8+y}, 15)`;
+        });
+
+        // Mobile Menu Toggle logic
+        const menuBtn = document.getElementById('menuBtn');
+        const navMenu = document.getElementById('navMenu');
+        menuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('mobile-active');
+        });
+
+        // Fix for mobile stacking logic
+        if (window.innerWidth < 768) {
+            document.getElementById('mobile-stack').style.flexDirection = 'column';
+        }
     </script>
 </body>
 </html>
