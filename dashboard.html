@@ -233,9 +233,31 @@
             .box-grid { flex-direction: column; }
             .btn-auth { padding: 8px 16px; font-size: 0.6rem; }
         }
+
+        /* THE GOLDEN DOT - Sovereign Pointer */
+#cursor-dot {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background-color: var(--gold);
+    border-radius: 50%;
+    pointer-events: none; /* Crucial: allows clicks to pass through to buttons */
+    z-index: 10001; 
+    box-shadow: 0 0 15px var(--gold), 0 0 30px rgba(255, 215, 0, 0.4);
+    transform: translate(-50%, -50%);
+    opacity: 0; /* Hidden until first movement */
+    transition: opacity 0.5s ease;
+}
+
+/* Hide on mobile to prevent interaction glitches */
+@media (pointer: coarse) {
+    #cursor-dot { display: none; }
+}
     </style>
 </head>
 <body>
+
+    <div id="cursor-dot"></div>
 
     <img src="logo1.png" class="fixed-bg" alt="BACKGROUND">
 
@@ -303,6 +325,26 @@
         mobileBtn.addEventListener('click', () => {
             navMenu.classList.toggle('active');
         });
+
+        const dot = document.getElementById('cursor-dot');
+let hasMoved = false;
+
+document.addEventListener('mousemove', (e) => {
+    // Reveal dot on first move
+    if (!hasMoved) {
+        dot.style.opacity = "1";
+        hasMoved = true;
+    }
+
+    // Follow Cursor
+    dot.style.left = e.clientX + 'px';
+    dot.style.top = e.clientY + 'px';
+
+    // Interactive Background (Subtle 5px drift)
+    const xMove = (e.clientX / window.innerWidth) * 5;
+    const yMove = (e.clientY / window.innerHeight) * 5;
+    document.body.style.backgroundColor = `rgb(${6 + xMove}, ${8 + yMove}, 15)`;
+});
     </script>
 </body>
 </html>
