@@ -179,6 +179,26 @@ footer { padding: 50px 0; text-align: center; color: grey; font-size: 0.65rem; l
     .box-container { flex-direction: column; }
     .section-hero { height: auto; padding-top: 250px; padding-bottom: 100px; }
 }
+
+        /* THE GOLDEN DOT - Sovereign Pointer */
+#cursor-dot {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    background-color: var(--gold);
+    border-radius: 50%;
+    pointer-events: none; /* Allows clicks to pass through the dot */
+    z-index: 10001; /* Above the navigation */
+    box-shadow: 0 0 20px var(--gold), 0 0 40px rgba(255, 215, 0, 0.3);
+    transform: translate(-50%, -50%);
+    opacity: 0; /* Invisible until movement */
+    transition: opacity 0.5s ease;
+}
+
+/* Ensure no dot on touch devices to maintain luxury performance */
+@media (pointer: coarse) {
+    #cursor-dot { display: none; }
+}
     </style>
 </head>
 <body>
