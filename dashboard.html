@@ -130,6 +130,28 @@
             letter-spacing: 3px; text-transform: uppercase;
         }
 
+        /* THE GOLDEN ORB - SOVEREIGN TRACKING */
+#cursor-dot {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background-color: #FFD700; /* VARAVI Gold */
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000; /* Stays above everything */
+    box-shadow: 0 0 15px #FFD700, 0 0 30px rgba(255, 215, 0, 0.5);
+    transform: translate(-50%, -50%);
+    opacity: 0; /* Invisible on load */
+    transition: opacity 0.5s ease, transform 0.1s ease-out;
+}
+
+/* HIDE ON MOBILE AND TOUCH DEVICES */
+@media (pointer: coarse) {
+    #cursor-dot {
+        display: none !important;
+    }
+}
+
         /* MOBILE OPTIMIZATION */
         @media (max-width: 768px) {
             nav { height: auto; padding: 20px; flex-direction: column; gap: 20px; }
@@ -143,7 +165,9 @@
 </head>
 <body>
 
-    <img src="logo.png" class="fixed-bg" alt="VARAVI">
+    <div id="cursor-dot"></div>
+
+    <img src="logo1.png" class="fixed-bg" alt="VARAVI">
 
     <nav>
         <img src="logo.png" class="nav-logo" alt="VARAVI Global">
@@ -197,6 +221,29 @@
             const y = (e.clientY / window.innerHeight) * 10;
             document.body.style.backgroundColor = `rgb(${6 + x}, ${8 + y}, 15)`;
         });
+
+        const dot = document.getElementById('cursor-dot');
+let hasMoved = false;
+
+document.addEventListener('mousemove', (e) => {
+    // Reveal the dot only when the user first interacts
+    if (!hasMoved) {
+        dot.style.opacity = "1";
+        hasMoved = true;
+    }
+
+    // Follow the cursor
+    dot.style.left = e.clientX + 'px';
+    dot.style.top = e.clientY + 'px';
+});
+
+// Subtle "Click" reaction for the dot
+document.addEventListener('mousedown', () => {
+    dot.style.transform = 'translate(-50%, -50%) scale(0.6)';
+});
+document.addEventListener('mouseup', () => {
+    dot.style.transform = 'translate(-50%, -50%) scale(1)';
+});
     </script>
 </body>
 </html>
