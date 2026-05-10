@@ -184,39 +184,54 @@ nav {
 /* MOBILE RESPONSIVE OVERRIDE */
 @media (max-width: 1024px) {
     nav {
-        grid-template-columns: 1fr auto; /* Logo | Buttons + Menu */
-        height: 80px;
+        /* Forces everything to stay in one single row */
+        display: flex !important; 
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important; 
+        height: 80px; /* Locked height */
+        padding: 0 5%;
     }
 
+    .nav-logo-container {
+        display: flex;
+        align-items: center;
+        flex: 1; /* Takes up space on the left */
+    }
+
+    .nav-logo {
+        /* Zoomed but controlled for mobile height */
+        height: 25px; 
+        transform: scale(2.2); 
+        transform-origin: left center;
+    }
+
+    .auth-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center; /* Crucial: aligns buttons with the logo center */
+        gap: 10px;
+        flex: 0 0 auto; /* Prevents buttons from shrinking */
+    }
+
+    .btn-auth {
+        padding: 8px 12px;
+        font-size: 0.6rem;
+        white-space: nowrap; /* Prevents text from jumping to two lines */
+    }
+
+    /* The Drawer Menu */
     .nav-center {
         position: fixed;
-        top: 0; right: -100%; /* Hidden off-screen */
-        width: 100%; height: 100vh;
+        top: 0; 
+        right: -100%;
+        width: 100%; 
+        height: 100vh;
         background: var(--deep-black);
         flex-direction: column;
         justify-content: center;
-        align-items: center;
-        transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        gap: 30px;
         z-index: 999;
-    }
-
-    .nav-center.active {
-        right: 0; /* Slides in */
-    }
-
-    .menu-toggle {
-        display: flex; /* Show on Mobile */
-        margin-left: 15px;
-    }
-
-    /* Adjusting Buttons for Mobile Header */
-    .btn-auth {
-        padding: 8px 15px;
-        font-size: 0.6rem;
-    }
-    
-    .nav-logo {
-        transform: scale(1.8); /* Slightly smaller zoom for mobile fit */
     }
 }
 /* Hover Scaling for both */
