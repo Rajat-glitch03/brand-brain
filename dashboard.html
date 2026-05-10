@@ -57,13 +57,7 @@ nav {
 }
 
 /* --- TAB ALIGNMENT & LUXURY STYLE --- */
-.nav-center {
-    display: flex;
-    align-items: center;
-    gap: 60px; /* Exact spacing between tabs */
-    margin-left: -50px; /* Adjusts the center slightly to account for logo width */
-}
-
+/* --- LUXURY FILAMENT NAVIGATION --- */
 .nav-center a {
     text-decoration: none;
     color: var(--pure-white);
@@ -73,27 +67,43 @@ nav {
     font-weight: 400;
     opacity: 0.4;
     position: relative;
-    padding: 10px 0; /* Creates a larger clickable area */
-    transition: all 0.4s ease;
+    padding: 10px 0;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.nav-center a.active, .nav-center a:hover {
+/* The Animated Line Base */
+.nav-center a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;         /* Start at the center */
+    width: 0;          /* Start with zero width */
+    height: 2px;
+    background: var(--gold);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    transform: translateX(-50%); /* Keeps it centered as it grows */
+}
+
+/* Hover State: The Line Expands */
+.nav-center a:hover {
     opacity: 1;
     color: var(--gold);
 }
 
-/* The Underline from the Screenshot */
-.nav-center a.active::after {
-    content: '';
-    position: absolute;
-    bottom: -5px; /* Adjust based on your screenshot's exact position */
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--gold);
-    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3); /* Adds that slight glow */
+.nav-center a:hover::after {
+    width: 100%;       /* Expands to full text width */
 }
 
+/* Active State: The Line Stays Fixed for Overview */
+.nav-center a.active {
+    opacity: 1;
+    color: var(--gold);
+}
+
+.nav-center a.active::after {
+    width: 100%;       /* Always full width for the current page */
+}
 /* --- AUTH BUTTON ALIGNMENT --- */
 .auth-group {
     display: flex;
