@@ -72,6 +72,54 @@ nav {
     gap: 50px;
 }
 
+        /* --- LUXURY TAB STYLING --- */
+.nav-center a {
+    text-decoration: none;
+    color: var(--pure-white); /* High-contrast white */
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 400;
+    position: relative;
+    padding: 10px 0;
+    opacity: 0.4; /* Dimmed initially for luxury hierarchy */
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* The Animated Golden Line (Filament) */
+.nav-center a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;      /* Positioned slightly below the text */
+    left: 50%;
+    width: 0;          /* Hidden by default */
+    height: 2px;
+    background: var(--gold);
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.5); /* Imperial Glow */
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    transform: translateX(-50%);
+}
+
+/* HOVER STATE: Turn Golden + Show Line */
+.nav-center a:hover {
+    opacity: 1;
+    color: var(--gold);
+}
+
+.nav-center a:hover::after {
+    width: 100%; /* Line grows to match text width */
+}
+
+/* ACTIVE STATE: Fixed Overview Style */
+.nav-center a.active {
+    opacity: 1;
+    color: var(--gold); /* Overview is gold by default */
+}
+
+.nav-center a.active::after {
+    width: 100%; /* Line is permanently visible for Overview */
+}
+
 /* --- THE IMPERIAL AUTHENTICATION SUITE --- */
 .auth-group {
     display: flex;
