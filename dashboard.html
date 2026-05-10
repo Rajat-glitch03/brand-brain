@@ -104,26 +104,52 @@
 
         /* AUTH BUTTONS */
         .auth-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Precision spacing */
+}
 
-        .btn-auth {
-            padding: 10px 24px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            border-radius: 0;
-            transition: 0.3s;
-            white-space: nowrap;
-        }
+.btn-auth {
+    font-family: var(--font-main);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 10px 24px;
+    cursor: pointer;
+    border-radius: 0; /* Sharp architectural corners */
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    outline: none;
+    white-space: nowrap;
+}
 
-        .btn-login { background: transparent; color: var(--pure-white); border: 1px solid rgba(255,255,255,0.2); }
-        .btn-signin { background: var(--gold); color: var(--deep-black); border: 1px solid var(--gold); }
-        .btn-auth:hover { transform: translateY(-2px); }
+/* LOGIN: The Ghost Variant (Minimalist White) */
+.btn-login {
+    background: transparent;
+    color: var(--pure-white);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-login:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--pure-white);
+    transform: translateY(-2px);
+}
+
+/* SIGNIN: The Executive Variant (Sovereign Gold) */
+.btn-signin {
+    background: var(--gold);
+    color: var(--deep-black);
+    border: 1px solid var(--gold);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-signin:hover {
+    background: transparent;
+    color: var(--gold);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.1);
+    transform: translateY(-2px);
+}
 
         /* MOBILE MENU TOGGLE */
         .menu-toggle {
@@ -156,7 +182,11 @@
 
             .menu-toggle { display: flex; }
 
-            .btn-auth { padding: 8px 14px; font-size: 0.6rem; }
+            .btn-auth {
+        padding: 8px 16px;
+        font-size: 0.6rem;
+        letter-spacing: 1px;
+    }
         }
 
         /* SECTIONS */
