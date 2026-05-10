@@ -105,8 +105,34 @@
     width: 70%;
 }
 
-        .nav-logo { height: 35px; zoom: 4.5;}
+        /* IMPERIAL LOGO FOCUS */
+.nav-logo {
+    /* Precise scaling */
+    transform: scale(4.5);
+    
+    /* Crucial: Keeps the anchor point at the far left center 
+       so it doesn't zoom 'off-screen' to the left */
+    transform-origin: left center;
+    
+    /* Spacing from the very edge of the viewport */
+    margin-left: 20px; 
+    
+    /* Ensures the logo doesn't get cut off by the nav height */
+    height: auto;
+    width: 60px; /* Adjust base width so 4.5x zoom fits your vision */
+    
+    display: block;
+    transition: transform 0.5s ease; /* Smooth transition if you ever change it */
+    z-index: 1001;
+}
 
+/* Mobile Adjustment: 4.5x might be too large for small screens */
+@media (max-width: 768px) {
+    .nav-logo {
+        transform: scale(3); /* Slightly smaller for mobile integrity */
+        margin-left: 10px;
+    }
+}
         /* LOGIN/SIGNIN BUTTONS */
         .auth-group { display: flex; gap: 15px; }
         .btn-auth {
