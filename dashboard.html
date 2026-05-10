@@ -40,97 +40,89 @@
             pointer-events: none;
         }
 
-        /* HEADER NAVIGATION */
-        nav {
-            position: fixed;
-            top: 0; width: 100%;
-            height: 100px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 5%;
-            background: rgba(6, 8, 15, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-            z-index: 1000;
-        }
+       /* HEADER ARCHITECTURE */
+nav {
+    position: fixed;
+    top: 0; width: 100%;
+    height: 120px; /* Slightly taller to accommodate the larger logo */
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr; /* Logo Left | Nav Center | Auth Right */
+    align-items: center;
+    padding: 0 5%;
+    background: rgba(6, 8, 15, 0.95);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+    z-index: 1000;
+}
 
-        /* --- VARAVI NAVIGATION ENHANCEMENT --- */
+/* 1. THE ZOOMED LOGO (Left Most) */
+.nav-logo {
+    height: 35px; /* Base height */
+    transform: scale(4.5); /* Imperial Zoom */
+    transform-origin: left center; /* Keeps it pinned to the left edge */
+    transition: transform 0.5s ease;
+}
 
-/* 1. Base style for all nav items */
+/* 2. CENTERED NAVIGATION */
+.nav-center {
+    display: flex;
+    justify-content: center; /* Perfectly centers links in the middle column */
+    gap: 60px; /* Elegant spacing between items */
+}
+
 .nav-center a {
     text-decoration: none;
-    color: var(--pure-white);
+    color: #ffffff;
     font-size: 0.75rem;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     text-transform: uppercase;
     font-weight: 300;
     opacity: 0.5;
+    transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
     position: relative;
-    padding: 10px 15px;
-    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); /* Luxury smooth timing */
 }
 
-/* 2. Animation: The 'Rising' Effect on hover */
+/* The Hover Design stays the same but with a smoother lift */
 .nav-center a:hover {
     opacity: 1;
-    color: var(--gold);
-    transform: translateY(-3px); /* Subtle lift */
-    text-shadow: 0 0 10px rgba(255, 214, 0, 0.3);
+    color: #FFD700;
+    transform: translateY(-1px);
 }
 
-/* 3. The ACTIVE State (Specifically for Overview) */
-.nav-center a.active-tab {
-    opacity: 1;
-    color: var(--gold);
-    font-weight: 700;
-    transform: scale(1.15); /* Zoomed as requested */
-    border-bottom: 1px solid var(--gold); /* Thin filament line below */
+/* 3. AUTH GROUP (Right Most) */
+.auth-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
 }
 
-/* 4. Underline Reveal Animation for non-active buttons */
-.nav-center a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 1px;
-    background: var(--gold);
-    transition: all 0.4s ease;
-    transform: translateX(-50%);
-}
-
-.nav-center a:hover::after {
-    width: 70%;
-}
-
-        /* IMPERIAL LOGO FOCUS */
-.nav-logo {
-    /* Precise scaling */
-    transform: scale(4.5);
-    
-    /* Crucial: Keeps the anchor point at the far left center 
-       so it doesn't zoom 'off-screen' to the left */
-    transform-origin: left center;
-    
-    /* Spacing from the very edge of the viewport */
-    margin-left: 1px; 
-    
-    /* Ensures the logo doesn't get cut off by the nav height */
-    height: auto;
-    width: 20px; /* Adjust base width so 4.5x zoom fits your vision */
-    
-    display: block;
-    transition: transform 0.5s ease; /* Smooth transition if you ever change it */
-    z-index: 1001;
-}
-
-/* Mobile Adjustment: 4.5x might be too large for small screens */
-@media (max-width: 768px) {
+/* MOBILE RECALIBRATION */
+@media (max-width: 1024px) {
     .nav-logo {
-        transform: scale(3); /* Slightly smaller for mobile integrity */
-        margin-left: 10px;
+        transform: scale(3); /* Slightly smaller zoom for tablets */
+    }
+    .nav-center {
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        grid-template-columns: 1fr; /* Stack on mobile */
+        height: auto;
+        padding: 30px 20px;
+        gap: 30px;
+    }
+    .nav-logo {
+        transform: scale(2.5);
+        margin: 0 auto; /* Center logo on mobile */
+    }
+    .nav-center {
+        width: 100%;
+        justify-content: space-around;
+    }
+    .auth-group {
+        justify-content: center;
     }
 }
         /* LOGIN/SIGNIN BUTTONS */
