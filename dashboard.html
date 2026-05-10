@@ -89,34 +89,46 @@
             margin-left: 30px;
         }
 
-        .nav-center a {
-            text-decoration: none;
-            color: var(--pure-white);
-            font-size: 0.75rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            opacity: 0.4;
-            position: relative;
-            padding: 8px 0;
-            transition: 0.4s;
-        }
+        /* --- CLEAN TAB LOGIC --- */
+.nav-center a {
+    text-decoration: none;
+    color: var(--pure-white);
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 0.4;
+    position: relative;
+    padding: 8px 0;
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
 
-        .nav-center a::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 50%;
-            width: 0; height: 1.5px;
-            background: var(--gold);
-            box-shadow: 0 0 10px var(--gold);
-            transition: 0.4s;
-            transform: translateX(-50%);
-        }
+/* The Animated Line Base */
+.nav-center a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0; 
+    height: 1.5px;
+    background: var(--gold);
+    box-shadow: 0 0 10px var(--gold);
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    transform: translateX(-50%);
+}
 
-        .nav-center a.active, .nav-center a:hover {
-            opacity: 1; color: var(--gold);
-        }
+/* THE ONLY WAY THE LINE SHOWS IS THE ACTIVE CLASS */
+.nav-center a.active {
+    opacity: 1;
+    color: var(--gold);
+}
 
-        .nav-center a.active::after, .nav-center a:hover::after { width: 100%; }
+.nav-center a.active::after {
+    width: 100%; /* Only the active link gets the full line */
+}
+
+.nav-center a:hover {
+    opacity: 1;
+}
 
         /* AUTH BUTTONS */
         .auth-group {
@@ -239,7 +251,7 @@
         </div>
 
         <div class="nav-center" id="navMenu">
-            <a href="#">Overview</a>
+            <a href="#" class="active">Overview</a>
             <a href="#">Intelligence</a>
             <a href="#">Contact Us</a>
         </div>
@@ -281,31 +293,6 @@
     <footer>© VARAVI Global ----- Imperial Obsidian</footer>
 
     <script>
-
-                // --- TAB NAVIGATION CONTROLLER ---
-const navLinks = document.querySelectorAll('.nav-center a');
-
-navLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-        // Prevent jumping to top if using '#'
-        if(this.getAttribute('href') === '#') e.preventDefault();
-
-        // 1. Remove 'active' class from all links (Hides the Overview line)
-        navLinks.forEach(l => l.classList.remove('active'));
-
-        // 2. Add 'active' class to the one you just clicked
-        this.classList.add('active');
-    });
-});
-
-// Mobile Menu Toggle (Keep this part)
-const menuBtn = document.getElementById('menuBtn');
-const navMenu = document.getElementById('navMenu');
-if(menuBtn) {
-    menuBtn.addEventListener('click', () => {
-        navMenu.classList.toggle('mobile-active');
-    });
-}
         // Cursor Dot logic
         const dot = document.getElementById('cursor-dot');
         document.addEventListener('mousemove', (e) => {
@@ -329,6 +316,33 @@ if(menuBtn) {
         if (window.innerWidth < 768) {
             document.getElementById('mobile-stack').style.flexDirection = 'column';
         }
+
+        <script>
+    // 1. SELECT ALL LINKS
+    const tabs = document.querySelectorAll('.nav-center a');
+
+    tabs.forEach(clickedTab => {
+        clickedTab.addEventListener('click', function(e) {
+            // Optional: prevent page jump if links aren't real yet
+            // e.preventDefault(); 
+
+            // 2. REMOVE ACTIVE FROM ALL (This kills the Overview line)
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // 3. ADD ACTIVE TO THE ONE CLICKED (This starts the new line)
+            this.classList.add('active');
+        });
+    });
+
+    // Mobile Menu Toggle Logic (Ensuring it still works)
+    const menuBtn = document.getElementById('menuBtn');
+    const navMenu = document.getElementById('navMenu');
+    if(menuBtn) {
+        menuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('mobile-active');
+        });
+    }
+</script>
     </script>
 </body>
 </html>
