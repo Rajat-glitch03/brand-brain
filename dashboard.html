@@ -115,33 +115,60 @@ nav {
 }
 
 /* AUTH BUTTONS (IMPERIAL STYLE) */
-.auth-group { display: flex; justify-content: flex-end; gap: 20px; }
+/* --- THE IMPERIAL AUTH BUTTONS --- */
+.auth-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
 .btn-auth {
-    padding: 14px 35px;
+    /* Same font and weight as Activate Dashboard */
     font-family: var(--font-main);
-    font-size: 0.65rem;
+    font-size: 0.7rem; 
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 3px;
+    
+    /* Exact sizing and shape */
+    padding: 16px 40px;
     cursor: pointer;
-    transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    border-radius: 0; /* Keep it architectural and sharp */
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    position: relative;
+    overflow: hidden;
 }
 
+/* LOGIN - The 'Ghost Gold' Version */
 .btn-login {
     background: transparent;
     color: var(--gold);
     border: 1px solid var(--gold);
 }
 
+.btn-login:hover {
+    background: rgba(255, 215, 0, 0.05); /* Very subtle gold tint */
+    letter-spacing: 5px; /* Expands like the Activate button */
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+/* SIGNIN - The 'Solid Imperial' Version */
 .btn-signin {
     background: var(--gold);
     color: var(--deep-black);
     border: 1px solid var(--gold);
 }
 
+.btn-signin:hover {
+    background: transparent;
+    color: var(--gold);
+    letter-spacing: 5px; /* Expands like the Activate button */
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+}
+
+/* Hover Scaling for both */
 .btn-auth:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(255, 215, 0, 0.15);
+    transform: scale(1.05);
 }
 
 /* SECTION CONTENT */
