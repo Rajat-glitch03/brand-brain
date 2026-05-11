@@ -53,7 +53,10 @@
 
         .nav-logo { height: 32px; transform: scale(2); transform-origin: left center; margin-left: -25px; }
 
-        .nav-center { display: flex; gap: 60px; }
+        .nav-center {
+    display: flex;
+    gap: 60px;
+}
         .nav-tab {
             text-decoration: none;
             color: var(--pure-white);
@@ -226,29 +229,31 @@
         /* Ensure consistent mobile sizing */
         /* HAMBURGER ICON (PURE CYBER ANIMATION) */
 .menu-toggle {
-    display: none;
+    display: none; /* Hidden on PC */
     flex-direction: column;
     justify-content: space-between;
     width: 26px; height: 18px;
     cursor: pointer;
-    z-index: 1002;
-    margin-left: 15px;
+    z-index: 2000; /* Above everything */
 }
 
 .menu-toggle span {
     display: block;
     width: 100%; height: 2px;
-    background: var(--electric-blue); /* Intelligence Color */
+    background: var(--electric-blue);
     transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    transform-origin: left center;
 }
-
 /* MOBILE LAYOUT OVERRIDES */
     @media (max-width: 1024px) {
         nav {
             height: 80px;
             padding: 0 20px;
         }
+
+        .nav-tab {
+        font-size: 1.2rem; /* Bigger for touch on mobile */
+        opacity: 1;
+    }
     
         .nav-logo { transform: scale(2); }
     
@@ -297,7 +302,7 @@
 
     <nav>
     <div class="nav-left">
-        <img src="logo.png" class="nav-logo" alt="VARAVI">
+        <img src="brand-logo.png" class="nav-logo" alt="VARAVI">
     </div>
 
     <div class="nav-center" id="navDrawer">
@@ -309,11 +314,12 @@
     <div class="nav-right">
         <button class="btn-get-started-intel" onclick="location.href='get-started.html'">GET STARTED</button>
         <div class="menu-toggle" id="menuToggle">
-            <span></span><span></span><span></span>
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
     </div>
 </nav>
-
     <section class="hero">
         <h1>Meet Our Intelligence</h1>
         <p>Our intelligence, Quans, is not a tool— it is a strategist. Whether Quans is guiding your general inquiries or scanning the deep web for leaks while you sleep, Quans operates with one objective: Absolute Sovereignty.</p>
@@ -369,22 +375,35 @@
             dot.style.top = e.clientY + 'px';
         });
 
-        const menuToggle = document.getElementById('menuToggle');
-const navDrawer = document.getElementById('navDrawer');
-const tabs = document.querySelectorAll('.nav-tab');
+        <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navDrawer = document.getElementById('navDrawer');
+    const tabs = document.querySelectorAll('.nav-tab');
 
-// Toggle Drawer and Hamburger Animation
-menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('open');
-    navDrawer.classList.toggle('open');
-});
-
-// Close drawer when a link is clicked
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        menuToggle.classList.remove('open');
-        navDrawer.classList.remove('open');
+    // Open/Close logic
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('open');
+        navDrawer.classList.toggle('open');
+        
+        // Prevent body scrolling when menu is open
+        if (navDrawer.classList.contains('open')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
     });
+
+    // Close when clicking a link
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            menuToggle.classList.remove('open');
+            navDrawer.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        });
+    });
+
+    /* Blue Dot Logic for PC *
+</script>
 });
     </script>
 </body>
