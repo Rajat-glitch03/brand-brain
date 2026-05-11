@@ -4,191 +4,187 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>VARAVI Global | Imperial Obsidian</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;400;500;700&display=swap" rel="stylesheet">
     
     <style>
+        /* =========================================
+           CORE VARIABLES & THEME
+        ========================================= */
         :root {
             --gold: #FFD700;
             --deep-black: #06080f;
             --pure-white: #ffffff;
-            --grey: #888888;
             --font-main: 'DM Sans', sans-serif;
         }
 
-        /* --- EXCLUSIVE GOLDEN SCROLLBAR --- */
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-track { background: var(--deep-black); }
-        ::-webkit-scrollbar-thumb { 
-            background: var(--gold); 
-            border-radius: 2px; 
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        /* CUSTOM GOLDEN SCROLLBAR (PC & Mobile) */
+        ::-webkit-scrollbar {
+            width: 4px;
         }
-        * { scrollbar-width: thin; scrollbar-color: var(--gold) var(--deep-black); }
+        ::-webkit-scrollbar-track {
+            background: var(--deep-black);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 0px;
+        }
 
-        /* --- RESET & CORE SETUP --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background-color: var(--deep-black);
             color: var(--pure-white);
             font-family: var(--font-main);
             overflow-x: hidden;
             scroll-behavior: smooth;
+            /* Subliminal background depth */
+            background-image: radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.03) 0%, transparent 70%);
         }
 
-        /* --- GHOST AMBIENT LOGO --- */
-        .fixed-bg {
+        /* =========================================
+           GOLDEN DOT CURSOR (PC ONLY)
+        ========================================= */
+        #cursor-dot {
             position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 85%; max-width: 900px;
-            opacity: 0.2;
-            z-index: -1;
+            width: 8px;
+            height: 8px;
+            background-color: var(--gold);
+            border-radius: 50%;
             pointer-events: none;
-            zoom: 2;
+            z-index: 10001;
+            box-shadow: 0 0 15px var(--gold), 0 0 30px rgba(255, 215, 0, 0.4);
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        @media (pointer: coarse) {
+            #cursor-dot { display: none; }
         }
 
-        /* --- PC NAVIGATION HEADER --- */
+        /* =========================================
+           NAVIGATION BAR
+        ========================================= */
         nav {
             position: fixed;
-            top: 0; width: 100%;
-            height: 100px;
+            top: 0;
+            width: 100%;
+            height: 90px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 6%;
-            background: rgba(6, 8, 15, 0.92);
-            backdrop-filter: blur(25px);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.08);
+            background: rgba(6, 8, 15, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
             z-index: 1000;
         }
 
-        .nav-left { display: flex; align-items: center; }
-        .nav-logo { height: 32px; transform: scale(2); transform-origin: left center; margin-left: -25px;}
+        /* LOGO */
+        .nav-logo img {
+            height: 28px;
+            display: block;
+        }
 
-        /* CENTER TABS (ANIMATED LINE) */
+        /* CENTER TABS (PC) */
         .nav-center {
             display: flex;
             gap: 60px;
         }
 
-        .nav-tab {
+        .nav-center a {
             text-decoration: none;
             color: var(--pure-white);
             font-size: 0.75rem;
             letter-spacing: 4px;
-            font-weight: 400;
+            text-transform: uppercase;
             position: relative;
             padding: 8px 0;
-            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            cursor: pointer;
+            transition: color 0.4s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        .nav-tab::after {
+        /* The Animated Golden Line */
+        .nav-center a::after {
             content: '';
             position: absolute;
-            bottom: 0; left: 50%;
-            width: 0; height: 1.5px;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 1.5px;
             background: var(--gold);
-            box-shadow: 0 0 12px var(--gold);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
             transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
             transform: translateX(-50%);
         }
 
-        /* Hover & Click logic */
-        .nav-tab:hover, .nav-tab.active { color: var(--gold); }
-        .nav-tab:hover::after, .nav-tab.active::after { width: 100%; }
+        /* Active / Hover States */
+        .nav-center a.active, 
+        .nav-center a:hover {
+            color: var(--gold);
+        }
+
+        .nav-center a.active::after, 
+        .nav-center a:hover::after {
+            width: 100%;
+        }
 
         /* RIGHT ACTIONS */
-        .nav-right {
+        .nav-actions {
             display: flex;
             align-items: center;
             gap: 20px;
         }
 
         /* GET STARTED BUTTON */
-        .btn-get-started {
+        .btn-start {
             background: var(--gold);
             color: var(--deep-black);
-            border: 1px solid var(--gold);
-            padding: 12px 32px;
             font-family: var(--font-main);
             font-size: 0.7rem;
             font-weight: 700;
+            text-transform: uppercase;
             letter-spacing: 2px;
+            padding: 14px 32px;
+            border: 1px solid var(--gold);
             cursor: pointer;
+            border-radius: 0; /* Sharp, professional architecture */
             transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
             white-space: nowrap;
-            outline: none;
         }
 
-        .btn-get-started:hover {
+        .btn-start:hover {
             background: var(--deep-black);
             color: var(--gold);
-            transform: scale(1.06);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.15);
         }
 
-        /* HAMBURGER ICON (PURE ANIMATION) */
-        .menu-toggle {
+        /* HAMBURGER MENU (MOBILE ONLY) */
+        .hamburger {
             display: none;
             flex-direction: column;
             justify-content: space-between;
-            width: 26px; height: 18px;
+            width: 26px;
+            height: 18px;
             cursor: pointer;
-            z-index: 1002;
+            z-index: 1001;
         }
 
-        .menu-toggle span {
+        .hamburger span {
             display: block;
-            width: 100%; height: 2px;
-            background: var(--gold);
+            height: 2px;
+            width: 100%;
+            background: var(--pure-white);
             transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            transform-origin: left center;
         }
 
-        /* --- MOBILE LAYOUT OVERRIDES --- */
-        @media (max-width: 1024px) {
-            nav {
-                height: 80px;
-                padding: 0 20px;
-            }
-
-            .nav-logo { transform: scale(1.5); margin-left: 20px;}
-
-            /* Forces Logo, Get Started, and Menu onto ONE Unbreakable Line */
-            .nav-right { gap: 12px; }
-
-            .btn-get-started {
-                padding: 10px 18px;
-                font-size: 0.65rem;
-            }
-
-            .menu-toggle { display: flex; }
-
-            /* Hidden Drawer Overlay */
-            .nav-center {
-                position: fixed;
-                top: 0; right: -100%;
-                width: 100%; height: 100vh;
-                background: rgba(6, 8, 15, 0.98);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 50px;
-                transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-                z-index: 1001;
-            }
-
-            .nav-center.open { right: 0; }
-
-            /* Hamburger -> X Animation */
-            .menu-toggle.open span:nth-child(1) { transform: rotate(45deg); width: 23px; }
-            .menu-toggle.open span:nth-child(2) { opacity: 0; width: 0; }
-            .menu-toggle.open span:nth-child(3) { transform: rotate(-45deg); width: 23px; }
-        }
-
-        /* --- MAIN SCREEN (HERO) --- */
+        /* =========================================
+           HERO SECTION
+        ========================================= */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -196,202 +192,300 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 140px 8% 80px;
+            padding: 120px 10% 50px;
         }
 
-        .hero h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 250; margin-bottom: 10px; letter-spacing: -2px}
-        .hero h2 { font-size: clamp(1rem, 2.5vw, 1.5rem); font-weight: 300; opacity: 0.9; letter-spacing: 2px; }
-        
-        .golden-divider {
-            width: 120px; height: 1.5px;
-            background: var(--gold);
-            margin: 40px auto;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 200;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 20px;
         }
 
-        .hero-script {
-            max-width: 850px;
-            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-            line-height: 1.8;
-            font-weight: 300;
+        .hero h2 {
+            font-size: clamp(1rem, 2.5vw, 1.8rem);
+            font-weight: 400;
+            color: var(--pure-white);
             opacity: 0.8;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
         }
 
-        /* --- THE INTELLIGENCE SECTION --- */
+        .hero .gold-divider {
+            width: 150px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin-bottom: 40px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .hero p {
+            max-width: 800px;
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            font-weight: 200;
+            line-height: 1.8;
+            color: var(--pure-white);
+            opacity: 0.7;
+        }
+
+        /* =========================================
+           THE INTELLIGENCE SECTION
+        ========================================= */
         .intelligence-section {
             padding: 100px 8%;
             display: flex;
-            font-weight: 250;
             flex-direction: column;
             align-items: center;
+            background: #04050a; /* Slight contrast from hero */
         }
 
-        .intelligence-section h2 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 250; margin-bottom: 15px; letter-spacing:-2px;}
-        .intelligence-section .intro-desc { opacity: 0.7; font-size: 1rem; margin-bottom: 70px; text-align: center; }
-
-        /* MONOLITHIC GRID */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            width: 100%;
-            max-width: 1200px;
-            margin-bottom: 60px;
+        .intelligence-section h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 200;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
         }
 
-        .box {
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            padding: 50px 40px;
-            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .box:hover {
-            transform: translateY(-8px);
-            border-color: var(--gold);
-            background: rgba(255, 215, 0, 0.03);
-            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.15);
-        }
-
-        .box h3 { color: var(--gold); font-size: 1.4rem; font-weight: 600; letter-spacing: 1px; margin-bottom: 20px; }
-        .box p { font-size: 0.9rem; line-height: 1.7; opacity: 0.75; font-weight: 300; }
-
-        .cta-gold {
-            color: var(--gold);
-            font-size: 1.6rem;
-            font-weight: 320;
-            letter-spacing: -2px;
-            margin-top: 20px;
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            padding: 80px 0 40px;
+        .intelligence-section > p {
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-bottom: 80px;
+            font-weight: 200;
             text-align: center;
         }
 
-        footer p {
-            color: var(--grey);
-            font-size: 0.65rem;
-            letter-spacing: 3px;
+        /* BOX GRID */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 80px;
         }
 
-        /* --- EXCLUSIVE PC GOLDEN DOT --- */
-        #cursor-dot {
-            position: fixed; width: 10px; height: 10px;
-            background: var(--gold); border-radius: 50%;
-            pointer-events: none; z-index: 10001;
-            box-shadow: 0 0 15px var(--gold), 0 0 30px rgba(255, 215, 0, 0.4);
-            transform: translate(-50%, -50%);
-            opacity: 0; transition: opacity 0.5s ease;
+        .intel-box {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 50px 40px;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
-        @media (pointer: coarse), (max-width: 1024px) { #cursor-dot { display: none !important; } }
+
+        .intel-box:hover {
+            background: rgba(255, 215, 0, 0.02);
+            border-color: var(--gold);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.05);
+        }
+
+        .intel-box h3 {
+            color: var(--gold);
+            font-size: 1.4rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .intel-box p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            opacity: 0.6;
+            font-weight: 200;
+            transition: opacity 0.4s;
+        }
+
+        .intel-box:hover p {
+            opacity: 0.9;
+        }
+
+        /* CALL TO ACTION */
+        .cta-text {
+            color: var(--gold);
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--deep-black);
+            color: #555555;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        /* =========================================
+           MOBILE RESPONSIVENESS
+        ========================================= */
+        @media (max-width: 1024px) {
+            /* Header Adjustments */
+            nav { padding: 0 20px; height: 80px; }
+            .nav-logo img { height: 22px; }
+            
+            .hamburger { display: flex; }
+
+            /* Mobile Menu Drawer */
+            .nav-center {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(6, 8, 15, 0.98);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
+                transition: right 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+                z-index: 999;
+            }
+
+            .nav-center.menu-open {
+                right: 0;
+            }
+
+            .nav-center a {
+                font-size: 1.2rem;
+            }
+
+            /* Buttons inside Nav Actions */
+            .btn-start {
+                padding: 10px 20px;
+                font-size: 0.6rem;
+            }
+
+            /* Hamburger Animation Classes */
+            .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); background: var(--gold); }
+            .hamburger.active span:nth-child(2) { opacity: 0; }
+            .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); background: var(--gold); }
+
+            /* Grid Adjustments */
+            .grid-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .intel-box {
+                padding: 35px 25px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div id="cursor-dot"></div>
 
-    <img src="logo1.png" class="fixed-bg" alt="">
-
     <nav>
-        <div class="nav-left">
-            <img src="brand-logo.png" class="nav-logo" alt="VARAVI">
+        <div class="nav-logo">
+            <img src="logo.png" alt="VARAVI Logo" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'30\'><text x=\'0\' y=\'20\' fill=\'white\' font-family=\'sans-serif\' font-size=\'20\' font-weight=\'bold\'>VARAVI</text></svg>'">
         </div>
 
-        <div class="nav-center" id="navDrawer">
-            <a href="#overview" class="nav-tab active">OVERVIEW</a>
-            <a href="#intelligence" class="nav-tab">INTELLIGENCE</a>
-            <a href="#contact" class="nav-tab">CONTACT US</a>
+        <div class="nav-center" id="mobile-menu">
+            <a class="nav-link active">OVERVIEW</a>
+            <a class="nav-link">INTELLIGENCE</a>
+            <a class="nav-link">CONTACT US</a>
         </div>
 
-        <div class="nav-right">
-            <button class="btn-get-started">GET STARTED</button>
-            <div class="menu-toggle" id="menuToggle">
-                <span></span><span></span><span></span>
+        <div class="nav-actions">
+            <button class="btn-start">GET STARTED</button>
+            <div class="hamburger" id="hamburger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </nav>
 
-    <main>
-        <section class="hero" id="overview">
-            <h1>Intelligence that Acts.</h1>
-            <h1>Voice that Governs.</h1>
-            <h2>Universal Hand for Global Executions.</h2>
-            <div class="golden-divider"></div>
-            <p class="hero-script">We don’t just observe the landscape; we govern it. We provide the Imperial Obsidian of technology—a foundation that is dark, deep, and impenetrable. We are the "Universal Hand" designed for Global Executions. We don't offer opinions; we deliver outcomes.</p>
-        </section>
+    <header class="hero">
+        <h1>Intelligence that Acts.<br>Voice that Governs.</h1>
+        <h2>Universal Hand for Global Executions.</h2>
+        <div class="gold-divider"></div>
+        <p>We don’t just observe the landscape; we govern it. We provide the Imperial Obsidian of technology—a foundation that is dark, deep, and impenetrable. We are the "Universal Hand" designed for Global Executions. We don't offer opinions; we deliver outcomes.</p>
+    </header>
 
-        <section class="intelligence-section" id="intelligence">
-            <h2>The Intelligence</h2>
-            <p class="intro-desc">We here come with an intelligence which works, acts, deliver whatever you want.</p>
-
-            <div class="grid-container">
-                <div class="box">
-                    <h3>Quans</h3>
-                    <p>Here for your general inquires, navigation and will guide according to your consultion. Free to use.</p>
-                </div>
-                <div class="box">
-                    <h3>Quans v2.4bb</h3>
-                    <p>Specially made for business. Will generate reports, risk analysis, steps to take. This is your high-end consultant.</p>
-                </div>
-                <div class="box">
-                    <h3>Quans v2.4s</h3>
-                    <p>24/7 scanner. Enroll your brand name I will be scanning deep web for leaks, impersonations, market shifts even while you sleep.</p>
-                </div>
+    <section class="intelligence-section">
+        <h2>The Intelligence</h2>
+        <p>We here come with an intelligence which works, acts, deliver whatever you want.</p>
+        
+        <div class="grid-container">
+            <div class="intel-box">
+                <h3>Quans</h3>
+                <p>Here for your general inquires, navigation and will guide according to your consultion. Free to use.</p>
             </div>
+            <div class="intel-box">
+                <h3>Quans v2.4bb</h3>
+                <p>Specially made for business. Will generate reports, risk analysis, steps to take. This is your high-end consultant.</p>
+            </div>
+            <div class="intel-box">
+                <h3>Quans v2.4s</h3>
+                <p>24/7 scanner. Enroll your brand name I will be scanning deep web for leaks, impersonations, market shifts even while you sleep.</p>
+            </div>
+        </div>
 
-            <div class="cta-gold">Start working with us today.</div>
-        </section>
-    </main>
+        <div class="cta-text">Start working with us today.</div>
+    </section>
 
-    <footer id="contact">
-        <p>© VARAVI Global ------ Imperial Obsidian</p>
-    </footer>
+    <footer>C VARAVI Global ------ Imperial Obsidian</footer>
 
     <script>
-        // --- 1. PC GOLDEN DOT CONTROLLER ---
+        // 1. Golden Dot Cursor Logic (PC Only)
         const dot = document.getElementById('cursor-dot');
-        let initialMove = false;
+        let cursorActive = false;
 
         document.addEventListener('mousemove', (e) => {
-            if (!initialMove) {
-                dot.style.opacity = "1";
-                initialMove = true;
+            if (!cursorActive) {
+                dot.style.opacity = '1';
+                cursorActive = true;
             }
             dot.style.left = e.clientX + 'px';
             dot.style.top = e.clientY + 'px';
         });
 
-        // --- 2. DYNAMIC TAB ACTIVATION LOGIC ---
-        const tabs = document.querySelectorAll('.nav-tab');
-        const navDrawer = document.getElementById('navDrawer');
-        const menuToggle = document.getElementById('menuToggle');
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', function() {
-                // Strip active class from all existing links
-                tabs.forEach(t => t.classList.remove('active'));
-                // Apply active directly to clicked
+        // 2. Tab Animation Logic (Moving the Golden Line)
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                // Remove active class from all links
+                navLinks.forEach(l => l.classList.remove('active'));
+                // Add active class to the clicked link
                 this.classList.add('active');
-
-                // Gracefully collapse drawer on mobile after selection
-                if (window.innerWidth <= 1024) {
-                    navDrawer.classList.remove('open');
-                    menuToggle.classList.remove('open');
+                
+                // If on mobile, clicking a link closes the menu automatically
+                if(window.innerWidth <= 1024) {
+                    toggleMobileMenu();
                 }
             });
         });
 
-        // --- 3. PURE ANIMATION MOBILE HAMBURGER ---
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('open');
-            navDrawer.classList.toggle('open');
-        });
+        // 3. Mobile Hamburger Menu Animation & Toggle
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function toggleMobileMenu() {
+            hamburgerBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('menu-open');
+            
+            // Lock body scrolling when menu is open
+            if(mobileMenu.classList.contains('menu-open')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        hamburgerBtn.addEventListener('click', toggleMobileMenu);
     </script>
 </body>
 </html>
