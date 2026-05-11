@@ -86,8 +86,9 @@
 
         .hero h1 { 
             font-size: clamp(2.5rem, 5vw, 4rem); 
-            font-weight: 200; 
+            font-weight: 300; 
             margin-bottom: 25px;
+            letter-spacing: -2px;
             background: linear-gradient(90deg, #fff, var(--electric-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -134,7 +135,7 @@
             font-size: 1.8rem; 
             letter-spacing: 3px; 
             margin-bottom: 20px; 
-            font-weight: 400;
+            font-weight: 600;
         }
 
         .box p { font-size: 0.95rem; line-height: 1.8; opacity: 0.7; margin-bottom: 30px; font-weight: 300; }
@@ -179,7 +180,7 @@
         .quans-logo {
             height: 60px;
             margin-bottom: 15px;
-            filter: drop-shadow(0 0 10px var(--electric-blue));
+            zoom: 3;
         }
 
         .powered-by {
@@ -199,6 +200,38 @@
             opacity: 0; transition: opacity 0.5s ease;
         }
 
+        /* CYBER-INVERSION GET STARTED BUTTON */
+        .btn-get-started-intel {
+            background: var(--electric-blue);
+            color: var(--deep-black);
+            border: 1px solid var(--electric-blue);
+            padding: 12px 32px;
+            font-family: var(--font-main);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            white-space: nowrap;
+            outline: none;
+        }
+        
+        .btn-get-started-intel:hover {
+            background: var(--deep-black);
+            color: var(--electric-blue);
+            transform: scale(1.06); /* The Sovereign Zoom */
+            box-shadow: 0 8px 25px rgba(0, 157, 255, 0.3);
+        }
+        
+        /* Ensure consistent mobile sizing */
+        @media (max-width: 1024px) {
+            .btn-get-started-intel {
+                padding: 10px 18px;
+                font-size: 0.65rem;
+            }
+        }
+
         /* MOBILE OPTIMIZATION */
         @media (max-width: 768px) {
             #cursor-dot { display: none !important; }
@@ -215,17 +248,16 @@
     <div id="cursor-dot"></div>
 
     <nav>
-        <div class="nav-left">
-            <img src="logo.png" class="nav-logo" alt="VARAVI">
-        </div>
         <div class="nav-center">
             <a href="index.html" class="nav-tab">OVERVIEW</a>
             <a href="#" class="nav-tab active">INTELLIGENCE</a>
             <a href="#" class="nav-tab">CONTACT US</a>
         </div>
         <div class="nav-right">
-            <button style="background: var(--electric-blue); color: #fff; border: none; padding: 10px 25px; font-size: 0.7rem; letter-spacing: 2px; font-weight: 700; cursor: pointer;">GET STARTED</button>
-        </div>
+    <button class="btn-get-started-intel" onclick="location.href='get-started.html'">
+        GET STARTED
+    </button>
+</div>
     </nav>
 
     <section class="hero">
