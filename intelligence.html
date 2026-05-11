@@ -47,18 +47,45 @@
 
         .nav-center { display: flex; gap: 50px; }
         
-        .nav-tab {
-            text-decoration: none; color: var(--pure-white);
-            font-size: 0.75rem; letter-spacing: 4px;
-            opacity: 0.5; transition: 0.4s;
-            position: relative; padding: 8px 0;
-        }
-        .nav-tab:hover, .nav-tab.active { opacity: 1; color: var(--electric-blue); }
-        .nav-tab.active::after {
-            content: ''; position: absolute; bottom: 0; left: 0;
-            width: 100%; height: 1.5px; background: var(--electric-blue);
-            box-shadow: 0 0 10px var(--electric-blue);
-        }
+        /* --- SOVEREIGN TABS (BLUE EDITION) --- */
+.nav-tab {
+    text-decoration: none;
+    color: var(--pure-white);
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    font-weight: 400;
+    opacity: 0.5; /* Dimmed when inactive */
+    position: relative;
+    padding: 8px 0;
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* THE SLIDING LINE LOGIC */
+.nav-tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%; /* Start from center */
+    width: 0; /* Hidden by default */
+    height: 1.5px;
+    background: var(--electric-blue);
+    box-shadow: 0 0 15px var(--electric-blue);
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    transform: translateX(-50%);
+}
+
+/* HOVER & ACTIVE STATES */
+.nav-tab:hover, 
+.nav-tab.active {
+    opacity: 1;
+    color: var(--electric-blue);
+}
+
+/* Slide the line out on hover or if the tab is active */
+.nav-tab:hover::after, 
+.nav-tab.active::after {
+    width: 100%;
+}
 
         .nav-right { display: flex; align-items: center; gap: 25px; }
 
