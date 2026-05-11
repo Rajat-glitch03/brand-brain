@@ -153,6 +153,38 @@
             font-weight: 700;
         }
 
+        /* THE IMPERIAL CREATE ACCOUNT BUTTON */
+        .btn-create-acc {
+            width: 100%;
+            background: var(--gold);
+            color: var(--deep-black);
+            border: 1px solid var(--gold);
+            padding: 14px;
+            font-family: var(--font-main);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            margin-top: 10px;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-create-acc:hover {
+            background: var(--deep-black);
+            color: var(--gold);
+            transform: scale(1.05); /* The Sovereign Zoom */
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+/* Optional: Subtle pulse effect to draw the eye */
+        .btn-create-acc:active {
+            transform: scale(0.98);
+        }
+
         /* INPUT FIELDS */
         .input-group {
             margin-bottom: 20px;
@@ -253,9 +285,9 @@
                 <input type="password" placeholder="••••••••">
             </div>
 
-            <button class="google-btn" style="background: var(--gold); color: var(--deep-black); border: none; margin-top: 10px;">
-                CREATE ACCOUNT
-            </button>
+            <button class="btn-create-acc">
+    CREATE ACCOUNT
+</button>
         </div>
 
         <p class="footer-link">Already have an account? <a href="#">LOGIN</a></p>
