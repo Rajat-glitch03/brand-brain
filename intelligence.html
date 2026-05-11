@@ -50,6 +50,12 @@
             z-index: 1000;
         }
 
+        .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between button and lines */
+}
+
         .nav-logo { height: 32px; transform: scale(3.0); transform-origin: left center; }
 
         .nav-center { display: flex; gap: 60px; }
@@ -119,33 +125,44 @@
         }
 
         /* --- MOBILE NAVIGATION --- */
-        @media (max-width: 1024px) {
-            .menu-toggle { display: flex !important; }
-            nav { height: 80px; padding: 0 20px; }
-            .nav-logo { transform: scale(2.2); }
+       @media (max-width: 1024px) {
+    nav {
+        height: 80px;
+        padding: 0 5%; /* Tighten padding for mobile */
+    }
 
-            .nav-center {
-                display: flex !important;
-                position: fixed !important;
-                top: 0; right: -100% !important;
-                width: 100% !important;
-                height: 100vh !important;
-                background: #06080f !important;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 40px;
-                transition: right 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-                z-index: 1500;
-            }
+    .nav-logo { 
+        transform: scale(2.0); /* Slightly smaller logo for mobile space */
+    }
 
-            .nav-center.open { right: 0 !important; }
+    .btn-get-started-intel {
+        padding: 8px 16px; /* Smaller button for mobile */
+        font-size: 0.6rem;
+        letter-spacing: 1px;
+    }
 
-            .menu-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-            .menu-toggle.open span:nth-child(2) { opacity: 0; }
-            .menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-        }
+    .menu-toggle {
+        display: flex !important;
+        flex-shrink: 0; /* Prevents hamburger from squishing */
+    }
 
+    .nav-center {
+        display: flex !important;
+        position: fixed !important;
+        top: 0; right: -100% !important;
+        width: 100% !important;
+        height: 100vh !important;
+        background: #06080f !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        transition: right 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        z-index: 1500;
+    }
+
+    .nav-center.open { right: 0 !important; }
+}
         /* --- CONTENT SECTIONS --- */
         .hero {
             padding: 180px 10% 60px;
@@ -220,12 +237,13 @@
             <a href="#" class="nav-tab">CONTACT US</a>
         </div>
         <div class="nav-right">
-            <button class="btn-get-started-intel" onclick="location.href='get-started.html'">GET STARTED</button>
-            <div class="menu-toggle" id="menuToggle">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-    </nav>
+    <button class="btn-get-started-intel" onclick="location.href='get-started.html'">GET STARTED</button>
+    <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
 
     <section class="hero">
         <h1>Meet Our Intelligence</h1>
