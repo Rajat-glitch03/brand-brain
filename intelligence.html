@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VARAVI Global | Intelligence Protocols</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* THE NEW INTELLIGENCE PALETTE */
+            --electric-blue: #009dff;
+            --cyber-purple: #6a35ff;
+            --midnight-blue: #001b6e;
+            --deep-black: #06080f;
+            --pure-white: #ffffff;
+            --grey: #888888;
+            --font-main: 'DM Sans', sans-serif;
+        }
+
+        /* --- EXCLUSIVE CYBER SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--deep-black); }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(var(--electric-blue), var(--cyber-purple)); 
+            border-radius: 2px; 
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scrollbar-width: thin; scrollbar-color: var(--electric-blue) var(--deep-black); }
+
+        body {
+            background-color: var(--deep-black);
+            color: var(--pure-white);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- NAVIGATION (INTELLIGENCE THEME) --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 6%;
+            background: rgba(6, 8, 15, 0.95);
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(0, 157, 255, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-logo { height: 32px; transform: scale(3.0); transform-origin: left center; }
+
+        .nav-center { display: flex; gap: 60px; }
+        .nav-tab {
+            text-decoration: none;
+            color: var(--pure-white);
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            opacity: 0.5;
+            position: relative;
+            padding: 8px 0;
+            transition: 0.4s;
+        }
+        .nav-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%; width: 0; height: 1.5px;
+            background: var(--electric-blue);
+            box-shadow: 0 0 15px var(--electric-blue);
+            transition: 0.4s;
+            transform: translateX(-50%);
+        }
+        .nav-tab:hover, .nav-tab.active { opacity: 1; color: var(--electric-blue); }
+        .nav-tab:hover::after, .nav-tab.active::after { width: 100%; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 180px 10% 60px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 { 
+            font-size: clamp(2.5rem, 5vw, 4rem); 
+            font-weight: 200; 
+            margin-bottom: 25px;
+            background: linear-gradient(90deg, #fff, var(--electric-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p { 
+            font-size: 1.1rem; 
+            line-height: 1.8; 
+            opacity: 0.7; 
+            font-weight: 300; 
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+
+        /* --- INTELLIGENCE GRID --- */
+        .intel-container {
+            padding: 40px 8% 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .box {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(0, 157, 255, 0.1);
+            padding: 50px;
+            margin-bottom: 40px;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .box:hover {
+            border-color: var(--electric-blue);
+            background: rgba(0, 157, 255, 0.03);
+            box-shadow: 0 0 40px rgba(0, 157, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .box h2 { 
+            color: var(--electric-blue); 
+            font-size: 1.8rem; 
+            letter-spacing: 3px; 
+            margin-bottom: 20px; 
+            font-weight: 400;
+        }
+
+        .box p { font-size: 0.95rem; line-height: 1.8; opacity: 0.7; margin-bottom: 30px; font-weight: 300; }
+
+        .purpose-tag {
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .purpose-tag span:first-child {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--cyber-purple);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .purpose-tag span:last-child {
+            font-size: 1.1rem;
+            color: var(--pure-white);
+            font-weight: 400;
+        }
+
+        /* SERIES DIVIDER */
+        .series-label {
+            font-size: 0.8rem;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: var(--grey);
+            margin: 40px 0;
+            position: relative;
+        }
+
+        /* --- FOOTER LOGO AREA --- */
+        .intel-footer {
+            text-align: center;
+            padding: 60px 0 100px;
+        }
+
+        .quans-logo {
+            height: 60px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px var(--electric-blue));
+        }
+
+        .powered-by {
+            font-size: 0.65rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--grey);
+        }
+
+        /* --- PC BLUE DOT --- */
+        #cursor-dot {
+            position: fixed; width: 10px; height: 10px;
+            background: var(--electric-blue); border-radius: 50%;
+            pointer-events: none; z-index: 10001;
+            box-shadow: 0 0 20px var(--electric-blue);
+            transform: translate(-50%, -50%);
+            opacity: 0; transition: opacity 0.5s ease;
+        }
+
+        /* MOBILE OPTIMIZATION */
+        @media (max-width: 768px) {
+            #cursor-dot { display: none !important; }
+            nav { height: 80px; padding: 0 20px; }
+            .nav-logo { transform: scale(2.2); }
+            .nav-center { display: none; } /* Mobile uses drawer - assuming inherited from main logic */
+            .box { padding: 35px 25px; }
+            .hero h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor-dot"></div>
+
+    <nav>
+        <div class="nav-left">
+            <img src="logo.png" class="nav-logo" alt="VARAVI">
+        </div>
+        <div class="nav-center">
+            <a href="index.html" class="nav-tab">OVERVIEW</a>
+            <a href="#" class="nav-tab active">INTELLIGENCE</a>
+            <a href="#" class="nav-tab">CONTACT US</a>
+        </div>
+        <div class="nav-right">
+            <button style="background: var(--electric-blue); color: #fff; border: none; padding: 10px 25px; font-size: 0.7rem; letter-spacing: 2px; font-weight: 700; cursor: pointer;">GET STARTED</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Meet Our Intelligence</h1>
+        <p>Our intelligence, Quans, is not a tool— it is a strategist. Whether Quans is guiding your general inquiries or scanning the deep web for leaks while you sleep, Quans operates with one objective: Absolute Sovereignty.</p>
+    </section>
+
+    <div class="intel-container">
+        <div class="box">
+            <h2>Quans</h2>
+            <p>Quans is our baseline strategic engine, designed for high-velocity navigation and general advisory. It provides a clean, unbiased synthesis of global data to guide your initial consultations. Reliable, precise, and accessible—Quans ensures you never move into the landscape blind. It is the compass for the modern sovereign.</p>
+            <div class="purpose-tag">
+                <span>Purpose</span>
+                <span>Guidance and Navigation.</span>
+            </div>
+        </div>
+
+        <div class="series-label">v2.4 Series</div>
+
+        <div class="box">
+            <h2>Quans v2.4bb</h2>
+            <p>Engineered specifically for the theatre of high-stakes business. The v2.4bb protocol doesn’t just provide data—it provides Architectural Reports. It performs real-time risk mitigation, competitive deep-dives, and strategic forecasting. This is your high-end consultant that never sleeps, offering a panoramic view of market shifts and actionable steps to maintain your dominance. Where others guess, v2.4bb knows.</p>
+            <div class="purpose-tag">
+                <span>Purpose</span>
+                <span>Business Warfare & Risk Analysis.</span>
+            </div>
+        </div>
+
+        <div class="box">
+            <h2>Quans v2.4s</h2>
+            <p>The absolute peak of the VARAVI line. The v2.4s is a 24/7 deep-web scanner that operates in the shadows of the internet. By enrolling your brand or asset name, the Sentinel begins an unending hunt for leaks, impersonations, and hostile market movements. It operates at the edge of the digital frontier, guarding your empire while you sleep. Total awareness. Zero vulnerability.</p>
+            <div class="purpose-tag">
+                <span>Purpose</span>
+                <span>Deep-Web Defense & Asset Protection.</span>
+            </div>
+        </div>
+
+        <div class="intel-footer">
+            <img src="quans-logo.png" class="quans-logo" alt="QUANS">
+            <div class="powered-by">Powered by VARAVI Global</div>
+        </div>
+    </div>
+
+    <script>
+        // BLUE CURSOR DOT LOGIC
+        const dot = document.getElementById('cursor-dot');
+        let initialMove = false;
+
+        document.addEventListener('mousemove', (e) => {
+            if (!initialMove) {
+                dot.style.opacity = "1";
+                initialMove = true;
+            }
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+        });
+    </script>
+</body>
+</html>
