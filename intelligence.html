@@ -86,7 +86,7 @@
         /* --- MOBILE NAVIGATION --- */
         @media (max-width: 1024px) {
             nav { height: 80px; padding: 0 5%; }
-            .nav-logo { transform: scale(2.2); }
+            .nav-logo { transform: scale(1.5); }
             .nav-center {
                 position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
                 background: #06080f; flex-direction: column; justify-content: center;
@@ -105,8 +105,8 @@
         /* --- CONTENT --- */
         .hero { padding: 180px 8% 60px; text-align: center; max-width: 1000px; margin: 0 auto; }
         .hero h1 { 
-            font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 200; margin-bottom: 25px;
-            letter-spacing: 5px; text-transform: uppercase;
+            font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 320; margin-bottom: 25px;
+            letter-spacing: -3px;
             background: linear-gradient(90deg, #fff, var(--electric-blue));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
@@ -128,7 +128,7 @@
             transform: translateY(-10px);
         }
 
-        .box h2 { color: var(--electric-blue); font-size: 1.8rem; letter-spacing: 3px; margin-bottom: 20px; font-weight: 400; text-transform: uppercase; }
+        .box h2 { color: var(--electric-blue); font-size: 1.8rem; letter-spacing: 3px; margin-bottom: 20px; font-weight: 600; }
         .box p { font-size: 0.95rem; opacity: 0.7; margin-bottom: 35px; font-weight: 300; line-height: 1.8; }
 
         .purpose-section h4 { color: var(--cyber-purple); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 8px; }
@@ -137,8 +137,8 @@
         .series-label { font-size: 0.8rem; letter-spacing: 10px; text-transform: uppercase; color: var(--grey); margin: 20px 0; font-weight: 700; }
 
         .intel-footer { text-align: center; padding: 60px 0 120px; }
-        .quans-logo { height: 50px; margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--electric-blue)); }
-        .powered-by { font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase; color: var(--grey); }
+        .quans-logo { height: 50px; margin-bottom: 20px; zoom: 3; }
+        .powered-by { font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase; color: var(--white); }
 
         /* PC BLUE DOT CURSOR */
         #cursor-dot {
@@ -156,7 +156,7 @@
 
     <nav>
         <div class="nav-left">
-            <img src="logo.png" class="nav-logo" alt="VARAVI">
+            <img src="brand-logo.png" class="nav-logo" alt="VARAVI">
         </div>
 
         <div class="nav-center" id="navDrawer">
@@ -209,7 +209,7 @@
         </div>
 
         <footer class="intel-footer">
-            <img src="quans-logo.png" class="quans-logo" alt="QUANS">
+            <img src="quans.png" class="quans-logo" alt="QUANS">
             <div class="powered-by">Powered by VARAVI Global</div>
         </footer>
     </div>
