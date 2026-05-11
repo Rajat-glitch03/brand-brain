@@ -224,12 +224,61 @@
         }
         
         /* Ensure consistent mobile sizing */
-        @media (max-width: 1024px) {
-            .btn-get-started-intel {
-                padding: 10px 18px;
-                font-size: 0.65rem;
-            }
+        /* HAMBURGER ICON (PURE CYBER ANIMATION) */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 26px; height: 18px;
+    cursor: pointer;
+    z-index: 1002;
+    margin-left: 15px;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 100%; height: 2px;
+    background: var(--electric-blue); /* Intelligence Color */
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    transform-origin: left center;
+}
+
+/* MOBILE LAYOUT OVERRIDES */
+    @media (max-width: 1024px) {
+        nav {
+            height: 80px;
+            padding: 0 20px;
         }
+    
+        .nav-logo { transform: scale(2); }
+    
+        .nav-right { display: flex; align-items: center; gap: 10px; }
+    
+        .menu-toggle { display: flex; }
+    
+        /* Hidden Drawer Overlay */
+        .nav-center {
+            position: fixed;
+            top: 0; right: -100%;
+            width: 100%; height: 100vh;
+            background: rgba(6, 8, 15, 0.98);
+            backdrop-filter: blur(20px);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 1001;
+            display: flex; /* Overriding the display: none from earlier */
+        }
+    
+        .nav-center.open { right: 0; }
+    
+        /* Hamburger -> X Animation */
+        .menu-toggle.open span:nth-child(1) { transform: rotate(45deg); width: 23px; }
+        .menu-toggle.open span:nth-child(2) { opacity: 0; width: 0; }
+        .menu-toggle.open span:nth-child(3) { transform: rotate(-45deg); width: 23px; }
+    }
 
         /* MOBILE OPTIMIZATION */
         @media (max-width: 768px) {
@@ -247,21 +296,23 @@
     <div id="cursor-dot"></div>
 
     <nav>
+    <div class="nav-left">
+        <img src="logo.png" class="nav-logo" alt="VARAVI">
+    </div>
 
-        <div class="nav-left">
-            <img src="brand-logo.png" class="nav-logo">
+    <div class="nav-center" id="navDrawer">
+        <a href="index.html" class="nav-tab">OVERVIEW</a>
+        <a href="#" class="nav-tab active">INTELLIGENCE</a>
+        <a href="#contact" class="nav-tab">CONTACT US</a>
+    </div>
+
+    <div class="nav-right">
+        <button class="btn-get-started-intel" onclick="location.href='get-started.html'">GET STARTED</button>
+        <div class="menu-toggle" id="menuToggle">
+            <span></span><span></span><span></span>
         </div>
-        <div class="nav-center">
-            <a href="index.html" class="nav-tab">OVERVIEW</a>
-            <a href="#" class="nav-tab active">INTELLIGENCE</a>
-            <a href="#" class="nav-tab">CONTACT US</a>
-        </div>
-        <div class="nav-right">
-    <button class="btn-get-started-intel" onclick="location.href='get-started.html'">
-        GET STARTED
-    </button>
-</div>
-    </nav>
+    </div>
+</nav>
 
     <section class="hero">
         <h1>Meet Our Intelligence</h1>
@@ -317,6 +368,24 @@
             dot.style.left = e.clientX + 'px';
             dot.style.top = e.clientY + 'px';
         });
+
+        const menuToggle = document.getElementById('menuToggle');
+const navDrawer = document.getElementById('navDrawer');
+const tabs = document.querySelectorAll('.nav-tab');
+
+// Toggle Drawer and Hamburger Animation
+menuToggle.addEventListener('click', () => {
+    menuToggle.classList.toggle('open');
+    navDrawer.classList.toggle('open');
+});
+
+// Close drawer when a link is clicked
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        menuToggle.classList.remove('open');
+        navDrawer.classList.remove('open');
+    });
+});
     </script>
 </body>
 </html>
