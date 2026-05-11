@@ -8,7 +8,6 @@
     
     <style>
         :root {
-            /* THE NEW INTELLIGENCE PALETTE */
             --electric-blue: #009dff;
             --cyber-purple: #6a35ff;
             --midnight-blue: #001b6e;
@@ -36,7 +35,7 @@
             scroll-behavior: smooth;
         }
 
-        /* --- NAVIGATION (INTELLIGENCE THEME) --- */
+        /* --- NAVIGATION --- */
         nav {
             position: fixed;
             top: 0; width: 100%;
@@ -51,12 +50,9 @@
             z-index: 1000;
         }
 
-        .nav-logo { height: 32px; transform: scale(2); transform-origin: left center; margin-left: -25px; }
+        .nav-logo { height: 32px; transform: scale(2); transform-origin: left center; }
 
-        .nav-center {
-    display: flex;
-    gap: 60px;
-}
+        .nav-center { display: flex; gap: 60px; }
         .nav-tab {
             text-decoration: none;
             color: var(--pure-white);
@@ -79,129 +75,6 @@
         .nav-tab:hover, .nav-tab.active { opacity: 1; color: var(--electric-blue); }
         .nav-tab:hover::after, .nav-tab.active::after { width: 100%; }
 
-        /* --- HERO SECTION --- */
-        .hero {
-            padding: 180px 10% 60px;
-            text-align: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .hero h1 { 
-            font-size: clamp(2.5rem, 5vw, 4rem); 
-            font-weight: 300; 
-            margin-bottom: 25px;
-            letter-spacing: -2px;
-            background: linear-gradient(90deg, #fff, var(--electric-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p { 
-            font-size: 1.1rem; 
-            line-height: 1.8; 
-            opacity: 0.7; 
-            font-weight: 300; 
-            max-width: 800px; 
-            margin: 0 auto; 
-        }
-
-        /* --- INTELLIGENCE GRID --- */
-        .intel-container {
-            padding: 40px 8% 100px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .box {
-            width: 100%;
-            max-width: 900px;
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid rgba(0, 157, 255, 0.1);
-            padding: 50px;
-            margin-bottom: 40px;
-            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .box:hover {
-            border-color: var(--electric-blue);
-            background: rgba(0, 157, 255, 0.03);
-            box-shadow: 0 0 40px rgba(0, 157, 255, 0.15);
-            transform: translateY(-5px);
-        }
-
-        .box h2 { 
-            color: var(--electric-blue); 
-            font-size: 1.8rem; 
-            letter-spacing: 3px; 
-            margin-bottom: 20px; 
-            font-weight: 600;
-        }
-
-        .box p { font-size: 0.95rem; line-height: 1.8; opacity: 0.7; margin-bottom: 30px; font-weight: 300; }
-
-        .purpose-tag {
-            display: inline-block;
-            margin-top: 10px;
-        }
-
-        .purpose-tag span:first-child {
-            display: block;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--cyber-purple);
-            margin-bottom: 5px;
-            font-weight: 700;
-        }
-
-        .purpose-tag span:last-child {
-            font-size: 1.1rem;
-            color: var(--pure-white);
-            font-weight: 400;
-        }
-
-        /* SERIES DIVIDER */
-        .series-label {
-            font-size: 0.8rem;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            color: var(--grey);
-            margin: 40px 0;
-            position: relative;
-        }
-
-        /* --- FOOTER LOGO AREA --- */
-        .intel-footer {
-            text-align: center;
-            padding: 60px 0 100px;
-        }
-
-        .quans-logo {
-            height: 60px;
-            margin-bottom: 15px;
-            zoom: 3;
-        }
-
-        .powered-by {
-            font-size: 0.80rem;
-            letter-spacing: 4px;
-            color: var(--white);
-        }
-
-        /* --- PC BLUE DOT --- */
-        #cursor-dot {
-            position: fixed; width: 10px; height: 10px;
-            background: var(--electric-blue); border-radius: 50%;
-            pointer-events: none; z-index: 10001;
-            box-shadow: 0 0 20px var(--electric-blue);
-            transform: translate(-50%, -50%);
-            opacity: 0; transition: opacity 0.5s ease;
-        }
-
         /* CYBER-INVERSION GET STARTED BUTTON */
         .btn-get-started-intel {
             background: var(--electric-blue);
@@ -218,81 +91,119 @@
             white-space: nowrap;
             outline: none;
         }
-        
+
         .btn-get-started-intel:hover {
             background: var(--deep-black);
             color: var(--electric-blue);
-            transform: scale(1.06); /* The Sovereign Zoom */
+            transform: scale(1.06);
             box-shadow: 0 8px 25px rgba(0, 157, 255, 0.3);
         }
-        
-        /* Ensure consistent mobile sizing */
-        /* HAMBURGER ICON (PURE CYBER ANIMATION) */
-.menu-toggle {
-    display: none; /* Hidden on PC */
-    flex-direction: column;
-    justify-content: space-between;
-    width: 26px; height: 18px;
-    cursor: pointer;
-    z-index: 2000; /* Above everything */
-}
 
-.menu-toggle span {
-    display: block;
-    width: 100%; height: 2px;
-    background: var(--electric-blue);
-    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-}
-/* MOBILE LAYOUT OVERRIDES */
-     @media (max-width: 1024px) {
-            nav {
-                height: 80px;
-                padding: 0 20px;
-            }
-
-            .nav-logo { transform: scale(1.5); margin-left: 20px;}
-
-            /* Forces Logo, Get Started, and Menu onto ONE Unbreakable Line */
-            .nav-right { gap: 12px; }
-
-            .btn-get-started {
-                padding: 10px 18px;
-                font-size: 0.65rem;
-            }
-
-            .menu-toggle { display: flex; }
-
-            /* Hidden Drawer Overlay */
-            .nav-center {
-                position: fixed;
-                top: 0; right: -100%;
-                width: 100%; height: 100vh;
-                background: rgba(6, 8, 15, 0.98);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 50px;
-                transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-                z-index: 1001;
-            }
-
-            .nav-center.open { right: 0; }
-
-            /* Hamburger -> X Animation */
-            .menu-toggle.open span:nth-child(1) { transform: rotate(45deg); width: 23px; }
-            .menu-toggle.open span:nth-child(2) { opacity: 0; width: 0; }
-            .menu-toggle.open span:nth-child(3) { transform: rotate(-45deg); width: 23px; }
+        /* HAMBURGER TOGGLE */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 26px; height: 18px;
+            cursor: pointer;
+            z-index: 9999;
+            margin-left: 15px;
         }
 
-        /* MOBILE OPTIMIZATION */
-        @media (max-width: 768px) {
+        .menu-toggle span {
+            display: block;
+            width: 100%; height: 2px;
+            background: var(--electric-blue);
+            transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 180px 10% 60px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 { 
+            font-size: clamp(2.5rem, 5vw, 4rem); 
+            font-weight: 200; 
+            margin-bottom: 25px;
+            background: linear-gradient(90deg, #fff, var(--electric-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p { font-size: 1.1rem; line-height: 1.8; opacity: 0.7; font-weight: 300; max-width: 800px; margin: 0 auto; }
+
+        /* --- INTELLIGENCE GRID --- */
+        .intel-container { padding: 40px 8% 100px; display: flex; flex-direction: column; align-items: center; }
+
+        .box {
+            width: 100%; max-width: 900px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(0, 157, 255, 0.1);
+            padding: 50px; margin-bottom: 40px;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+        }
+
+        .box:hover {
+            border-color: var(--electric-blue);
+            background: rgba(0, 157, 255, 0.03);
+            box-shadow: 0 0 40px rgba(0, 157, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .box h2 { color: var(--electric-blue); font-size: 1.8rem; letter-spacing: 3px; margin-bottom: 20px; font-weight: 400; }
+        .box p { font-size: 0.95rem; line-height: 1.8; opacity: 0.7; margin-bottom: 30px; font-weight: 300; }
+
+        .purpose-tag span:first-child { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--cyber-purple); margin-bottom: 5px; font-weight: 700; }
+        .purpose-tag span:last-child { font-size: 1.1rem; color: var(--pure-white); font-weight: 400; }
+
+        .series-label { font-size: 0.8rem; letter-spacing: 8px; text-transform: uppercase; color: var(--grey); margin: 40px 0; }
+
+        .intel-footer { text-align: center; padding: 60px 0 100px; }
+        .quans-logo { height: 60px; margin-bottom: 15px; filter: drop-shadow(0 0 10px var(--electric-blue)); }
+        .powered-by { font-size: 0.65rem; letter-spacing: 4px; text-transform: uppercase; color: var(--grey); }
+
+        /* --- PC BLUE DOT --- */
+        #cursor-dot {
+            position: fixed; width: 10px; height: 10px;
+            background: var(--electric-blue); border-radius: 50%;
+            pointer-events: none; z-index: 10001;
+            box-shadow: 0 0 20px var(--electric-blue);
+            transform: translate(-50%, -50%);
+            opacity: 0; transition: opacity 0.5s ease;
+        }
+
+        /* MOBILE OVERRIDES */
+        @media (max-width: 1024px) {
             #cursor-dot { display: none !important; }
             nav { height: 80px; padding: 0 20px; }
-            .nav-logo { transform: scale(2.2); }
-            .nav-center { display: none; } /* Mobile uses drawer - assuming inherited from main logic */
+            .nav-logo { transform: scale(1.5); mragin-left: -15px; }
+            .menu-toggle { display: flex !important; }
+            
+            .nav-center {
+                display: flex !important;
+                position: fixed !important;
+                top: 0; right: -100% !important;
+                width: 100% !important; height: 100vh !important;
+                background: #06080f !important;
+                flex-direction: column; justify-content: center; align-items: center;
+                gap: 40px; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+                z-index: 9998;
+            }
+
+            .nav-center.open { right: 0 !important; }
+            .nav-tab { font-size: 1.2rem; opacity: 1; }
+
+            .menu-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .menu-toggle.open span:nth-child(2) { opacity: 0; }
+            .menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+            .btn-get-started-intel { padding: 10px 18px; font-size: 0.65rem; }
             .box { padding: 35px 25px; }
-            .hero h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
@@ -301,25 +212,22 @@
     <div id="cursor-dot"></div>
 
     <nav>
-    <div class="nav-left">
-        <img src="brand-logo.png" class="nav-logo" alt="VARAVI">
-    </div>
-
-    <div class="nav-center" id="navDrawer">
-        <a href="index.html" class="nav-tab">OVERVIEW</a>
-        <a href="#" class="nav-tab active">INTELLIGENCE</a>
-        <a href="#contact" class="nav-tab">CONTACT US</a>
-    </div>
-
-    <div class="nav-right">
-        <button class="btn-get-started-intel" onclick="location.href='get-started.html'">GET STARTED</button>
-        <div class="menu-toggle" id="menuToggle">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="nav-left">
+            <img src="brand-logo.png" class="nav-logo" alt="VARAVI">
         </div>
-    </div>
-</nav>
+        <div class="nav-center" id="navDrawer">
+            <a href="index.html" class="nav-tab">OVERVIEW</a>
+            <a href="#" class="nav-tab active">INTELLIGENCE</a>
+            <a href="#" class="nav-tab">CONTACT US</a>
+        </div>
+        <div class="nav-right">
+            <button class="btn-get-started-intel" onclick="location.href='get-started.html'">GET STARTED</button>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
     <section class="hero">
         <h1>Meet Our Intelligence</h1>
         <p>Our intelligence, Quans, is not a tool— it is a strategist. Whether Quans is guiding your general inquiries or scanning the deep web for leaks while you sleep, Quans operates with one objective: Absolute Sovereignty.</p>
@@ -329,10 +237,7 @@
         <div class="box">
             <h2>Quans</h2>
             <p>Quans is our baseline strategic engine, designed for high-velocity navigation and general advisory. It provides a clean, unbiased synthesis of global data to guide your initial consultations. Reliable, precise, and accessible—Quans ensures you never move into the landscape blind. It is the compass for the modern sovereign.</p>
-            <div class="purpose-tag">
-                <span>Purpose</span>
-                <span>Guidance and Navigation.</span>
-            </div>
+            <div class="purpose-tag"><span>Purpose</span><span>Guidance and Navigation.</span></div>
         </div>
 
         <div class="series-label">v2.4 Series</div>
@@ -340,94 +245,45 @@
         <div class="box">
             <h2>Quans v2.4bb</h2>
             <p>Engineered specifically for the theatre of high-stakes business. The v2.4bb protocol doesn’t just provide data—it provides Architectural Reports. It performs real-time risk mitigation, competitive deep-dives, and strategic forecasting. This is your high-end consultant that never sleeps, offering a panoramic view of market shifts and actionable steps to maintain your dominance. Where others guess, v2.4bb knows.</p>
-            <div class="purpose-tag">
-                <span>Purpose</span>
-                <span>Business Warfare & Risk Analysis.</span>
-            </div>
+            <div class="purpose-tag"><span>Purpose</span><span>Business Warfare & Risk Analysis.</span></div>
         </div>
 
         <div class="box">
             <h2>Quans v2.4s</h2>
             <p>The absolute peak of the VARAVI line. The v2.4s is a 24/7 deep-web scanner that operates in the shadows of the internet. By enrolling your brand or asset name, the Sentinel begins an unending hunt for leaks, impersonations, and hostile market movements. It operates at the edge of the digital frontier, guarding your empire while you sleep. Total awareness. Zero vulnerability.</p>
-            <div class="purpose-tag">
-                <span>Purpose</span>
-                <span>Deep-Web Defense & Asset Protection.</span>
-            </div>
+            <div class="purpose-tag"><span>Purpose</span><span>Deep-Web Defense & Asset Protection.</span></div>
         </div>
 
         <div class="intel-footer">
-            <img src="quans.png" class="quans-logo" alt="QUANS">
+            <img src="quans-logo.png" class="quans-logo" alt="QUANS">
             <div class="powered-by">Powered by VARAVI Global</div>
         </div>
     </div>
 
     <script>
+        const menuBtn = document.getElementById('menuToggle');
+        const drawer = document.getElementById('navDrawer');
 
-    const menuToggle = document.getElementById('menuToggle');
-    const navDrawer = document.getElementById('navDrawer');
-    const tabs = document.querySelectorAll('.nav-tab');
-
-    // Open/Close logic
-    menuToggle.addEventListener('click', () => {
-        menuToggle.classList.toggle('open');
-        navDrawer.classList.toggle('open');
-        
-        // Prevent body scrolling when menu is open
-        if (navDrawer.classList.contains('open')) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'auto';
-        }
-    });
-
-    // Close when clicking a link
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            menuToggle.classList.remove('open');
-            navDrawer.classList.remove('open');
-            document.body.style.overflow = 'auto';
-        });
-    });
-
-        <script>
-    // Explicitly target the elements
-    const menuBtn = document.getElementById('menuToggle');
-    const drawer = document.getElementById('navDrawer');
-
-    if (menuBtn) {
         menuBtn.onclick = function() {
-            // Toggle the 'open' class on both the button and the drawer
             menuBtn.classList.toggle('open');
             drawer.classList.toggle('open');
-            
-            // Log to console for debugging (you can remove this later)
-            console.log("Menu toggled: ", drawer.classList.contains('open'));
+            document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : 'auto';
+        };
 
-            // Prevent scroll when menu is open
-            if (drawer.classList.contains('open')) {
-                document.body.style.overflow = 'hidden';
-            } else {
+        document.querySelectorAll('.nav-tab').forEach(link => {
+            link.onclick = () => {
+                menuBtn.classList.remove('open');
+                drawer.classList.remove('open');
                 document.body.style.overflow = 'auto';
-            }
-        };
-    }
+            };
+        });
 
-    // Close drawer when clicking any link inside it
-    document.querySelectorAll('.nav-tab').forEach(link => {
-        link.onclick = function() {
-            menuBtn.classList.remove('open');
-            drawer.classList.remove('open');
-            document.body.style.overflow = 'auto';
-        };
-    });
-
-    /* Blue Dot Logic */
-    const dot = document.getElementById('cursor-dot');
-    document.addEventListener('mousemove', (e) => {
-        dot.style.opacity = "1";
-        dot.style.left = e.clientX + 'px';
-        dot.style.top = e.clientY + 'px';
-    });
-</script>
+        const dot = document.getElementById('cursor-dot');
+        document.addEventListener('mousemove', (e) => {
+            dot.style.opacity = "1";
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+        });
+    </script>
 </body>
 </html>
