@@ -63,15 +63,19 @@
         }
 
         .nav-tab::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 50%;
-            width: 0; height: 1.5px;
-            background: var(--electric-blue);
-            box-shadow: 0 0 12px var(--electric-blue);
-            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            transform: translateX(-50%);
-        }
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    /* Height increased for a bolder look */
+    height: 3px; 
+    background: var(--electric-blue);
+    /* Intensified glow for the bold line */
+    box-shadow: 0 0 20px 2px var(--electric-blue); 
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    transform: translateX(-50%);
+}
 
         /* Hover & Click logic */
         .nav-tab:hover, .nav-tab.active { color: var(--electric-blue); }
