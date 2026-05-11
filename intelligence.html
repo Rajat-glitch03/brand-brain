@@ -362,20 +362,7 @@
     </div>
 
     <script>
-        // BLUE CURSOR DOT LOGIC
-        const dot = document.getElementById('cursor-dot');
-        let initialMove = false;
 
-        document.addEventListener('mousemove', (e) => {
-            if (!initialMove) {
-                dot.style.opacity = "1";
-                initialMove = true;
-            }
-            dot.style.left = e.clientX + 'px';
-            dot.style.top = e.clientY + 'px';
-        });
-
-        <script>
     const menuToggle = document.getElementById('menuToggle');
     const navDrawer = document.getElementById('navDrawer');
     const tabs = document.querySelectorAll('.nav-tab');
@@ -402,9 +389,45 @@
         });
     });
 
-    /* Blue Dot Logic for PC *
+        <script>
+    // Explicitly target the elements
+    const menuBtn = document.getElementById('menuToggle');
+    const drawer = document.getElementById('navDrawer');
+
+    if (menuBtn) {
+        menuBtn.onclick = function() {
+            // Toggle the 'open' class on both the button and the drawer
+            menuBtn.classList.toggle('open');
+            drawer.classList.toggle('open');
+            
+            // Log to console for debugging (you can remove this later)
+            console.log("Menu toggled: ", drawer.classList.contains('open'));
+
+            // Prevent scroll when menu is open
+            if (drawer.classList.contains('open')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        };
+    }
+
+    // Close drawer when clicking any link inside it
+    document.querySelectorAll('.nav-tab').forEach(link => {
+        link.onclick = function() {
+            menuBtn.classList.remove('open');
+            drawer.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        };
+    });
+
+    /* Blue Dot Logic */
+    const dot = document.getElementById('cursor-dot');
+    document.addEventListener('mousemove', (e) => {
+        dot.style.opacity = "1";
+        dot.style.left = e.clientX + 'px';
+        dot.style.top = e.clientY + 'px';
+    });
 </script>
-});
-    </script>
 </body>
 </html>
