@@ -289,7 +289,7 @@
         <h2 class="main-heading">CREATE AN ACCOUNT</h2>
 
         <div class="form-box">
-            <button class="btn-google"><img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">SIGNIN WITH GOOGLE</button>
+            <button class="btn-google"><img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google" onclick="signInWithGoogle()">SIGNIN WITH GOOGLE</button>
 
             <div class="or-separator">
                 <span>OR</span>
@@ -329,6 +329,78 @@
             dot.style.left = e.clientX + 'px';
             dot.style.top = e.clientY + 'px';
         });
+
+        <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  // --- PASTE YOUR CONFIG FROM STEP 3 HERE ---
+  const firebaseConfig = {
+    apiKey: "AIzaSyDgs1JQbYEVA7MRAnu4KUQezhFJzDtJbmE",
+  authDomain: "varavi-global.firebaseapp.com",
+  projectId: "varavi-global",
+  storageBucket: "varavi-global.firebasestorage.app",
+  messagingSenderId: "682864161453",
+  appId: "1:682864161453:web:7d09546a34e3c994038c24",
+  measurementId: "G-M196BGD968"
+  };
+
+  // Initialize Firebase App & Services
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // --- GOOGLE LOGIN LOGIC ---
+  window.signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // Save the player to your Firestore "Users" list
+      await setDoc(doc(db, "users", user.uid), {
+        name: user.displayName,
+        email: user.email,
+        method: "Google",
+        timestamp: new Date()
+      });
+
+      window.location.href = "intelligence.html";
+    } catch (error) {
+      console.error("Auth Error:", error.message);
+      alert("Authentication Failed.");
+    }
+  };
+
+  // --- MANUAL EMAIL SIGNUP LOGIC ---
+  const signupForm = document.getElementById('getStartedForm');
+  if (signupForm) {
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = signupForm.querySelector('input[type="text"]').value;
+      const email = signupForm.querySelector('input[type="email"]').value;
+      const password = signupForm.querySelector('input[type="password"]').value;
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Save manual user info to Firestore
+        await setDoc(doc(db, "users", user.uid), {
+          name: name,
+          email: email,
+          method: "Email/Pass",
+          timestamp: new Date()
+        });
+
+        window.location.href = "intelligence.html";
+      } catch (error) {
+        alert("Error: " + error.message);
+      }
+    });
+  }
+</script>
     </script>
 </body>
 </html>
