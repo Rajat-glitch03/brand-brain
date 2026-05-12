@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VARAVI Global | Contact Liaison</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gold: #FFD700;
+            --deep-black: #06080f;
+            --pure-white: #ffffff;
+            --grey: #888888;
+            --font-main: 'DM Sans', sans-serif;
+        }
+
+        /* --- IMPERIAL SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--deep-black); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--deep-black);
+            color: var(--pure-white);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%; height: 100px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 6%;
+            background: rgba(6, 8, 15, 0.95);
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-logo { height: 32px; transform: scale(3.0); transform-origin: left center; }
+
+        .nav-center { display: flex; gap: 50px; }
+        
+        .nav-tab {
+            text-decoration: none; color: var(--pure-white);
+            font-size: 0.75rem; letter-spacing: 4px;
+            opacity: 0.5; transition: 0.4s;
+            position: relative; padding: 8px 0;
+        }
+        .nav-tab:hover, .nav-tab.active { opacity: 1; color: var(--gold); }
+
+        /* BOLD GOLD UNDERLINE */
+        .nav-tab::after {
+            content: ''; position: absolute; bottom: 0; left: 50%;
+            width: 0; height: 3px; background: var(--gold);
+            box-shadow: 0 0 20px 2px var(--gold);
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transform: translateX(-50%);
+        }
+        .nav-tab:hover::after, .nav-tab.active::after { width: 100%; }
+
+        .nav-right { display: flex; align-items: center; gap: 25px; }
+
+        /* SOVEREIGN BUTTON */
+        .btn-submit {
+            background: var(--gold); color: var(--deep-black);
+            border: 1px solid var(--gold);
+            padding: 14px 40px; font-family: var(--font-main);
+            font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
+            text-transform: uppercase; cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            width: 100%; margin-top: 20px;
+        }
+        .btn-submit:hover {
+            background: transparent; color: var(--gold);
+            transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .menu-toggle {
+            display: none; flex-direction: column; justify-content: space-between;
+            width: 24px; height: 16px; cursor: pointer; z-index: 2000; flex-shrink: 0;
+        }
+        .menu-toggle span { display: block; width: 100%; height: 2px; background: var(--gold); transition: 0.4s; }
+
+        /* --- CONTENT --- */
+        .contact-hero {
+            padding: 180px 10% 60px;
+            text-align: center; max-width: 1100px; margin: 0 auto;
+        }
+        .contact-hero p {
+            font-size: 1.1rem; font-weight: 300; opacity: 0.8;
+            letter-spacing: 1px; line-height: 1.8;
+        }
+
+        /* THE CONTACT MONOLITH BOX */
+        .form-container {
+            width: 90%; max-width: 600px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            padding: 60px 50px; margin: 0 auto 60px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        .form-container h2 {
+            color: var(--gold); font-size: 1.8rem; letter-spacing: 5px;
+            margin-bottom: 40px; text-align: center; font-weight: 400;
+        }
+
+        .input-group { margin-bottom: 25px; text-align: left; }
+        .input-group label {
+            display: block; font-size: 0.7rem; color: var(--gold);
+            text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px;
+        }
+        .input-group label span { color: var(--gold); font-weight: bold; margin-left: 3px; }
+
+        .input-group input, .input-group textarea {
+            width: 100%; background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px; color: #fff; font-family: var(--font-main);
+            outline: none; transition: 0.4s;
+        }
+        .input-group input:focus, .input-group textarea:focus {
+            border-color: var(--gold); background: rgba(255, 215, 0, 0.02);
+        }
+
+        /* --- FOOTER INFO --- */
+        .liaison-details {
+            text-align: center; padding-bottom: 100px;
+        }
+        .info-block { margin-bottom: 35px; }
+        .info-label { font-size: 0.7rem; color: var(--gold); letter-spacing: 4px; margin-bottom: 8px; text-transform: uppercase; }
+        .info-value { font-size: 1.1rem; opacity: 0.8; font-weight: 300; }
+
+        .stay-updated {
+            margin-top: 50px; font-size: 0.8rem; letter-spacing: 8px;
+            color: var(--grey); text-transform: uppercase; font-weight: 700;
+        }
+
+        /* PC GOLDEN DOT */
+        #cursor-dot {
+            position: fixed; width: 10px; height: 10px; background: var(--gold);
+            border-radius: 50%; pointer-events: none; z-index: 10001;
+            box-shadow: 0 0 20px var(--gold); transform: translate(-50%, -50%); opacity: 0;
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 1024px) {
+            nav { height: 80px; padding: 0 5%; }
+            .nav-logo { transform: scale(3.5); margin-left: 20px; }
+            .nav-center {
+                position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+                background: #06080f; flex-direction: column; justify-content: center;
+                align-items: center; gap: 40px; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: 1500;
+            }
+            .nav-center.open { right: 0; }
+            .menu-toggle { display: flex; }
+            .form-container { padding: 40px 25px; }
+            #cursor-dot { display: none; }
+
+            .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+            .menu-toggle.open span:nth-child(2) { opacity: 0; }
+            .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor-dot"></div>
+
+    <nav>
+        <div class="nav-left">
+            <img src="logo.png" class="nav-logo" alt="VARAVI">
+        </div>
+        <div class="nav-center" id="navDrawer">
+            <a href="index.html" class="nav-tab">OVERVIEW</a>
+            <a href="intelligence.html" class="nav-tab">INTELLIGENCE</a>
+            <a href="#" class="nav-tab active">CONTACT US</a>
+        </div>
+        <div class="nav-right">
+            <button class="btn-submit" style="width: auto; padding: 10px 20px; margin: 0; font-size: 0.6rem;" onclick="location.href='get-started.html'">GET STARTED</button>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="contact-hero">
+        <p>VARAVI Global is a high-execution intelligence firm. We combine deep-web surveillance with autonomous strategic consulting to give our clients an unfair advantage in a global market. We are the invisible hand that acts while the rest of the world watches.</p>
+    </div>
+
+    <div class="form-container">
+        <h2>CONTACT US</h2>
+        <form action="#">
+            <div class="input-group">
+                <label>Name<span>*</span></label>
+                <input type="text" placeholder="Enter your full name" required>
+            </div>
+            <div class="input-group">
+                <label>Email<span>*</span></label>
+                <input type="email" placeholder="name@firm.com" required>
+            </div>
+            <div class="input-group">
+                <label>Type your message<span>*</span></label>
+                <textarea rows="5" placeholder="Transmission details..." required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">SUBMIT</button>
+        </form>
+    </div>
+
+    <div class="liaison-details">
+        <div class="info-block">
+            <div class="info-label">🏠 ADDRESS</div>
+            <div class="info-value">Utar Galli, Kadrabad, Jalna.</div>
+        </div>
+        <div class="info-block">
+            <div class="info-label">📧 EMAIL</div>
+            <div class="info-value">wangikarrajat@gmail.com</div>
+        </div>
+        <div class="stay-updated">STAY CONNECTED, STAY UPDATED</div>
+    </div>
+
+    <script>
+        const menuBtn = document.getElementById('menuToggle');
+        const drawer = document.getElementById('navDrawer');
+
+        menuBtn.onclick = () => {
+            menuBtn.classList.toggle('open');
+            drawer.classList.toggle('open');
+            document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : 'auto';
+        };
+
+        const dot = document.getElementById('cursor-dot');
+        document.addEventListener('mousemove', (e) => {
+            dot.style.opacity = "1";
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('.nav-tab').forEach(n => n.addEventListener('click', () => {
+            menuBtn.classList.remove('open');
+            drawer.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        }));
+    </script>
+</body>
+</html>
