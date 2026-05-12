@@ -391,29 +391,6 @@
             dot.style.left = e.clientX + 'px';
             dot.style.top = e.clientY + 'px';
         });
-
-        // --- 1. THE EYE TOGGLE LOGIC ---
-window.togglePasswordVisibility = function() {
-    const passwordInput = document.querySelector('input[type="password"]') || document.getElementById('regPassword') || document.getElementById('loginPassword');
-    const eyeIcon = document.getElementById('eyeIcon');
-    
-    if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        eyeIcon.innerText = "🔒"; // Changes to a lock when visible
-    } else {
-        passwordInput.type = "password";
-        eyeIcon.innerText = "👁️"; // Changes back to eye
-    }
-};
-
-// --- 2. THE STRENGTH CHECK (Inside your Submit listener) ---
-// Add this inside your form 'submit' listener BEFORE the Firebase call:
-const passwordValue = signupForm.querySelector('input[type="password"]').value;
-
-if (passwordValue.length < 6) {
-    alert("IMPERIAL REQUIREMENT: Your password must be at least 6 characters for maximum security.");
-    return; // Stops the process
-}
         
   
 </script>
@@ -516,6 +493,19 @@ if (signupForm) {
 } else {
     console.error("CRITICAL: System could not find the form with ID 'getStartedForm'");
 }
+
+     window.togglePasswordVisibility = function() {
+    const passwordInput = document.querySelector('input[type="password"]') || document.getElementById('regPassword') || document.getElementById('loginPassword');
+    const eyeIcon = document.getElementById('eyeIcon');
+    
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        eyeIcon.innerText = "🔒"; // Changes to a lock when visible
+    } else {
+        passwordInput.type = "password";
+        eyeIcon.innerText = "👁️"; // Changes back to eye
+    }
+};
 </script>
 
     <div class="modal-overlay" id="accountExistsModal">
