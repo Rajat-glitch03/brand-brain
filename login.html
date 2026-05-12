@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VARAVI Global | Protocol Access</title>
+    <title>VARAVI Global | Access Protocol</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;700&display=swap" rel="stylesheet">
     
     <style>
@@ -15,63 +15,47 @@
             --font-main: 'DM Sans', sans-serif;
         }
 
-        /* --- IMPERIAL SCROLLBAR --- */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: var(--deep-black); }
-        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
-
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             background-color: var(--deep-black);
             color: var(--pure-white);
             font-family: var(--font-main);
-            overflow: hidden; /* Focused login, no scrolling needed */
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            width: 100vw;
+            overflow: hidden;
         }
 
         /* --- LOGIN MONOLITH --- */
+        .login-container {
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            padding: 40px;
+        }
 
-        .login-hero h1 {
-            font-size: 1.2rem;
+        .login-container h1 {
+            font-size: 1.8rem;
             letter-spacing: 8px;
-            text-transform: uppercase;
-            font-weight: 200;
-            margin-bottom: 40px;
-            color: var(--pure-white);
-            opacity: 0.8;
-        }
-
-        .login-box {
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            padding: 50px 40px;
-            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            position: relative;
-        }
-
-        .login-box:hover {
-            border-color: var(--gold);
-            background: rgba(255, 215, 0, 0.02);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.05);
-        }
-
-        .login-box h2 {
             color: var(--gold);
-            font-size: 0.8rem;
-            letter-spacing: 5px;
             text-transform: uppercase;
+            font-weight: 300;
+            margin-bottom: 15px;
+        }
+
+        .login-container p {
+            font-size: 0.85rem;
+            color: var(--grey);
+            letter-spacing: 1px;
             margin-bottom: 40px;
-            font-weight: 700;
+            line-height: 1.6;
         }
 
         /* --- FORM ELEMENTS --- */
         .input-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: left;
         }
 
@@ -81,96 +65,82 @@
             color: var(--gold);
             text-transform: uppercase;
             letter-spacing: 3px;
-            margin-bottom: 10px;
-        }
-
-        .input-group label span {
-            color: var(--gold);
-            margin-left: 3px;
+            margin-bottom: 8px;
         }
 
         .input-group input {
             width: 100%;
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.1);
             padding: 15px;
             color: #fff;
             font-family: var(--font-main);
+            font-size: 0.9rem;
             outline: none;
-            transition: 0.4s;
-            border-radius: 0;
+            transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         .input-group input:focus {
             border-color: var(--gold);
             background: rgba(255, 215, 0, 0.02);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
         }
 
-        /* --- THE SOVEREIGN BUTTON --- */
-        .btn-access {
+        /* --- ACTION BUTTON --- */
+        .btn-login {
+            width: 100%;
             background: var(--gold);
             color: var(--deep-black);
             border: 1px solid var(--gold);
-            padding: 15px 0;
-            width: 100%;
+            padding: 16px;
             font-family: var(--font-main);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 700;
             letter-spacing: 3px;
             text-transform: uppercase;
             cursor: pointer;
+            margin-top: 20px;
             transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            margin-top: 10px;
         }
 
-        .btn-access:hover {
+        .btn-login:hover {
             background: transparent;
             color: var(--gold);
             transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.15);
         }
 
-        /* --- FOOTER LINKS --- */
-        .login-footer {
+        /* --- FOOTER NAV --- */
+        .footer-nav {
             margin-top: 30px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--grey);
         }
 
-        .login-footer a {
-            color: var(--grey);
+        .footer-nav a {
+            color: var(--gold);
             text-decoration: none;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            margin-left: 5px;
+            font-weight: 700;
             transition: 0.3s;
         }
 
-        .login-footer a:hover {
-            color: var(--gold);
+        .footer-nav a:hover {
+            text-shadow: 0 0 10px var(--gold);
         }
 
-        /* --- PC GOLDEN DOT --- */
+        /* PC GOLDEN DOT */
         #cursor-dot {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: var(--gold);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10001;
-            box-shadow: 0 0 20px var(--gold);
-            transform: translate(-50%, -50%);
-            opacity: 0;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            position: fixed; width: 10px; height: 10px; background: var(--gold);
+            border-radius: 50%; pointer-events: none; z-index: 10001;
+            box-shadow: 0 0 20px var(--gold); transform: translate(-50%, -50%); opacity: 0;
         }
 
         @media (max-width: 768px) {
             #cursor-dot { display: none; }
-            .login-box { padding: 40px 25px; }
-            .login-hero h1 { font-size: 1rem; letter-spacing: 5px; }
+            .login-container { padding: 20px; }
+            .login-container h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -178,38 +148,34 @@
 
     <div id="cursor-dot"></div>
 
-    <div class="login-wrapper">
+    <div class="login-container">
+        <h1>Access Protocol</h1>
+        <p>Re-establish connection to the VARAVI Nerve Center. Authorization required for strategic engagement.</p>
+        
+        <form action="#">
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" placeholder="name@firm.com" required>
+            </div>
+            
+            <div class="input-group">
+                <label>Access Code / Password</label>
+                <input type="password" placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" class="btn-login">LOGIN</button>
+        </form>
 
-        <div class="login-box">
-            <h2>WELCOME BACK</h2>
-            <form action="#">
-                <div class="input-group">
-                    <label>Email Address<span>*</span></label>
-                    <input type="email" placeholder="name@firm.com" required>
-                </div>
-                <div class="input-group">
-                    <label>Access Key<span>*</span></label>
-                    <input type="password" placeholder="••••••••" required>
-                </div>
-                <button type="submit" class="btn-access">AUTHENTICATE</button>
-            </form>
-        </div>
-
-        <div class="login-footer">
-            <p>New to VARAVI Global</p><a href="get-started.html">Create Account</a>
+        <div class="footer-nav">
+            NEW TO THE EMPIRE? <a href="get-started.html">CREATE ACCOUNT</a>
         </div>
     </div>
 
     <script>
-        // PC GOLDEN DOT LOGIC
+        // Custom Cursor Logic
         const dot = document.getElementById('cursor-dot');
-        let initialMove = false;
-
         document.addEventListener('mousemove', (e) => {
-            if (!initialMove) {
-                dot.style.opacity = "1";
-                initialMove = true;
-            }
+            dot.style.opacity = "1";
             dot.style.left = e.clientX + 'px';
             dot.style.top = e.clientY + 'px';
         });
