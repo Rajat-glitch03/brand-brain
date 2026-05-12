@@ -215,7 +215,7 @@
             <div class="divider-line"></div>
         </div>
 
-        <form>
+        <form id="loginForm">
             <div class="input-group">
                 <label>Email</label>
                 <input type="email" placeholder="name@firm.com" required>
@@ -280,24 +280,28 @@
   };
 
   // --- 2. MANUAL LOGIN (Email/Password) ---
-  const loginForm = document.querySelector('form'); // Make sure your login page has a <form>
+  const loginForm = document.getElementById('loginForm');
+  
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      const email = loginForm.querySelector('input[type="email"]').value;
-      const password = loginForm.querySelector('input[type="password"]').value;
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
 
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        // Access Granted
+        // SUCCESS: Access Granted
         window.location.href = "intelligence.html";
       } catch (error) {
-        // Handle common errors like "Wrong Password" or "User Not Found"
+        console.error("Auth Error:", error.code);
+        // Catch specific login failures
         if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
-          alert("INVALID CREDENTIALS: Access Denied to the VARAVI network.");
+          alert("INVALID CREDENTIALS: The VARAVI network does not recognize this identity.");
+        } else if (error.code === 'auth/too-many-requests') {
+          alert("SECURITY LOCK: Too many failed attempts. Try again later.");
         } else {
-          alert("System Error: " + error.message);
+          alert("ACCESS DENIED: " + error.message);
         }
       }
     });
