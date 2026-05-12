@@ -128,6 +128,28 @@
             border-color: var(--gold); background: rgba(255, 215, 0, 0.02);
         }
 
+        .btn-get-started {
+            background: var(--gold);
+            color: var(--deep-black);
+            border: 1px solid var(--gold);
+            padding: 12px 32px;
+            font-family: var(--font-main);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            white-space: nowrap;
+            outline: none;
+        }
+
+        .btn-get-started:hover {
+            background: var(--deep-black);
+            color: var(--gold);
+            transform: scale(1.06);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.2);
+        }
+
         /* --- FOOTER INFO --- */
         .liaison-details {
             text-align: center; padding-bottom: 100px;
@@ -182,7 +204,7 @@
             <a href="#" class="nav-tab active">CONTACT US</a>
         </div>
         <div class="nav-right">
-            <button class="btn-submit" style="width: auto; padding: 10px 20px; margin: 0; font-size: 0.6rem;" onclick="location.href='get-started.html'">GET STARTED</button>
+            <button class="btn-get-started" onclick="location.href='get-started.html'">GET STARTED</button>
             <div class="menu-toggle" id="menuToggle">
                 <span></span><span></span><span></span>
             </div>
