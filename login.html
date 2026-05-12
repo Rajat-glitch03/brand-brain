@@ -204,22 +204,24 @@
         </div>
 
         <form id="loginForm">
-            <div class="input-group">
-                <label>Email</label>
-                <input type="email" id="loginEmail" placeholder="name@firm.com" required>
-            </div>
-            
-            <div class="input-group">
-                <label>Password</label>
-                <div style="position: relative; display: flex; align-items: center;">
-                    <input type="password" id="loginPassword" placeholder="••••••••" required>
-                    <span id="eyeBtn" style="position: absolute; right: 15px; cursor: pointer; color: var(--gold); font-size: 1.2rem; user-select: none;">👁️</span>
-                </div>
-            </div>
-            
-            <button type="submit" class="btn-login">LOGIN</button>
-        </form>
-
+    <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="name@firm.com" required>
+    </div>
+    
+    <div class="input-group">
+        <label>Password</label>
+        <div style="position: relative; display: flex; align-items: center;">
+            <input type="password" id="loginPassword" placeholder="••••••••" required>
+            <span id="eyeBtn" style="position: absolute; right: 15px; cursor: pointer; color: var(--gold); font-size: 1.2rem; user-select: none;">👁️</span>
+        </div>
+        <span id="loginError" style="color: var(--gold); font-size: 0.65rem; letter-spacing: 1px; margin-top: 8px; display: none; text-transform: uppercase; opacity: 0.8;">
+            * Security Protocol: Minimum 6 characters required.
+        </span>
+    </div>
+    
+    <button type="submit" class="btn-login">LOGIN</button>
+</form>
         <div class="auth-footer">
             New to VARAVI Global? <a href="get-started.html">CREATE AN ACCOUNT</a>
         </div>
@@ -278,27 +280,40 @@
         };
 
         // --- MANUAL LOGIN & 6-CHAR CHECK ---
-        const loginForm = document.getElementById('loginForm');
-        if (loginForm) {
-            loginForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                const email = document.getElementById('loginEmail').value;
-                const password = passInput.value;
+        // --- MANUAL LOGIN & INLINE SECURITY CHECK ---
+const loginForm = document.getElementById('loginForm');
+const loginError = document.getElementById('loginError');
 
-                if (password.length < 6) {
-                    alert("SECURITY ALERT: Credentials must be at least 6 characters.");
-                    return; 
-                }
+if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('loginEmail').value;
+        const password = passInput.value;
 
-                try {
-                    await signInWithEmailAndPassword(auth, email, password);
-                    window.location.href = "intelligence.html";
-                } catch (error) {
-                    alert("ACCESS DENIED: " + error.message);
-                }
-            });
+        // Check if password is too short
+        if (password.length < 6) {
+            loginError.style.display = 'block'; // Show golden warning
+            loginError.textContent = "* Security Protocol: Minimum 6 characters required.";
+            return; 
+        } else {
+            loginError.style.display = 'none'; // Hide if fixed
         }
+
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            window.location.href = "intelligence.html";
+        } catch (error) {
+            // Also use the inline warning for wrong passwords!
+            loginError.style.display = 'block';
+            if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+                loginError.textContent = "* Access Denied: Invalid Credentials.";
+            } else {
+                loginError.textContent = "* System Error: Unable to authenticate.";
+            }
+        }
+    });
+}
     </script>
 </body>
 </html>
