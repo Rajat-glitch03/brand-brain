@@ -330,21 +330,20 @@
             </div>
 
             <form id="getStartedForm">
-            <div class="input-group">
-                <label>Email address<span>*</span></label>
-                <input type="email" placeholder="name@firm.com" required>
-            </div>
-
-            <div class="input-group">
-                <label>Password<span>*</span></label>
-                <input type="password" placeholder="••••••••" required>
-            </div>
-            
-
-            <button class="btn-create-acc">
-    CREATE ACCOUNT
-</button>
-                </form>
+    <div class="input-group">
+        <label>Full Name<span>*</span></label>
+        <input type="text" id="regName" placeholder="Enter your name" required>
+    </div>
+    <div class="input-group">
+        <label>Email Address<span>*</span></label>
+        <input type="email" id="regEmail" placeholder="name@firm.com" required>
+    </div>
+    <div class="input-group">
+        <label>Create Password<span>*</span></label>
+        <input type="password" id="regPassword" placeholder="••••••••" required>
+    </div>
+    <button type="submit" class="btn-get-started">GET STARTED</button>
+</form>
         </div>
 
         <p class="footer-link">Already have an account? <a href="#" onclick="location.href='login.html'">LOGIN</a></p>
@@ -368,12 +367,11 @@
 </script>
     
     <script type="module">
-  // Import the "Engines" from Google
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
   import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  // PASTE YOUR CONFIG HERE (The one from your Firebase Settings)
+  // --- YOUR CONFIG (Keep your actual keys here) ---
   const firebaseConfig = {
     apiKey: "AIzaSyDgs1JQbYEVA7MRAnu4KUQezhFJzDtJbmE",
   authDomain: "varavi-global.firebaseapp.com",
@@ -384,70 +382,46 @@
   measurementId: "G-M196BGD968"
   };
 
-  // Initialize
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // --- GOOGLE LOGIN (Exported to window so the button can see it) ---
-  window.signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
+  const signupForm = document.getElementById('getStartedForm');
 
+  signupForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const name = document.getElementById('regName').value;
+    const email = document.getElementById('regEmail').value;
+    const password = document.getElementById('regPassword').value;
+
+    try {
+      // 1. Attempt to create the new account
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // 2. If successful, save to Firestore
       await setDoc(doc(db, "users", user.uid), {
-        name: user.displayName,
-        email: user.email,
-        method: "Google",
+        name: name,
+        email: email,
+        method: "Manual",
         timestamp: new Date()
       });
 
+      // 3. Redirect to Intelligence
       window.location.href = "intelligence.html";
+
     } catch (error) {
-      alert("Imperial Auth Failed: " + error.message);
+      console.error("Auth Error Code:", error.code);
+      
+      // 4. CHECK IF ACCOUNT EXISTS
+      if (error.code === 'auth/email-already-in-use') {
+        document.getElementById('accountExistsModal').style.display = 'flex';
+      } else {
+        alert("System Error: " + error.message);
+      }
     }
-  };
-
-  // --- MANUAL SIGNUP LOGIC ---
-  // --- UPDATED MANUAL SIGNUP LOGIC ---
-const signupForm = document.getElementById('getStartedForm');
-if (signupForm) {
-    signupForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const name = signupForm.querySelector('input[type="text"]').value;
-        const email = signupForm.querySelector('input[type="email"]').value;
-        const password = signupForm.querySelector('input[type="password"]').value;
-
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-
-            await setDoc(doc(db, "users", user.uid), {
-                name: name,
-                email: email,
-                method: "Manual",
-                timestamp: new Date()
-            });
-
-            window.location.href = "intelligence.html";
-        } // Inside your signupForm.addEventListener('submit', async (e) => { ... })
-
-} catch (error) {
-    console.log("Firebase Error Code:", error.code); // This tells us the exact error in the Inspect element
-    
-    // Check for the existing account error
-    if (error.code === 'auth/email-already-in-use') {
-        const modal = document.getElementById('accountExistsModal');
-        modal.style.display = 'flex';
-    } else if (error.code === 'auth/weak-password') {
-        alert("Security protocol requires a stronger password.");
-    } else {
-        alert("Transmission Error: " + error.message);
-    }
-}
-    });
-}
+  });
 </script>
 
     <div class="modal-overlay" id="accountExistsModal">
