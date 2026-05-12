@@ -34,6 +34,41 @@
             overflow-x: hidden;
         }
 
+        /* --- OVERRIDE MODAL --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(10px);
+}
+
+.modal-box {
+    width: 90%;
+    max-width: 400px;
+    background: var(--deep-black);
+    border: 1px solid var(--gold);
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.2);
+}
+
+.modal-box h2 {
+    color: var(--gold);
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.modal-box p {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin-bottom: 30px;
+}
+
         /* --- THE MASTER MONOLITH BOX --- */
         .gateway-container {
             width: 100%;
@@ -376,31 +411,46 @@
   };
 
   // --- MANUAL SIGNUP LOGIC ---
-  const signupForm = document.getElementById('getStartedForm');
-  if (signupForm) {
+  // --- UPDATED MANUAL SIGNUP LOGIC ---
+const signupForm = document.getElementById('getStartedForm');
+if (signupForm) {
     signupForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = signupForm.querySelector('input[type="text"]').value;
-      const email = signupForm.querySelector('input[type="email"]').value;
-      const password = signupForm.querySelector('input[type="password"]').value;
+        e.preventDefault();
+        const name = signupForm.querySelector('input[type="text"]').value;
+        const email = signupForm.querySelector('input[type="email"]').value;
+        const password = signupForm.querySelector('input[type="password"]').value;
 
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
 
-        await setDoc(doc(db, "users", user.uid), {
-          name: name,
-          email: email,
-          method: "Manual",
-          timestamp: new Date()
-        });
+            await setDoc(doc(db, "users", user.uid), {
+                name: name,
+                email: email,
+                method: "Manual",
+                timestamp: new Date()
+            });
 
-        window.location.href = "intelligence.html";
-      } catch (error) {
-        alert("Access Denied: " + error.message);
-      }
+            window.location.href = "intelligence.html";
+        } catch (error) {
+            // CHECK FOR EXISTING ACCOUNT
+            if (error.code === 'auth/email-already-in-use') {
+                document.getElementById('accountExistsModal').style.display = 'flex';
+            } else {
+                alert("Access Denied: " + error.message);
+            }
+        }
     });
-  }
+}
 </script>
+
+    <div class="modal-overlay" id="accountExistsModal">
+    <div class="modal-box">
+        <h2>IDENTITY DETECTED</h2>
+        <p>A VARAVI Global account is already associated with this email address.</p>
+        <button class="btn-get-started" onclick="location.href='login.html'">LOGIN TO ACCESS</button>
+    </div>
+</div>
+    
 </body>
 </html>
