@@ -434,30 +434,32 @@ if (signupForm) {
         console.log("Attempting to create account for:", email); // Check your console (F12)
 
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
+    // Attempting to create a new user
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-            await setDoc(doc(db, "users", user.uid), {
-                name: name,
-                email: email,
-                method: "Manual",
-                timestamp: new Date()
-            });
+    // If successful, save to Firestore
+    await setDoc(doc(db, "users", user.uid), {
+        name: name,
+        email: email,
+        method: "Manual",
+        timestamp: new Date()
+    });
 
-            console.log("Success! Redirecting...");
-            window.location.href = "intelligence.html";
+    window.location.href = "intelligence.html";
 
-        } catch (error) {
-            console.error("Manual Auth Error:", error.code, error.message);
-            
-            if (error.code === 'auth/email-already-in-use') {
-                document.getElementById('accountExistsModal').style.display = 'flex';
-            } else if (error.code === 'auth/weak-password') {
-                alert("SECURITY PROTOCOL: Password must be at least 6 characters.");
-            } else {
-                alert("ACCESS DENIED: " + error.message);
-            }
-        }
+} catch (error) {
+    // THE IDENTITY CHECK
+    if (error.code === 'auth/email-already-in-use') {
+        // This is where we trigger your sleek gold popup
+        const modal = document.getElementById('accountExistsModal');
+        modal.style.display = 'flex';
+    } else if (error.code === 'auth/weak-password') {
+        alert("SECURITY ALERT: Password must be at least 6 characters.");
+    } else {
+        alert("ACCESS DENIED: " + error.message);
+    }
+}
     });
 } else {
     console.error("CRITICAL: System could not find the form with ID 'getStartedForm'");
