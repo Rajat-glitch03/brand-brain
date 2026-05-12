@@ -31,6 +31,26 @@
             line-height: 1.6;
         }
 
+        .premium-rank {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gold);
+            font-weight: 700;
+        }
+        
+        .king-icon {
+            font-size: 1.2rem;
+            filter: drop-shadow(0 0 10px var(--gold));
+            animation: goldPulse 2s infinite ease-in-out;
+        }
+        
+        @keyframes goldPulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
         /* --- NAVIGATION --- */
         nav {
             position: fixed;
@@ -211,7 +231,10 @@
         <div class="series-label">v2.4 Series</div>
 
         <div class="box">
-            <h2>Quans v2.4bb</h2>
+            <div class="intel-box premium-border">
+                <h3>Quans v2.4bb    <span class="king-icon">👑</span></h3>
+                <p class="premium-rank">PREMIUM ACCESS ONLY</p>
+            </div>
             <p>Engineered specifically for the theatre of high-stakes business. The v2.4bb protocol doesn’t just provide data—it provides Architectural Reports. It performs real-time risk mitigation, competitive deep-dives, and strategic forecasting. This is your high-end consultant that never sleeps, offering a panoramic view of market shifts and actionable steps to maintain your dominance. Where others guess, v2.4bb knows.</p>
             <div class="purpose-section">
                 <h4>Purpose</h4>
@@ -220,7 +243,8 @@
         </div>
 
         <div class="box">
-            <h2>Quans v2.4s</h2>
+            <h3>Quans v2.4bs    <span class="king-icon">👑</span></h3>
+                <p class="premium-rank">PREMIUM ACCESS ONLY</p>
             <p>The absolute peak of the VARAVI line. The v2.4s is a 24/7 deep-web scanner that operates in the shadows of the internet. By enrolling your brand or asset name, the Sentinel begins an unending hunt for leaks, impersonations, and hostile market movements. It operates at the edge of the digital frontier, guarding your empire while you sleep. Total awareness. Zero vulnerability.</p>
             <div class="purpose-section">
                 <h4>Purpose</h4>
