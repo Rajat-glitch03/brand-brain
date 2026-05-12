@@ -323,7 +323,7 @@
         <h2 class="main-heading">CREATE AN ACCOUNT</h2>
 
         <div class="form-box">
-            <button class="btn-google"  alt="Google" onclick="signInWithGoogle()"><img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png">SIGNIN WITH GOOGLE</button>
+            <button class="btn-google" alt="Google" onclick="signInWithGoogle()"><img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png">SIGNIN WITH GOOGLE</button>
 
             <div class="or-separator">
                 <span>OR</span>
@@ -363,11 +363,12 @@
 </script>
     
     <script type="module">
+ <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  // --- YOUR CONFIG (Keep your actual keys here) ---
+  // --- YOUR CONFIG ---
   const firebaseConfig = {
     apiKey: "AIzaSyDgs1JQbYEVA7MRAnu4KUQezhFJzDtJbmE",
   authDomain: "varavi-global.firebaseapp.com",
@@ -382,42 +383,69 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  const signupForm = document.getElementById('getStartedForm');
+  const modal = document.getElementById('accountExistsModal');
 
-  signupForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const name = document.getElementById('regName').value;
-    const email = document.getElementById('regEmail').value;
-    const password = document.getElementById('regPassword').value;
-
+  // --- 1. GOOGLE SIGN UP LOGIC (With Duplicate Check) ---
+  window.signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
     try {
-      // 1. Attempt to create the new account
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
 
-      // 2. If successful, save to Firestore
-      await setDoc(doc(db, "users", user.uid), {
-        name: name,
-        email: email,
-        method: "Manual",
-        timestamp: new Date()
-      });
+      // Check if this user document already exists in Firestore
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
 
-      // 3. Redirect to Intelligence
-      window.location.href = "intelligence.html";
-
-    } catch (error) {
-      console.error("Auth Error Code:", error.code);
-      
-      // 4. CHECK IF ACCOUNT EXISTS
-      if (error.code === 'auth/email-already-in-use') {
-        document.getElementById('accountExistsModal').style.display = 'flex';
+      if (userSnap.exists()) {
+        // IDENTITY DETECTED: User already has an account
+        modal.style.display = 'flex';
       } else {
-        alert("System Error: " + error.message);
+        // NEW USER: Create their imperial profile
+        await setDoc(userRef, {
+          name: user.displayName,
+          email: user.email,
+          method: "Google",
+          timestamp: new Date()
+        });
+        window.location.href = "intelligence.html";
       }
+    } catch (error) {
+      console.error("Google Auth Error:", error.code);
     }
-  });
+  };
+
+  // --- 2. MANUAL SIGN UP LOGIC ---
+  const signupForm = document.getElementById('getStartedForm');
+  if (signupForm) {
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('regName').value;
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        await setDoc(doc(db, "users", user.uid), {
+          name: name,
+          email: email,
+          method: "Manual",
+          timestamp: new Date()
+        });
+
+        window.location.href = "intelligence.html";
+
+      } catch (error) {
+        if (error.code === 'auth/email-already-in-use') {
+          modal.style.display = 'flex';
+        } else {
+          alert("Error: " + error.message);
+        }
+      }
+    });
+  }
+</script>
 </script>
 
     <div class="modal-overlay" id="accountExistsModal">
