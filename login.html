@@ -224,16 +224,9 @@
     <div class="input-group">
         <label>Password</label>
         <div style="position: relative; display: flex; align-items: center;">
-            <input type="password" id="loginPassword" placeholder="••••••••" required 
-                   style="width: 100%; padding-right: 45px;">
-            
-            <span id="toggleLoginPass" style="position: absolute; right: 15px; cursor: pointer; font-size: 1.1rem; user-select: none; color: var(--gold); opacity: 0.6;">
-                👁️
-            </span>
+            <input type="password" id="loginPassword" placeholder="••••••••" required>
+            <span id="eyeBtn" style="position: absolute; right: 15px; cursor: pointer; color: var(--gold); font-size: 1.2rem;">👁️</span>
         </div>
-        <small id="passWarning" style="color: var(--gold); font-size: 0.65rem; opacity: 0.5; margin-top: 5px; display: none;">
-            * Credentials must be at least 6 characters.
-        </small>
     </div>
     
     <button type="submit" class="btn-login">LOGIN</button>
@@ -281,72 +274,40 @@
             }
         };
 
-        // --- 4. MANUAL LOGIN ---
-        const loginForm = document.getElementById('loginForm');
-        if (loginForm) {
-            loginForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                const email = document.getElementById('loginEmail').value;
-                const password = document.getElementById('loginPassword').value;
+        const eyeBtn = document.getElementById('eyeBtn');
+  const passInput = document.getElementById('loginPassword');
 
-                try {
-                    await signInWithEmailAndPassword(auth, email, password);
-                    window.location.href = "intelligence.html";
-                } catch (error) {
-                    console.error("Auth Error:", error.code);
-                    if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
-                        alert("INVALID CREDENTIALS: The VARAVI network does not recognize this identity.");
-                    } else {
-                        alert("ACCESS DENIED: " + error.message);
-                    }
-                }
-            });
-        }
-
-        const toggleLoginPass = document.getElementById('toggleLoginPass');
-const loginPasswordInput = document.getElementById('loginPassword');
-
-if (toggleLoginPass && loginPasswordInput) {
-    toggleLoginPass.addEventListener('click', () => {
-        const isPass = loginPasswordInput.type === 'password';
-        loginPasswordInput.type = isPass ? 'text' : 'password';
-        toggleLoginPass.textContent = isPass ? '🔒' : '👁️';
-        toggleLoginPass.style.opacity = isPass ? '1' : '0.6';
+  if (eyeBtn && passInput) {
+    eyeBtn.addEventListener('click', () => {
+        const isPass = passInput.type === 'password';
+        passInput.type = isPass ? 'text' : 'password';
+        eyeBtn.textContent = isPass ? '🔒' : '👁️';
     });
-}
+  }
 
 // --- 4. MANUAL LOGIN (Updated with Security Check) ---
 const loginForm = document.getElementById('loginForm');
-if (loginForm) {
+  if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
-        const warning = document.getElementById('passWarning');
+      e.preventDefault();
+      
+      const email = document.getElementById('loginEmail').value;
+      const password = passInput.value;
 
-        // PRE-VALIDATION: Check length before hitting Firebase
-        if (password.length < 6) {
-            warning.style.display = 'block'; // Show the golden warning
-            return; // Stop the protocol
-        } else {
-            warning.style.display = 'none';
-        }
+      // The 6-Character Security Protocol
+      if (password.length < 6) {
+        alert("SECURITY ALERT: Credentials must be at least 6 characters.");
+        return; // Stops the login from even trying
+      }
 
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            window.location.href = "intelligence.html";
-        } catch (error) {
-            console.error("Auth Error:", error.code);
-            if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
-                alert("INVALID CREDENTIALS: Access Denied to the VARAVI network.");
-            } else {
-                alert("SYSTEM ERROR: " + error.message);
-            }
-        }
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        window.location.href = "intelligence.html";
+      } catch (error) {
+        alert("ACCESS DENIED: " + error.message);
+      }
     });
-}
+  }
     </script>
 </body>
 </html>
