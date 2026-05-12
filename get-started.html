@@ -77,6 +77,32 @@
             letter-spacing: 1px;
         }
 
+        .btn-google {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-family: var(--font-main);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: 0.4s;
+            margin-bottom: 30px;
+        }
+
+        .btn-google:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--gold);
+        }
+
+        .btn-google img { width: 18px; height: 18px; }
+
         /* --- DECORATIVE ELEMENTS --- */
         .golden-divider {
             width: 100%;
@@ -259,11 +285,11 @@
 
     <div class="gateway-container">
     
-        <p class="instruction-text">To access Quans</p>
+        <p class="instruction-text">To access VARAVI Global</p>
         <h2 class="main-heading">CREATE AN ACCOUNT</h2>
 
         <div class="form-box">
-            <button class="google-btn"><img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">SignIn with Google</button>
+            <button class="btn-google"><img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">SignIn with Google</button>
 
             <div class="or-separator">
                 <span>OR</span>
