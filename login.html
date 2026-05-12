@@ -234,7 +234,24 @@
     </div>
 
     <script>
-        // Custom Cursor Logic
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // --- 1. CONFIG (PASTE YOUR ACTUAL KEYS HERE) ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyCb7mIUHmJuM9TN40YN9ooAa-CTm-gFDrc",
+          authDomain: "varavi-global-8efa1.firebaseapp.com",
+          projectId: "varavi-global-8efa1",
+          storageBucket: "varavi-global-8efa1.firebasestorage.app",
+          messagingSenderId: "448204871009",
+          appId: "1:448204871009:web:6fe30cb2430c2e4d6e6120",
+          measurementId: "G-SEGDLESNC1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // --- 2. CURSOR LOGIC ---
         const dot = document.getElementById('cursor-dot');
         document.addEventListener('mousemove', (e) => {
             dot.style.opacity = "1";
@@ -242,70 +259,39 @@
             dot.style.top = e.clientY + 'px';
         });
 
-        // Redirect prevention for demo
-        document.querySelector('form').onsubmit = (e) => {
-            e.preventDefault();
-            alert("Authentication Protocol Initiated...");
+        // --- 3. GOOGLE LOGIN ---
+        window.signInWithGoogle = async () => {
+            const provider = new GoogleAuthProvider();
+            try {
+                await signInWithPopup(auth, provider);
+                window.location.href = "intelligence.html";
+            } catch (error) {
+                alert("Imperial Auth Failed: " + error.message);
+            }
         };
-    </script>
 
-    <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        // --- 4. MANUAL LOGIN ---
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
 
-  // --- YOUR CONFIG (Paste your actual Firebase config here) ---
-  const firebaseConfig = {
-    apiKey: "AIzaSyCb7mIUHmJuM9TN40YN9ooAa-CTm-gFDrc",
-  authDomain: "varavi-global-8efa1.firebaseapp.com",
-  projectId: "varavi-global-8efa1",
-  storageBucket: "varavi-global-8efa1.firebasestorage.app",
-  messagingSenderId: "448204871009",
-  appId: "1:448204871009:web:6fe30cb2430c2e4d6e6120",
-  measurementId: "G-SEGDLESNC1"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  // --- 1. LOGIN WITH GOOGLE ---
-  window.signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-      // If successful, they exist in our system, send them to the engine
-      window.location.href = "intelligence.html";
-    } catch (error) {
-      alert("Imperial Auth Failed: " + error.message);
-    }
-  };
-
-  // --- 2. MANUAL LOGIN (Email/Password) ---
-  const loginForm = document.getElementById('loginForm');
-  
-  if (loginForm) {
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
-
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        // SUCCESS: Access Granted
-        window.location.href = "intelligence.html";
-      } catch (error) {
-        console.error("Auth Error:", error.code);
-        // Catch specific login failures
-        if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
-          alert("INVALID CREDENTIALS: The VARAVI network does not recognize this identity.");
-        } else if (error.code === 'auth/too-many-requests') {
-          alert("SECURITY LOCK: Too many failed attempts. Try again later.");
-        } else {
-          alert("ACCESS DENIED: " + error.message);
+                try {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    window.location.href = "intelligence.html";
+                } catch (error) {
+                    console.error("Auth Error:", error.code);
+                    if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+                        alert("INVALID CREDENTIALS: The VARAVI network does not recognize this identity.");
+                    } else {
+                        alert("ACCESS DENIED: " + error.message);
+                    }
+                }
+            });
         }
-      }
-    });
-  }
-</script>
+    </script>
 </body>
 </html>
