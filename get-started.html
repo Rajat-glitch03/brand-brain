@@ -404,36 +404,32 @@
   // --- YOUR CONFIG ---
   const firebaseConfig = {
     apiKey: "AIzaSyDgs1JQbYEVA7MRAnu4KUQezhFJzDtJbmE",
-  authDomain: "varavi-global.firebaseapp.com",
-  projectId: "varavi-global",
-  storageBucket: "varavi-global.firebasestorage.app",
-  messagingSenderId: "682864161453",
-  appId: "1:682864161453:web:7d09546a34e3c994038c24",
-  measurementId: "G-M196BGD968"
+    authDomain: "varavi-global.firebaseapp.com",
+    projectId: "varavi-global",
+    storageBucket: "varavi-global.firebasestorage.app",
+    messagingSenderId: "682864161453",
+    appId: "1:682864161453:web:7d09546a34e3c994038c24",
+    measurementId: "G-M196BGD968"
   };
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  const modal = document.getElementById('accountExistsModal');
-
-  // --- 1. GOOGLE SIGN UP LOGIC (With Duplicate Check) ---
+  // --- 1. GOOGLE SIGN UP LOGIC ---
   window.signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
+    const modal = document.getElementById('accountExistsModal'); // Define inside function
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      // Check if this user document already exists in Firestore
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
 
       if (userSnap.exists()) {
-        // IDENTITY DETECTED: User already has an account
-        modal.style.display = 'flex';
+        if (modal) modal.style.display = 'flex';
       } else {
-        // NEW USER: Create their imperial profile
         await setDoc(userRef, {
           name: user.displayName,
           email: user.email,
@@ -448,65 +444,60 @@
   };
 
   // --- 2. MANUAL SIGN UP LOGIC ---
-  // --- THE "BULLETPROOF" MANUAL SIGNUP ---
-const signupForm = document.getElementById('getStartedForm');
+  const signupForm = document.getElementById('getStartedForm');
 
-if (signupForm) {
+  if (signupForm) {
     signupForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // Using querySelector to ensure we grab the right boxes regardless of ID
-        const name = signupForm.querySelector('input[type="text"]').value;
-        const email = signupForm.querySelector('input[type="email"]').value;
-        const password = signupForm.querySelector('input[type="password"]').value;
+      e.preventDefault();
+      
+      const modal = document.getElementById('accountExistsModal'); // Define inside event
+      
+      // Select inputs specifically from the form
+      const name = document.getElementById('regName').value;
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
 
-        console.log("Attempting to create account for:", email); // Check your console (F12)
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-        try {
-    // Attempting to create a new user
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
+        // Save to Firestore (Removed 'password' for security)
+        await setDoc(doc(db, "users", user.uid), {
+          name: name,
+          email: email,
+          method: "Manual",
+          timestamp: new Date()
+        });
 
-    // If successful, save to Firestore
-    await setDoc(doc(db, "users", user.uid), {
-        name: name,
-        email: email,
-        password: password,
-        method: "Manual",
-        timestamp: new Date()
+        window.location.href = "intelligence.html";
+
+      } catch (error) {
+        if (error.code === 'auth/email-already-in-use') {
+          if (modal) modal.style.display = 'flex';
+        } else if (error.code === 'auth/weak-password') {
+          alert("SECURITY ALERT: Password must be at least 6 characters.");
+        } else {
+          alert("ACCESS DENIED: " + error.message);
+        }
+      }
     });
+  }
 
-    window.location.href = "intelligence.html";
-
-} catch (error) {
-    // THE IDENTITY CHECK
-    if (error.code === 'auth/email-already-in-use') {
-        // This is where we trigger your sleek gold popup
-        const modal = document.getElementById('accountExistsModal');
-        modal.style.display = 'flex';
-    } else if (error.code === 'auth/weak-password') {
-        alert("SECURITY ALERT: Password must be at least 6 characters.");
-    } else {
-        alert("ACCESS DENIED: " + error.message);
-    }
-}
-    });
-} else {
-    console.error("CRITICAL: System could not find the form with ID 'getStartedForm'");
-}
-
-     window.togglePasswordVisibility = function() {
-    const passwordInput = document.querySelector('input[type="password"]') || document.getElementById('regPassword') || document.getElementById('loginPassword');
+  // --- 3. PASSWORD VISIBILITY LOGIC ---
+  window.togglePasswordVisibility = function() {
+    const passwordInput = document.getElementById('regPassword');
     const eyeIcon = document.getElementById('eyeIcon');
     
-    if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        eyeIcon.innerText = "🔒"; // Changes to a lock when visible
-    } else {
-        passwordInput.type = "password";
-        eyeIcon.innerText = "👁️"; // Changes back to eye
+    if (passwordInput && eyeIcon) {
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            eyeIcon.innerText = "🔒"; 
+        } else {
+            passwordInput.type = "password";
+            eyeIcon.innerText = "👁️";
+        }
     }
-};
+  };
 </script>
 
     <div class="modal-overlay" id="accountExistsModal">
