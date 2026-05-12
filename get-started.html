@@ -419,36 +419,49 @@
   };
 
   // --- 2. MANUAL SIGN UP LOGIC ---
-  const signupForm = document.getElementById('getStartedForm');
-  if (signupForm) {
+  // --- THE "BULLETPROOF" MANUAL SIGNUP ---
+const signupForm = document.getElementById('getStartedForm');
+
+if (signupForm) {
     signupForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = document.getElementById('regName').value;
-      const email = document.getElementById('regEmail').value;
-      const password = document.getElementById('regPassword').value;
+        e.preventDefault();
+        
+        // Using querySelector to ensure we grab the right boxes regardless of ID
+        const name = signupForm.querySelector('input[type="text"]').value;
+        const email = signupForm.querySelector('input[type="email"]').value;
+        const password = signupForm.querySelector('input[type="password"]').value;
 
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+        console.log("Attempting to create account for:", email); // Check your console (F12)
 
-        await setDoc(doc(db, "users", user.uid), {
-          name: name,
-          email: email,
-          method: "Manual",
-          timestamp: new Date()
-        });
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
 
-        window.location.href = "intelligence.html";
+            await setDoc(doc(db, "users", user.uid), {
+                name: name,
+                email: email,
+                method: "Manual",
+                timestamp: new Date()
+            });
 
-      } catch (error) {
-        if (error.code === 'auth/email-already-in-use') {
-          modal.style.display = 'flex';
-        } else {
-          alert("Error: " + error.message);
+            console.log("Success! Redirecting...");
+            window.location.href = "intelligence.html";
+
+        } catch (error) {
+            console.error("Manual Auth Error:", error.code, error.message);
+            
+            if (error.code === 'auth/email-already-in-use') {
+                document.getElementById('accountExistsModal').style.display = 'flex';
+            } else if (error.code === 'auth/weak-password') {
+                alert("SECURITY PROTOCOL: Password must be at least 6 characters.");
+            } else {
+                alert("ACCESS DENIED: " + error.message);
+            }
         }
-      }
     });
-  }
+} else {
+    console.error("CRITICAL: System could not find the form with ID 'getStartedForm'");
+}
 </script>
 
     <div class="modal-overlay" id="accountExistsModal">
