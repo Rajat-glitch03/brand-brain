@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VARAVI Global | Access Protocol</title>
+    <title>VARAVI Global | Authentication</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;700&display=swap" rel="stylesheet">
     
     <style>
@@ -28,119 +28,171 @@
             overflow: hidden;
         }
 
-        /* --- LOGIN MONOLITH --- */
-        .login-container {
+        /* --- THE AUTHENTICATION BOX --- */
+        .auth-container {
             width: 90%;
             max-width: 450px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            padding: 50px 40px;
             text-align: center;
-            padding: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
         }
 
-        .login-container h1 {
+        h1 {
             font-size: 1.8rem;
-            letter-spacing: 8px;
-            color: var(--gold);
-            text-transform: uppercase;
+            letter-spacing: 5px;
             font-weight: 300;
-            margin-bottom: 15px;
+            color: var(--gold);
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
 
-        .login-container p {
+        .subtitle {
             font-size: 0.85rem;
-            color: var(--grey);
+            opacity: 0.6;
             letter-spacing: 1px;
             margin-bottom: 40px;
-            line-height: 1.6;
+            font-weight: 200;
         }
 
-        /* --- FORM ELEMENTS --- */
+        /* --- GOOGLE LOGIN BUTTON --- */
+        .btn-google {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-family: var(--font-main);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: 0.4s;
+            margin-bottom: 30px;
+        }
+
+        .btn-google:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--gold);
+        }
+
+        .btn-google img { width: 18px; height: 18px; }
+
+        /* --- THE DIVIDER --- */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0.3;
+        }
+
+        .divider-text {
+            padding: 0 15px;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* --- INPUT FIELDS --- */
         .input-group {
-            margin-bottom: 20px;
             text-align: left;
+            margin-bottom: 20px;
         }
 
         .input-group label {
             display: block;
             font-size: 0.65rem;
             color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             margin-bottom: 8px;
+            text-transform: uppercase;
         }
 
         .input-group input {
             width: 100%;
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px;
             color: #fff;
             font-family: var(--font-main);
-            font-size: 0.9rem;
             outline: none;
-            transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            transition: 0.3s;
         }
 
         .input-group input:focus {
             border-color: var(--gold);
             background: rgba(255, 215, 0, 0.02);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
         }
 
-        /* --- ACTION BUTTON --- */
+        /* --- LOGIN BUTTON --- */
         .btn-login {
             width: 100%;
+            padding: 15px;
             background: var(--gold);
             color: var(--deep-black);
             border: 1px solid var(--gold);
-            padding: 16px;
             font-family: var(--font-main);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 3px;
             text-transform: uppercase;
             cursor: pointer;
-            margin-top: 20px;
             transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            margin-top: 10px;
         }
 
         .btn-login:hover {
             background: transparent;
             color: var(--gold);
             transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.15);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
         }
 
-        /* --- FOOTER NAV --- */
-        .footer-nav {
+        /* --- FOOTER LINK --- */
+        .auth-footer {
             margin-top: 30px;
             font-size: 0.7rem;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             color: var(--grey);
         }
 
-        .footer-nav a {
+        .auth-footer a {
             color: var(--gold);
             text-decoration: none;
-            margin-left: 5px;
             font-weight: 700;
+            margin-left: 5px;
             transition: 0.3s;
         }
 
-        .footer-nav a:hover {
+        .auth-footer a:hover {
             text-shadow: 0 0 10px var(--gold);
         }
 
-        /* PC GOLDEN DOT */
+        /* --- CURSOR --- */
         #cursor-dot {
             position: fixed; width: 10px; height: 10px; background: var(--gold);
             border-radius: 50%; pointer-events: none; z-index: 10001;
             box-shadow: 0 0 20px var(--gold); transform: translate(-50%, -50%); opacity: 0;
         }
 
+        /* --- MOBILE --- */
         @media (max-width: 768px) {
+            .auth-container { padding: 40px 25px; border: none; background: transparent; }
             #cursor-dot { display: none; }
-            .login-container { padding: 20px; }
-            .login-container h1 { font-size: 1.5rem; }
+            h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -148,26 +200,36 @@
 
     <div id="cursor-dot"></div>
 
-    <div class="login-container">
-        <h1>Access Protocol</h1>
-        <p>Re-establish connection to the VARAVI Nerve Center. Authorization required for strategic engagement.</p>
-        
-        <form action="#">
+    <div class="auth-container">
+        <h1>Welcome Back</h1>
+        <p class="subtitle">Authenticate your credentials to access the VARAVI Global.</p>
+
+        <button class="btn-google">
+            <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">
+            LOGIN WITH GOOGLE
+        </button>
+
+        <div class="divider">
+            <div class="divider-line"></div>
+            <div class="divider-text">OR</div>
+            <div class="divider-line"></div>
+        </div>
+
+        <form>
             <div class="input-group">
-                <label>Email Address</label>
+                <label>Email</label>
                 <input type="email" placeholder="name@firm.com" required>
             </div>
-            
             <div class="input-group">
-                <label>Access Code / Password</label>
+                <label>Password</label>
                 <input type="password" placeholder="••••••••" required>
             </div>
             
             <button type="submit" class="btn-login">LOGIN</button>
         </form>
 
-        <div class="footer-nav">
-            NEW TO THE EMPIRE? <a href="get-started.html">CREATE ACCOUNT</a>
+        <div class="auth-footer">
+            New to VARAVI Global? <a href="get-started.html">CREATE AN ACCOUNT</a>
         </div>
     </div>
 
@@ -179,6 +241,12 @@
             dot.style.left = e.clientX + 'px';
             dot.style.top = e.clientY + 'px';
         });
+
+        // Redirect prevention for demo
+        document.querySelector('form').onsubmit = (e) => {
+            e.preventDefault();
+            alert("Authentication Protocol Initiated...");
+        };
     </script>
 </body>
 </html>
