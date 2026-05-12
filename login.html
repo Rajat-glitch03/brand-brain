@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VARAVI Global | Imperial Login</title>
+    <title>VARAVI Global | Protocol Access</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;700&display=swap" rel="stylesheet">
     
     <style>
@@ -26,106 +26,157 @@
             background-color: var(--deep-black);
             color: var(--pure-white);
             font-family: var(--font-main);
-            overflow-x: hidden;
+            overflow: hidden; /* Focused login, no scrolling needed */
             display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
         }
 
-        /* --- LOGIN SECTION --- */
-        .login-hero {
-            padding: 180px 10% 40px;
+        /* --- LOGIN MONOLITH --- */
+        .login-wrapper {
+            width: 90%;
+            max-width: 450px;
             text-align: center;
+            animation: fadeIn 1.2s ease-out;
         }
+
         .login-hero h1 {
             font-size: 1.2rem;
-            letter-spacing: 5px;
-            font-weight: 700;
-            color: var(--gold);
-            margin-bottom: 35px;
-        }
-        .login-hero p {
-            font-size: 0.9rem; opacity: 0.6; letter-spacing: 2px;
-            max-width: 500px; margin: 0 auto;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            font-weight: 200;
+            margin-bottom: 40px;
+            color: var(--pure-white);
+            opacity: 0.8;
         }
 
-        .form-container {
-            width: 100%;
-            max-width: 500px;
+        .login-box {
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid rgba(255, 215, 0, 0.1);
             padding: 50px 40px;
-            text-align: center;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             position: relative;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
 
-        .input-group { margin-bottom: 25px; }
+        .login-box:hover {
+            border-color: var(--gold);
+            background: rgba(255, 215, 0, 0.02);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.05);
+        }
+
+        .login-box h2 {
+            color: var(--gold);
+            font-size: 0.8rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        /* --- FORM ELEMENTS --- */
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
         .input-group label {
-            display: block; font-size: 0.65rem; color: var(--gold);
-            text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px;
+            display: block;
+            font-size: 0.65rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .input-group label span {
+            color: var(--gold);
+            margin-left: 3px;
         }
 
         .input-group input {
-            width: 100%; background: rgba(255, 255, 255, 0.03);
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 15px; color: #fff; font-family: var(--font-main);
-            outline: none; transition: 0.4s;
-        }
-        .input-group input:focus {
-            border-color: var(--gold); background: rgba(255, 215, 0, 0.02);
+            padding: 15px;
+            color: #fff;
+            font-family: var(--font-main);
+            outline: none;
+            transition: 0.4s;
+            border-radius: 0;
         }
 
-        .btn-login {
-            background: var(--gold); color: var(--deep-black);
+        .input-group input:focus {
+            border-color: var(--gold);
+            background: rgba(255, 215, 0, 0.02);
+        }
+
+        /* --- THE SOVEREIGN BUTTON --- */
+        .btn-access {
+            background: var(--gold);
+            color: var(--deep-black);
             border: 1px solid var(--gold);
-            padding: 14px; width: 100%;
-            font-family: var(--font-main); font-size: 0.75rem;
-            font-weight: 700; letter-spacing: 3px;
-            text-transform: uppercase; cursor: pointer;
+            padding: 15px 0;
+            width: 100%;
+            font-family: var(--font-main);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
             transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
             margin-top: 10px;
         }
-        .btn-login:hover {
-            background: transparent; color: var(--gold);
-            transform: scale(1.03); box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+
+        .btn-access:hover {
+            background: transparent;
+            color: var(--gold);
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
         }
 
-        .switch-portal {
-            text-align: center; margin-top: 30px;
-            font-size: 0.7rem; letter-spacing: 2px; color: var(--grey);
+        /* --- FOOTER LINKS --- */
+        .login-footer {
+            margin-top: 30px;
         }
-        .switch-portal a {
-            color: var(--gold); text-decoration: none; font-weight: 700;
-            margin-left: 5px; transition: 0.3s;
-        }
-        .switch-portal a:hover { text-shadow: 0 0 10px var(--gold); }
 
-        /* PC GOLDEN DOT */
+        .login-footer a {
+            color: var(--grey);
+            text-decoration: none;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .login-footer a:hover {
+            color: var(--gold);
+        }
+
+        /* --- PC GOLDEN DOT --- */
         #cursor-dot {
-            position: fixed; width: 10px; height: 10px; background: var(--gold);
-            border-radius: 50%; pointer-events: none; z-index: 10001;
-            box-shadow: 0 0 20px var(--gold); transform: translate(-50%, -50%); opacity: 0;
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10001;
+            box-shadow: 0 0 20px var(--gold);
+            transform: translate(-50%, -50%);
+            opacity: 0;
         }
 
-        /* --- MOBILE --- */
-        @media (max-width: 1024px) {
-            nav { height: 80px; padding: 0 5%; }
-            .nav-logo { transform: scale(3.5); margin-left: 20px; }
-            .nav-center {
-                position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
-                background: #06080f; flex-direction: column; justify-content: center;
-                align-items: center; gap: 40px; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: 1500;
-            }
-            .nav-center.open { right: 0; }
-            .menu-toggle { display: flex; }
-            .login-hero h1 { font-size: 1.8rem; }
-            .form-container { padding: 40px 25px; }
-            #cursor-dot { display: none; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-            .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-            .menu-toggle.open span:nth-child(2) { opacity: 0; }
-            .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        @media (max-width: 768px) {
+            #cursor-dot { display: none; }
+            .login-box { padding: 40px 25px; }
+            .login-hero h1 { font-size: 1rem; letter-spacing: 5px; }
         }
     </style>
 </head>
@@ -133,52 +184,44 @@
 
     <div id="cursor-dot"></div>
 
-    <div class="form-container">
-        <form action="#">
+    <div class="login-wrapper">
+        <div class="login-hero">
+            <h1>Resume Command</h1>
+        </div>
 
-            <div class="login-hero">
-        <h1>WELCOME BACK</h1>
-        <p>Authenticate your credentials to access the VARAVI Global.</p>
-    </div>
-            
-            <div class="input-group">
-                <label>Email</label>
-                <input type="email" placeholder="name@firm.com" required>
-            </div>
-            <div class="input-group">
-                <label>Security Key (Password)</label>
-                <input type="password" placeholder="••••••••" required>
-            </div>
-            <button type="submit" class="btn-login">AUTHENTICATE</button>
-        </form>
+        <div class="login-box">
+            <h2>PROTOCOL LOGIN</h2>
+            <form action="#">
+                <div class="input-group">
+                    <label>Email Address<span>*</span></label>
+                    <input type="email" placeholder="name@firm.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Access Key<span>*</span></label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-access">AUTHENTICATE</button>
+            </form>
+        </div>
 
-        <div class="switch-portal">
-            New to VARAVI Global? <a href="get-started.html">CREATE ACCOUNT</a>
+        <div class="login-footer">
+            <a href="get-started.html">New to the Empire? Create Account</a>
         </div>
     </div>
 
     <script>
-        const menuBtn = document.getElementById('menuToggle');
-        const drawer = document.getElementById('navDrawer');
-
-        menuBtn.onclick = () => {
-            menuBtn.classList.toggle('open');
-            drawer.classList.toggle('open');
-            document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : 'auto';
-        };
-
+        // PC GOLDEN DOT LOGIC
         const dot = document.getElementById('cursor-dot');
+        let initialMove = false;
+
         document.addEventListener('mousemove', (e) => {
-            dot.style.opacity = "1";
+            if (!initialMove) {
+                dot.style.opacity = "1";
+                initialMove = true;
+            }
             dot.style.left = e.clientX + 'px';
             dot.style.top = e.clientY + 'px';
         });
-
-        document.querySelectorAll('.nav-tab').forEach(n => n.addEventListener('click', () => {
-            menuBtn.classList.remove('open');
-            drawer.classList.remove('open');
-            document.body.style.overflow = 'auto';
-        }));
     </script>
 </body>
 </html>
