@@ -204,7 +204,7 @@
         <h1>Welcome Back</h1>
         <p class="subtitle">Authenticate your credentials to access the VARAVI Global.</p>
 
-        <button class="btn-google">
+        <button class="btn-google" onclick="signInWithGoogle()">
             <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">
             LOGIN WITH GOOGLE
         </button>
@@ -248,5 +248,60 @@
             alert("Authentication Protocol Initiated...");
         };
     </script>
+
+    <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+  // --- YOUR CONFIG (Paste your actual Firebase config here) ---
+  const firebaseConfig = {
+    apiKey: "AIzaSyDgs1JQbYEVA7MRAnu4KUQezhFJzDtJbmE",
+  authDomain: "varavi-global.firebaseapp.com",
+  projectId: "varavi-global",
+  storageBucket: "varavi-global.firebasestorage.app",
+  messagingSenderId: "682864161453",
+  appId: "1:682864161453:web:7d09546a34e3c994038c24",
+  measurementId: "G-M196BGD968"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // --- 1. LOGIN WITH GOOGLE ---
+  window.signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      // If successful, they exist in our system, send them to the engine
+      window.location.href = "intelligence.html";
+    } catch (error) {
+      alert("Imperial Auth Failed: " + error.message);
+    }
+  };
+
+  // --- 2. MANUAL LOGIN (Email/Password) ---
+  const loginForm = document.querySelector('form'); // Make sure your login page has a <form>
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = loginForm.querySelector('input[type="email"]').value;
+      const password = loginForm.querySelector('input[type="password"]').value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        // Access Granted
+        window.location.href = "intelligence.html";
+      } catch (error) {
+        // Handle common errors like "Wrong Password" or "User Not Found"
+        if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+          alert("INVALID CREDENTIALS: Access Denied to the VARAVI network.");
+        } else {
+          alert("System Error: " + error.message);
+        }
+      }
+    });
+  }
+</script>
 </body>
 </html>
