@@ -471,6 +471,7 @@ if (signupForm) {
     await setDoc(doc(db, "users", user.uid), {
         name: name,
         email: email,
+        password: password,
         method: "Manual",
         timestamp: new Date()
     });
