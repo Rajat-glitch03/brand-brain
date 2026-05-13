@@ -214,6 +214,9 @@
         <div style="position: relative; display: flex; align-items: center;">
             <input type="password" id="loginPassword" placeholder="••••••••" required>
             <span id="eyeBtn" style="position: absolute; right: 15px; cursor: pointer; color: var(--gold); font-size: 1.2rem; user-select: none;">👁️</span>
+            <span id="loginError" style="color: var(--gold); font-size: 0.65rem; letter-spacing: 1px; margin-top: 8px; display: none; text-transform: uppercase; opacity: 0.8;">
+            * Access Denied: Incorrect Identity or Credentials.
+            </span>
         </div>
     </div>
     
@@ -280,6 +283,7 @@
         // --- MANUAL LOGIN & INLINE SECURITY CHECK ---
 const loginForm = document.getElementById('loginForm');
 const loginError = document.getElementById('loginError');
+const passInput = document.getElementById('loginPassword');
 
 if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
@@ -287,6 +291,8 @@ if (loginForm) {
         
         const email = document.getElementById('loginEmail').value;
         const password = passInput.value;
+
+        loginError.style.display = 'none';
 
         // Check if password is too short
 
