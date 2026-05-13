@@ -164,10 +164,6 @@
             <a href="#" class="nav-tab active">INTELLIGENCE</a>
             <a href="contact.html" class="nav-tab">CONTACT US</a>
         </div>
-        <div class="nav-right">
-            <button id="authBtn" class="btn-get-started-intel" onclick="location.href='get-started.html'">GET STARTED</button>
-            <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
-        </div>
     </nav>
     
     <section class="hero">
@@ -240,50 +236,6 @@
                 document.body.style.overflow = 'auto';
             };
         });
-
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-    const firebaseConfig = {
-        // Your existing config here
-        apiKey: "AIzaSyCb7mIUHmJuM9TN40YN9ooAa-CTm-gFDrc",
-  authDomain: "varavi-global-8efa1.firebaseapp.com",
-  projectId: "varavi-global-8efa1",
-  storageBucket: "varavi-global-8efa1.firebasestorage.app",
-  messagingSenderId: "448204871009",
-  appId: "1:448204871009:web:6fe30cb2430c2e4d6e6120",
-  measurementId: "G-SEGDLESNC1"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    
-    // Target the button in the Nav Bar
-    const authBtn = document.getElementById('authBtn');
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            // 1. Get the user's name (fallback to 'USER' if display name isn't set)
-            const userName = user.displayName ? user.displayName.toUpperCase() : "USER";
-            
-            // 2. Update button text and link
-            authBtn.textContent = `WELCOME, ${userName}`;
-            authBtn.onclick = () => window.location.href = "ai.html"; // Redirect to your AI app
-            
-            // 3. Optional: Change style slightly to show active session
-            authBtn.style.background = "transparent";
-            authBtn.style.color = "var(--electric-blue)";
-            authBtn.style.border = "1px solid var(--electric-blue)";
-        } else {
-            // User is signed out - Reset to default
-            authBtn.textContent = "GET STARTED";
-            authBtn.onclick = () => window.location.href = "get-started.html";
-            
-            // Reset styles
-            authBtn.style.background = "var(--electric-blue)";
-            authBtn.style.color = "var(--deep-black)";
-        }
-    });
     </script>
 </body>
 </html>
