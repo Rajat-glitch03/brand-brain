@@ -10,7 +10,7 @@
         :root {
             --electric-blue: #009dff;
             --cyber-purple: #6a35ff;
-            --gold: #FFD700; /* Added Gold variable */
+            --gold: #FFD700;
             --midnight-blue: #001b6e;
             --deep-black: #06080f;
             --pure-white: #ffffff;
@@ -32,91 +32,61 @@
             line-height: 1.6;
         }
 
-        /* THE COMBO ANIMATION & STYLE */
-/* THE INTELLIGENCE COMBO BUTTON */
-.btn-intel-chat {
-    background: var(--electric-blue); 
-    color: var(--deep-black);
-    border: 1px solid var(--electric-blue);
-    padding: 14px 35px; 
-    font-family: var(--font-main);
-    font-size: 0.75rem; 
-    font-weight: 700; 
-    letter-spacing: 3px;
-    text-transform: uppercase; 
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    white-space: nowrap;
-    box-shadow: 0 0 0px rgba(0, 157, 255, 0);
-}
-
-.btn-intel-chat:hover {
-    background: transparent; 
-    color: var(--electric-blue);
-    transform: scale(1.08); /* The pop animation from Get Started */
-    box-shadow: 0 10px 40px rgba(0, 157, 255, 0.4); /* Intense Blue Glow */
-    border-color: var(--electric-blue);
-}
         /* --- NAVIGATION --- */
         nav {
             position: fixed;
-            top: 0; width: 100%;
-            height: 100px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 6%;
-            background: rgba(6, 8, 15, 0.92);
-            backdrop-filter: blur(25px);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.08);
+            top: 0; width: 100%; height: 100px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 6%; background: rgba(6, 8, 15, 0.92);
+            backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255, 215, 0, 0.08);
             z-index: 1000;
         }
 
         .nav-logo { height: 32px; transform: scale(2); transform-origin: left center; margin-left: -25px;}
-        .nav-center { display: flex; gap: 50px; }
         
         .nav-tab {
             text-decoration: none; color: var(--pure-white);
             font-size: 0.75rem; letter-spacing: 4px; font-weight: 400;
             position: relative; padding: 8px 0; transition: 0.4s;
         }
-
         .nav-tab::after {
             content: ''; position: absolute; bottom: 0; left: 50%;
             width: 0; height: 2px; background: var(--electric-blue);
             box-shadow: 0 0 20px 2px var(--electric-blue);
             transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); transform: translateX(-50%);
         }
-
         .nav-tab:hover, .nav-tab.active { color: var(--electric-blue); }
         .nav-tab:hover::after, .nav-tab.active::after { width: 100%; }
 
-        .nav-right { display: flex; align-items: center; gap: 25px; }
-
-        .btn-get-started-intel {
-            background: var(--electric-blue); color: var(--deep-black);
+        /* THE INTELLIGENCE COMBO BUTTON STYLE */
+        .btn-intel-chat {
+            background: var(--electric-blue); 
+            color: var(--deep-black);
             border: 1px solid var(--electric-blue);
-            padding: 12px 28px; font-family: var(--font-main);
-            font-size: 0.7rem; font-weight: 700; letter-spacing: 2px;
-            text-transform: uppercase; cursor: pointer;
-            transition: 0.4s; white-space: nowrap;
+            padding: 14px 35px; 
+            font-family: var(--font-main);
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            letter-spacing: 3px;
+            text-transform: uppercase; 
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            white-space: nowrap;
         }
-        .btn-get-started-intel:hover { background: transparent; color: var(--electric-blue); box-shadow: 0 0 20px rgba(0, 157, 255, 0.3); }
+
+        .btn-intel-chat:hover {
+            background: transparent; 
+            color: var(--electric-blue);
+            transform: scale(1.08); 
+            box-shadow: 0 10px 40px rgba(0, 157, 255, 0.4); 
+        }
 
         /* TOP ACTION BAR */
         .top-action-bar {
-            width: 100%; padding: 20px; display: flex; justify-content: center;
-            background: rgba(255, 215, 0, 0.02); border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-            margin-top: 100px; /* Offset for fixed nav */
+            width: 100%; padding: 30px; display: flex; justify-content: center;
+            background: rgba(0, 157, 255, 0.03); border-bottom: 1px solid rgba(0, 157, 255, 0.1);
+            margin-top: 100px;
         }
-
-        #startChatBtn {
-            padding: 12px 30px; background: transparent; border: 1px solid var(--gold);
-            color: var(--gold); font-family: var(--font-main); font-size: 0.7rem;
-            font-weight: 700; letter-spacing: 3px; cursor: pointer; transition: 0.4s;
-            text-transform: uppercase;
-        }
-        #startChatBtn:hover { background: var(--gold); color: var(--deep-black); box-shadow: 0 0 30px rgba(255, 215, 0, 0.2); }
 
         /* --- CONTENT --- */
         .hero { padding: 80px 8% 60px; text-align: center; max-width: 1000px; margin: 0 auto; }
@@ -125,7 +95,6 @@
             letter-spacing: -3px; background: linear-gradient(90deg, #fff, var(--electric-blue));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .hero p { font-size: 1.1rem; opacity: 0.6; font-weight: 300; max-width: 800px; margin: 0 auto; }
 
         .intel-container { padding: 40px 6% 100px; display: flex; flex-direction: column; align-items: center; gap: 40px; }
 
@@ -134,8 +103,8 @@
             border: 1px solid rgba(255, 255, 255, 0.05); padding: 50px 40px; transition: 0.5s;
         }
         .box:hover { border-color: var(--electric-blue); background: rgba(0, 157, 255, 0.03); transform: translateY(-10px); }
-
         .box h2 { color: var(--electric-blue); font-size: 1.8rem; letter-spacing: 3px; margin-bottom: 20px; }
+
         .premium-rank { color: var(--gold); font-weight: 700; gap: 8px; display: flex; align-items: center; }
         .king-icon { filter: drop-shadow(0 0 10px var(--gold)); animation: goldPulse 2s infinite ease-in-out; display: inline-block; }
         
@@ -175,12 +144,10 @@
         </div>
     </nav>
 
-    <!-- START CHAT ACTION BAR -->
-    <div style="width: 100%; padding: 30px; display: flex; justify-content: center; background: rgba(0, 157, 255, 0.03); border-bottom: 1px solid rgba(0, 157, 255, 0.1); margin-top: 100px;">
-    <button id="startChatBtn" class="btn-intel-chat">
-        START CHAT
-    </button>
-</div>
+    <!-- START CHAT ACTION BAR (BLUE COMBO) -->
+    <div class="top-action-bar">
+        <button id="startChatBtn" class="btn-intel-chat">START CHAT</button>
+    </div>
 
     <section class="hero">
         <h1>Meet Our Intelligence</h1>
@@ -188,7 +155,6 @@
     </section>
 
     <div class="intel-container">
-        <!-- Quans Box -->
         <div class="box">
             <h2>Quans</h2>
             <p>Quans is our baseline strategic engine, designed for high-velocity navigation and general advisory...</p>
@@ -196,7 +162,6 @@
 
         <div class="series-label">v2.4 Series</div>
 
-        <!-- Premium Box -->
         <div class="box">
             <div class="intel-box">
                 <h3 style="color: var(--gold)">Quans v2.4bb <span class="king-icon">👑</span></h3>
@@ -205,11 +170,10 @@
             <p>Engineered specifically for the theatre of high-stakes business...</p>
         </div>
 
-        <!-- Premium Box 2 -->
         <div class="box">
             <h3 style="color: var(--gold)">Quans v2.4bs <span class="king-icon">👑</span></h3>
             <p class="premium-rank">PREMIUM ACCESS ONLY</p>
-            <p>The absolute peak of the VARAVI line. The v2.4s is a 24/7 deep-web scanner...</p>
+            <p>The absolute peak of the VARAVI line...</p>
         </div>
 
         <footer class="intel-footer">
@@ -223,7 +187,7 @@
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
-            // PASTE YOUR KEYS HERE
+            /* PASTE YOUR KEYS HERE */
             apiKey: "AIzaSyCb7mIUHmJuM9TN40YN9ooAa-CTm-gFDrc",
   authDomain: "varavi-global-8efa1.firebaseapp.com",
   projectId: "varavi-global-8efa1",
@@ -237,20 +201,16 @@
         const auth = getAuth(app);
         const startChatBtn = document.getElementById('startChatBtn');
 
-        // --- AUTH OBSERVER (Updates button destination in real-time) ---
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Member is logged in
                 startChatBtn.onclick = () => window.location.href = "ai.html";
                 startChatBtn.textContent = "ENTER AI TERMINAL";
             } else {
-                // Guest is browsing
                 startChatBtn.onclick = () => window.location.href = "get-started.html";
                 startChatBtn.textContent = "START CHAT";
             }
         });
 
-        // --- CUSTOM CURSOR ---
         const dot = document.getElementById('cursor-dot');
         document.addEventListener('mousemove', (e) => {
             dot.style.opacity = "1";
@@ -258,7 +218,6 @@
             dot.style.top = e.clientY + 'px';
         });
 
-        // --- MOBILE MENU ---
         const menuBtn = document.getElementById('menuToggle');
         if (menuBtn) {
             menuBtn.onclick = () => {
