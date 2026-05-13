@@ -1,323 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VARAVI Global | Intelligence Protocols</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --electric-blue: #009dff;
-            --cyber-purple: #6a35ff;
-            --midnight-blue: #001b6e;
-            --deep-black: #06080f;
-            --pure-white: #ffffff;
-            --grey: #888888;
-            --font-main: 'DM Sans', sans-serif;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VARAVI Global | Intelligence Protocols</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --electric-blue: #009dff;
+            --cyber-purple: #6a35ff;
+            --gold: #FFD700;
+            --midnight-blue: #001b6e;
+            --deep-black: #06080f;
+            --pure-white: #ffffff;
+            --grey: #888888;
+            --font-main: 'DM Sans', sans-serif;
+        }
 
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: var(--deep-black); }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--electric-blue), var(--cyber-purple)); border-radius: 2px; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--deep-black); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--electric-blue), var(--cyber-purple)); border-radius: 2px; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-        body {
-            background-color: var(--deep-black);
-            color: var(--pure-white);
-            font-family: var(--font-main);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
+        body {
+            background-color: var(--deep-black);
+            color: var(--pure-white);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-        .premium-rank {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--gold);
-            font-weight: 700;
-        }
-        
-        .king-icon {
-            font-size: 1.2rem;
-            filter: drop-shadow(0 0 10px var(--gold));
-            animation: goldPulse 2s infinite ease-in-out;
-        }
-        
-        @keyframes goldPulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.8; }
-        }
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 6%;
+            background: rgba(6, 8, 15, 0.92);
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.08);
+            z-index: 1000;
+        }
 
-        /* --- NAVIGATION --- */
-        nav {
-            position: fixed;
-            top: 0; width: 100%;
-            height: 100px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 6%;
-            background: rgba(6, 8, 15, 0.92);
-            backdrop-filter: blur(25px);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.08);
-            z-index: 1000;
-        }
+        .nav-logo { height: 32px; transform: scale(2); transform-origin: left center; margin-left: -25px;}
+        .nav-center { display: flex; gap: 50px; }
+        
+        .nav-tab {
+            text-decoration: none;
+            color: var(--pure-white);
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            font-weight: 400;
+            position: relative;
+            padding: 8px 0;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
 
-        .nav-logo { height: 32px; transform: scale(2); transform-origin: left center; margin-left: -25px;}
+        .nav-tab::after {
+            content: ''; position: absolute; bottom: 0; left: 50%;
+            width: 0; height: 2px; background: var(--electric-blue);
+            box-shadow: 0 0 20px 2px var(--electric-blue); 
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transform: translateX(-50%);
+        }
 
-        .nav-center { display: flex; gap: 50px; }
-        
-        /* --- SOVEREIGN TABS (BLUE EDITION) --- */
-        .nav-tab {
-            text-decoration: none;
-            color: var(--pure-white);
-            font-size: 0.75rem;
-            letter-spacing: 4px;
-            font-weight: 400;
-            position: relative;
-            padding: 8px 0;
-            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-        }
+        .nav-tab:hover, .nav-tab.active { color: var(--electric-blue); }
+        .nav-tab:hover::after, .nav-tab.active::after { width: 100%; }
 
-        .nav-tab::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    /* Height increased for a bolder look */
-    height: 2px; 
-    background: var(--electric-blue);
-    /* Intensified glow for the bold line */
-    box-shadow: 0 0 20px 2px var(--electric-blue); 
-    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-    transform: translateX(-50%);
-}
+        /* THE INTELLIGENCE COMBO BUTTON STYLE */
+        .btn-intel-chat-combo {
+            background: var(--electric-blue); 
+            color: var(--deep-black);
+            border: 1px solid var(--electric-blue);
+            padding: 14px 35px; 
+            font-family: var(--font-main);
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            letter-spacing: 3px;
+            text-transform: uppercase; 
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            white-space: nowrap;
+            outline: none;
+        }
 
-        /* Hover & Click logic */
-        .nav-tab:hover, .nav-tab.active { color: var(--electric-blue); }
-        .nav-tab:hover::after, .nav-tab.active::after { width: 100%; }
+        .btn-intel-chat-combo:hover {
+            background: transparent; 
+            color: var(--electric-blue);
+            transform: scale(1.08); /* Get Started Pop Animation */
+            box-shadow: 0 10px 40px rgba(0, 157, 255, 0.4); /* Intense Glow */
+        }
 
-        .nav-right { display: flex; align-items: center; gap: 25px; }
+        /* TOP ACTION BAR CONTAINER */
+        .top-action-bar {
+            width: 100%; 
+            padding: 30px; 
+            display: flex; 
+            justify-content: center; 
+            background: rgba(0, 157, 255, 0.03); 
+            border-bottom: 1px solid rgba(0, 157, 255, 0.1); 
+            margin-top: 100px;
+        }
 
-        .btn-get-started-intel {
-            background: var(--electric-blue); color: var(--deep-black);
-            border: 1px solid var(--electric-blue);
-            padding: 12px 28px; font-family: var(--font-main);
-            font-size: 0.7rem; font-weight: 700; letter-spacing: 2px;
-            text-transform: uppercase; cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            white-space: nowrap;
-        }
-        .btn-get-started-intel:hover {
-            background: transparent; color: var(--electric-blue);
-            transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 157, 255, 0.3);
-        }
+        /* PREMIUM STYLING */
+        .premium-rank { color: var(--gold); font-weight: 700; display: inline-flex; align-items: center; gap: 8px; }
+        .king-icon { filter: drop-shadow(0 0 10px var(--gold)); animation: goldPulse 2s infinite ease-in-out; }
+        @keyframes goldPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
 
-        /* HAMBURGER MENU */
-        .menu-toggle {
-            display: none; flex-direction: column; justify-content: space-between;
-            width: 24px; height: 16px; cursor: pointer; z-index: 2000; flex-shrink: 0;
-        }
-        .menu-toggle span { display: block; width: 100%; height: 2px; background: var(--electric-blue); transition: 0.4s; }
+        /* --- CONTENT --- */
+        .hero { padding: 80px 8% 60px; text-align: center; max-width: 1000px; margin: 0 auto; }
+        .hero h1 { 
+            font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 335; margin-bottom: 25px;
+            letter-spacing: -3px; background: linear-gradient(90deg, #fff, var(--electric-blue));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p { font-size: 1.1rem; opacity: 0.6; font-weight: 300; max-width: 800px; margin: 0 auto; }
 
-        /* --- MOBILE NAVIGATION --- */
-        @media (max-width: 1024px) {
-            nav { height: 80px; padding: 0 5%; }
-            .nav-logo { transform: scale(1.5); margin-left: 20px;}
-            .nav-center {
-                position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
-                background: #06080f; flex-direction: column; justify-content: center;
-                align-items: center; gap: 40px; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: 1500;
-            }
-            .nav-center.open { right: 0; }
-            .menu-toggle { display: flex; }
-            .btn-get-started-intel { padding: 10px 18px; font-size: 0.6rem; }
-            
-            /* X Animation */
-            .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-            .menu-toggle.open span:nth-child(2) { opacity: 0; }
-            .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-        }
+        .intel-container { padding: 40px 6% 100px; display: flex; flex-direction: column; align-items: center; gap: 40px; }
+        .box {
+            width: 100%; max-width: 850px; background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.05); padding: 50px 40px; transition: 0.5s;
+        }
+        .box:hover { border-color: var(--electric-blue); background: rgba(0, 157, 255, 0.03); transform: translateY(-10px); }
+        .box h2 { color: var(--electric-blue); font-size: 1.8rem; letter-spacing: 3px; margin-bottom: 20px; }
 
-        /* --- CONTENT --- */
-        .hero { padding: 180px 8% 60px; text-align: center; max-width: 1000px; margin: 0 auto; }
-        .hero h1 { 
-            font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 335; margin-bottom: 25px;
-            letter-spacing: -3px;
-            background: linear-gradient(90deg, #fff, var(--electric-blue));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .hero p { font-size: 1.1rem; opacity: 0.6; font-weight: 300; max-width: 800px; margin: 0 auto; }
+        .series-label { font-size: 0.8rem; letter-spacing: 10px; text-transform: uppercase; color: var(--grey); margin: 20px 0; font-weight: 700; }
+        .intel-footer { text-align: center; padding: 60px 0 120px; }
+        .quans-logo { height: 50px; zoom: 3; }
 
-        .intel-container { padding: 40px 6% 100px; display: flex; flex-direction: column; align-items: center; gap: 40px; }
+        #cursor-dot {
+            position: fixed; width: 10px; height: 10px; background: var(--electric-blue);
+            border-radius: 50%; pointer-events: none; z-index: 10001;
+            box-shadow: 0 0 20px var(--electric-blue); transform: translate(-50%, -50%); opacity: 0;
+        }
 
-        .box {
-            width: 100%; max-width: 850px;
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 50px 40px; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        .box:hover {
-            border-color: var(--electric-blue);
-            background: rgba(0, 157, 255, 0.03);
-            box-shadow: 0 0 50px rgba(0, 157, 255, 0.15);
-            transform: translateY(-10px);
-        }
-
-        .box h2 { color: var(--electric-blue); font-size: 1.8rem; letter-spacing: 3px; margin-bottom: 20px; font-weight: 600; }
-        .box p { font-size: 0.95rem; opacity: 0.7; margin-bottom: 35px; font-weight: 300; line-height: 1.8; }
-
-        .purpose-section h4 { color: var(--cyber-purple); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 8px; }
-        .purpose-section p { font-size: 1.1rem; color: #fff; margin-bottom: 0; opacity: 1; }
-
-        .series-label { font-size: 0.8rem; letter-spacing: 10px; text-transform: uppercase; color: var(--grey); margin: 20px 0; font-weight: 700; }
-
-        .intel-footer { text-align: center; padding: 60px 0 120px; }
-        .quans-logo { height: 50px; margin-bottom: 20px; zoom: 3; }
-        .powered-by { font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase; color: var(--white); }
-
-        /* PC BLUE DOT CURSOR */
-        #cursor-dot {
-            position: fixed; width: 10px; height: 10px; background: var(--electric-blue);
-            border-radius: 50%; pointer-events: none; z-index: 10001;
-            box-shadow: 0 0 20px var(--electric-blue);
-            transform: translate(-50%, -50%); opacity: 0;
-        }
-        @media (max-width: 1024px) { #cursor-dot { display: none; } }
-    </style>
+        @media (max-width: 1024px) { 
+            nav { height: 80px; } .nav-center { display: none; } 
+            .top-action-bar { margin-top: 80px; }
+        }
+    </style>
 </head>
 <body>
 
-    <div id="cursor-dot"></div>
+    <div id="cursor-dot"></div>
 
-    <nav>
-        <div class="nav-left">
-            <img src="brand-logo.png" class="nav-logo" alt="VARAVI">
-        </div>
+    <nav>
+        <div class="nav-left"><img src="brand-logo.png" class="nav-logo" alt="VARAVI"></div>
+        <div class="nav-center" id="navDrawer">
+            <a href="index.html" class="nav-tab">OVERVIEW</a>
+            <a href="#" class="nav-tab active">INTELLIGENCE</a>
+            <a href="contact.html" class="nav-tab">CONTACT US</a>
+        </div>
+        <div class="nav-right">
+            <button class="btn-intel-chat-combo" onclick="location.href='get-started.html'">GET STARTED</button>
+        </div>
+    </nav>
 
-        <div class="nav-center" id="navDrawer">
-            <a href="index.html" class="nav-tab">OVERVIEW</a>
-            <a href="#" class="nav-tab active">INTELLIGENCE</a>
-            <a href="#" class="nav-tab" onclick="location.href='contact.html'">CONTACT US</a>
-        </div>
+    <!-- START CHAT ACTION BAR -->
+    <div class="top-action-bar">
+        <button id="startChatBtn" class="btn-intel-chat-combo">
+            START CHAT
+        </button>
+    </div>
 
-        <div class="nav-right">
-            <button class="btn-get-started-intel" onclick="location.href='get-started.html'">GET STARTED</button>
-            <div class="menu-toggle" id="menuToggle">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-    </nav>
+    <section class="hero">
+        <h1>Meet Our Intelligence</h1>
+        <p>Our intelligence, Quans, is not a tool— it is a strategist. Absolute Sovereignty is the only objective.</p>
+    </section>
 
-    <!-- TOP ACTION BAR -->
-<div style="width: 100%; padding: 20px; display: flex; justify-content: center; border-bottom: 1px solid rgba(255, 215, 0, 0.1);">
-    <button id="startChatBtn" style="padding: 12px 30px; background: var(--electric-blue); border: 1px solid var(--electric-blue); color: var(--deep-black); font-family: var(--font-main); font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; cursor: pointer; transition: 0.4s; text-transform: uppercase;">
-        START CHAT
-    </button>
-</div>
+    <div class="intel-container">
+        <!-- Quans Box -->
+        <div class="box">
+            <h2>Quans</h2>
+            <p>Quans is our baseline strategic engine, designed for high-velocity navigation and general advisory...</p>
+        </div>
 
-    <section class="hero">
-        <h1>Meet Our Intelligence</h1>
-        <p>Our intelligence, Quans, is not a tool— it is a strategist. Whether Quans is guiding your general inquiries or scanning the deep web for leaks while you sleep, Quans operates with one objective: Absolute Sovereignty.</p>
-    </section>
+        <div class="series-label">v2.4 Series</div>
 
-    <div class="intel-container">
-        <div class="box">
-            <h2>Quans</h2>
-            <p>Quans is our baseline strategic engine, designed for high-velocity navigation and general advisory. It provides a clean, unbiased synthesis of global data to guide your initial consultations. Reliable, precise, and accessible—Quans ensures you never move into the landscape blind. It is the compass for the modern sovereign.</p>
-            <div class="purpose-section">
-                <h4>Purpose</h4>
-                <p>Guidance and Navigation.</p>
-            </div>
-        </div>
+        <!-- Premium Box -->
+        <div class="box">
+            <h3 style="color: var(--gold)">Quans v2.4bb <span class="king-icon">👑</span></h3>
+            <p class="premium-rank">PREMIUM ACCESS ONLY</p>
+            <p>Engineered specifically for the theatre of high-stakes business...</p>
+        </div>
 
-        <div class="series-label">v2.4 Series</div>
+        <footer class="intel-footer">
+            <img src="quans.png" class="quans-logo" alt="QUANS">
+            <div style="font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase; margin-top: 20px;">Powered by VARAVI Global</div>
+        </footer>
+    </div>
 
-        <div class="box">
-            <div class="intel-box premium-border">
-                <h3>Quans v2.4bb    <span class="king-icon">👑</span></h3>
-                <p class="premium-rank">PREMIUM ACCESS ONLY</p>
-            </div>
-            <p>Engineered specifically for the theatre of high-stakes business. The v2.4bb protocol doesn’t just provide data—it provides Architectural Reports. It performs real-time risk mitigation, competitive deep-dives, and strategic forecasting. This is your high-end consultant that never sleeps, offering a panoramic view of market shifts and actionable steps to maintain your dominance. Where others guess, v2.4bb knows.</p>
-            <div class="purpose-section">
-                <h4>Purpose</h4>
-                <p>Business Warfare & Risk Analysis.</p>
-            </div>
-        </div>
-
-        <div class="box">
-            <h3>Quans v2.4bs    <span class="king-icon">👑</span></h3>
-                <p class="premium-rank">PREMIUM ACCESS ONLY</p>
-            <p>The absolute peak of the VARAVI line. The v2.4s is a 24/7 deep-web scanner that operates in the shadows of the internet. By enrolling your brand or asset name, the Sentinel begins an unending hunt for leaks, impersonations, and hostile market movements. It operates at the edge of the digital frontier, guarding your empire while you sleep. Total awareness. Zero vulnerability.</p>
-            <div class="purpose-section">
-                <h4>Purpose</h4>
-                <p>Deep-Web Defense & Asset Protection.</p>
-            </div>
-        </div>
-
-        <footer class="intel-footer">
-            <img src="quans.png" class="quans-logo" alt="QUANS">
-            <div class="powered-by">Powered by VARAVI Global</div>
-        </footer>
-    </div>
-
-    <script type="module">
-        const menuBtn = document.getElementById('menuToggle');
-        const drawer = document.getElementById('navDrawer');
-
-        // Toggle Mobile Menu
-        menuBtn.onclick = () => {
-            menuBtn.classList.toggle('open');
-            drawer.classList.toggle('open');
-            document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : 'auto';
-        };
-
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        const firebaseConfig = {
-            /* PASTE YOUR KEYS HERE */
-            apiKey: "AIzaSyCb7mIUHmJuM9TN40YN9ooAa-CTm-gFDrc",
+        const firebaseConfig = {apiKey: "AIzaSyCb7mIUHmJuM9TN40YN9ooAa-CTm-gFDrc",
   authDomain: "varavi-global-8efa1.firebaseapp.com",
   projectId: "varavi-global-8efa1",
   storageBucket: "varavi-global-8efa1.firebasestorage.app",
   messagingSenderId: "448204871009",
   appId: "1:448204871009:web:6fe30cb2430c2e4d6e6120",
-  measurementId: "G-SEGDLESNC1"
-        };
-
+  measurementId: "G-SEGDLESNC1"};
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const startChatBtn = document.getElementById('startChatBtn');
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                startChatBtn.onclick = () => window.location.href = "ai.html";
                 startChatBtn.textContent = "ENTER AI TERMINAL";
+                startChatBtn.onclick = () => window.location.href = "ai.html";
             } else {
-                startChatBtn.onclick = () => window.location.href = "get-started.html";
                 startChatBtn.textContent = "START CHAT";
+                startChatBtn.onclick = () => window.location.href = "get-started.html";
             }
         });
 
-        // Custom Cursor Logic
-        const dot = document.getElementById('cursor-dot');
-        document.addEventListener('mousemove', (e) => {
-            dot.style.opacity = "1";
-            dot.style.left = e.clientX + 'px';
-            dot.style.top = e.clientY + 'px';
-        });
-
-        // Close menu on link click
-        document.querySelectorAll('.nav-tab').forEach(n => n.addEventListener('click', () => {
-            menuBtn.classList.remove('open');
-            drawer.classList.remove('open');
-            document.body.style.overflow = 'auto';
-        }));
-    </script>
+        // Custom Cursor
+        const dot = document.getElementById('cursor-dot');
+        document.addEventListener('mousemove', (e) => {
+            dot.style.opacity = "1";
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+        });
+    </script>
 </body>
 </html>
