@@ -301,11 +301,11 @@ if (loginForm) {
             window.location.href = "intelligence.html";
         } catch (error) {
             // Also use the inline warning for wrong passwords!
+            console.error("Auth Error Code:", error.code);
             loginError.style.display = 'block';
-            if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
-                loginError.textContent = "* Access Denied: Invalid Credentials.";
-            } else {
-                loginError.textContent = "* System Error: Unable to authenticate.";
+            
+            // Standardizing the message for security
+            loginError.textContent = "* Access Denied: Incorrect Identity or Credentials.";
             }
         }
     });
