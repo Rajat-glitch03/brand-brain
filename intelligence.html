@@ -213,6 +213,13 @@
         </div>
     </nav>
 
+    <!-- TOP ACTION BAR -->
+<div style="width: 100%; padding: 20px; display: flex; justify-content: center; background: rgba(255, 215, 0, 0.02); border-bottom: 1px solid rgba(255, 215, 0, 0.1);">
+    <button id="startChatBtn" style="padding: 12px 30px; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-family: var(--font-main); font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; cursor: pointer; transition: 0.4s; text-transform: uppercase;">
+        START CHAT
+    </button>
+</div>
+
     <section class="hero">
         <h1>Meet Our Intelligence</h1>
         <p>Our intelligence, Quans, is not a tool— it is a strategist. Whether Quans is guiding your general inquiries or scanning the deep web for leaks while you sleep, Quans operates with one objective: Absolute Sovereignty.</p>
@@ -258,7 +265,7 @@
         </footer>
     </div>
 
-    <script>
+    <script type="module">
         const menuBtn = document.getElementById('menuToggle');
         const drawer = document.getElementById('navDrawer');
 
@@ -268,6 +275,25 @@
             drawer.classList.toggle('open');
             document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : 'auto';
         };
+
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const auth = getAuth();
+const startChatBtn = document.getElementById('startChatBtn');
+
+startChatBtn.addEventListener('click', () => {
+    const user = auth.currentUser;
+
+    if (user) {
+        // CASE: User is logged in
+        // We will change "ai-hub.html" to whatever your AI page name is later
+        window.location.href = "ai-hub.html"; 
+    } else {
+        // CASE: User is NOT logged in
+        // Redirecting to Get Started as requested
+        window.location.href = "get-started.html";
+    }
+});
 
         // Custom Cursor Logic
         const dot = document.getElementById('cursor-dot');
