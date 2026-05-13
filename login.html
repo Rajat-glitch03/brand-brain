@@ -39,137 +39,45 @@
             box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
         }
 
-        h1 {
-            font-size: 1.8rem;
-            letter-spacing: 5px;
-            font-weight: 500;
-            color: var(--gold);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .subtitle {
-            font-size: 0.85rem;
-            opacity: 0.6;
-            letter-spacing: 1px;
-            margin-bottom: 40px;
-            font-weight: 200;
-        }
+        h1 { font-size: 1.8rem; letter-spacing: 5px; font-weight: 500; color: var(--gold); margin-bottom: 10px; text-transform: uppercase; }
+        .subtitle { font-size: 0.85rem; opacity: 0.6; letter-spacing: 1px; margin-bottom: 40px; font-weight: 200; }
 
         .btn-google {
-            width: 100%;
-            padding: 14px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            font-family: var(--font-main);
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: 0.4s;
-            margin-bottom: 30px;
+            width: 100%; padding: 14px; background: transparent; border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff; font-family: var(--font-main); font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 2px; display: flex; justify-content: center; align-items: center;
+            gap: 12px; cursor: pointer; transition: 0.4s; margin-bottom: 30px;
         }
-
-        .btn-google:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--gold);
-        }
-
+        .btn-google:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--gold); }
         .btn-google img { width: 18px; height: 18px; }
 
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 30px 0;
-        }
+        .divider { display: flex; align-items: center; margin: 30px 0; }
+        .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.3; }
+        .divider-text { padding: 0 15px; font-size: 0.65rem; letter-spacing: 3px; color: var(--gold); font-weight: 700; }
 
-        .divider-line {
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            opacity: 0.3;
-        }
-
-        .divider-text {
-            padding: 0 15px;
-            font-size: 0.65rem;
-            letter-spacing: 3px;
-            color: var(--gold);
-            font-weight: 700;
-        }
-
-        .input-group {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 0.65rem;
-            color: var(--gold);
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
+        .input-group { text-align: left; margin-bottom: 20px; }
+        .input-group label { display: block; font-size: 0.65rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 8px; text-transform: uppercase; }
         .input-group input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 14px;
-            color: #fff;
-            font-family: var(--font-main);
-            outline: none;
-            transition: 0.3s;
+            width: 100%; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px; color: #fff; font-family: var(--font-main); outline: none; transition: 0.3s;
         }
-
-        .input-group input:focus {
-            border-color: var(--gold);
-            background: rgba(255, 215, 0, 0.02);
-        }
+        .input-group input:focus { border-color: var(--gold); background: rgba(255, 215, 0, 0.02); }
 
         .btn-login {
-            width: 100%;
-            padding: 15px;
-            background: var(--gold);
-            color: var(--deep-black);
-            border: 1px solid var(--gold);
-            font-family: var(--font-main);
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            margin-top: 10px;
+            width: 100%; padding: 15px; background: var(--gold); color: var(--deep-black); border: 1px solid var(--gold);
+            font-family: var(--font-main); font-size: 0.75rem; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; cursor: pointer; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); margin-top: 10px;
         }
+        .btn-login:hover { background: transparent; color: var(--gold); transform: scale(1.02); }
 
-        .btn-login:hover {
-            background: transparent;
-            color: var(--gold);
-            transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        .forgot-password {
+            display: block; margin-top: 15px; font-size: 0.6rem; color: var(--gold);
+            text-decoration: none; letter-spacing: 1px; opacity: 0.6; transition: 0.3s; cursor: pointer;
         }
+        .forgot-password:hover { opacity: 1; }
 
-        .auth-footer {
-            margin-top: 30px;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            color: var(--grey);
-        }
-
-        .auth-footer a {
-            color: var(--gold);
-            text-decoration: none;
-            font-weight: 700;
-            margin-left: 5px;
-            transition: 0.3s;
-        }
+        .auth-footer { margin-top: 30px; font-size: 0.7rem; letter-spacing: 1px; color: var(--grey); }
+        .auth-footer a { color: var(--gold); text-decoration: none; font-weight: 700; margin-left: 5px; }
 
         #cursor-dot {
             position: fixed; width: 10px; height: 10px; background: var(--gold);
@@ -177,10 +85,7 @@
             box-shadow: 0 0 20px var(--gold); transform: translate(-50%, -50%); opacity: 0;
         }
 
-        @media (max-width: 768px) {
-            .auth-container { padding: 40px 25px; border: none; background: transparent; }
-            #cursor-dot { display: none; }
-        }
+        @media (max-width: 768px) { .auth-container { padding: 40px 25px; border: none; background: transparent; } #cursor-dot { display: none; } }
     </style>
 </head>
 <body>
@@ -191,7 +96,6 @@
         <h1>Welcome Back</h1>
         <p class="subtitle">Authenticate your credentials to access the VARAVI Global.</p>
 
-        <!-- Google button triggers global function -->
         <button class="btn-google" onclick="window.signInWithGoogle()">
             <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">
             LOGIN WITH GOOGLE
@@ -204,33 +108,35 @@
         </div>
 
         <form id="loginForm">
-    <div class="input-group">
-        <label>Email</label>
-        <input type="email" id="loginEmail" placeholder="name@firm.com" required>
-    </div>
-    
-    <div class="input-group">
-        <label>Password</label>
-        <div style="position: relative; display: flex; align-items: center;">
-            <input type="password" id="loginPassword" placeholder="••••••••" required>
-            <span id="eyeBtn" style="position: absolute; right: 15px; cursor: pointer; color: var(--gold); font-size: 1.2rem; user-select: none;">👁️</span>
-            <span id="loginError" style="color: var(--gold); font-size: 0.65rem; letter-spacing: 1px; margin-top: 8px; display: none; text-transform: uppercase; opacity: 0.8;">
-            * Access Denied: Incorrect Identity or Credentials.
-            </span>
-        </div>
-    </div>
-    
-    <button type="submit" class="btn-login">LOGIN</button>
-</form>
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="loginEmail" placeholder="name@firm.com" required>
+            </div>
+            
+            <div class="input-group">
+                <label>Password</label>
+                <div style="position: relative; display: flex; align-items: center;">
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                    <span id="eyeBtn" style="position: absolute; right: 15px; cursor: pointer; color: var(--gold); font-size: 1.2rem; user-select: none;">👁️</span>
+                </div>
+                <!-- Inline Error Message -->
+                <span id="loginError" style="color: var(--gold); font-size: 0.65rem; letter-spacing: 1px; margin-top: 8px; display: none; text-transform: uppercase; opacity: 0.8;">
+                    * Access Denied: Incorrect Identity or Credentials.
+                </span>
+            </div>
+            
+            <button type="submit" class="btn-login">LOGIN</button>
+            <span class="forgot-password" id="forgotBtn">FORGOT PASSWORD?</span>
+        </form>
+
         <div class="auth-footer">
             New to VARAVI Global? <a href="get-started.html">CREATE AN ACCOUNT</a>
         </div>
     </div>
 
-    <!-- CRITICAL: MUST BE TYPE="MODULE" -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
             // PASTE YOUR CONFIG HERE
@@ -270,46 +176,60 @@
 
         // --- GOOGLE LOGIN ---
         window.signInWithGoogle = async () => {
-            const provider = new GoogleAuthProvider();
             try {
-                await signInWithPopup(auth, provider);
+                await signInWithPopup(auth, new GoogleAuthProvider());
                 window.location.href = "intelligence.html";
             } catch (error) {
-                alert("Auth Failed: " + error.message);
+                console.error(error.message);
             }
         };
 
-        // --- MANUAL LOGIN & 6-CHAR CHECK ---
-        // --- MANUAL LOGIN & INLINE SECURITY CHECK ---
-const loginForm = document.getElementById('loginForm');
-const loginError = document.getElementById('loginError');
-const passInput = document.getElementById('loginPassword');
+        // --- MANUAL LOGIN ---
+        const loginForm = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
 
-if (loginForm) {
-    loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const email = document.getElementById('loginEmail').value;
-        const password = passInput.value;
+        if (loginForm) {
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = passInput.value;
 
-        loginError.style.display = 'none';
+                loginError.style.display = 'none';
 
-        // Check if password is too short
-
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            window.location.href = "intelligence.html";
-        } catch (error) {
-            // Also use the inline warning for wrong passwords!
-            console.error("Auth Error Code:", error.code);
-            loginError.style.display = 'block';
-            
-            // Standardizing the message for security
-            loginError.textContent = "* Access Denied: Incorrect Identity or Credentials.";
-            }
+                try {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    window.location.href = "intelligence.html";
+                } catch (error) {
+                    loginError.style.display = 'block';
+                    loginError.textContent = "* Access Denied: Incorrect Identity or Credentials.";
+                    loginError.style.color = "#FFD700";
+                }
+            });
         }
-    });
-}
+
+        // --- FORGOT PASSWORD ---
+        const forgotBtn = document.getElementById('forgotBtn');
+        if (forgotBtn) {
+            forgotBtn.addEventListener('click', async () => {
+                const email = document.getElementById('loginEmail').value;
+                if (!email) {
+                    loginError.style.display = 'block';
+                    loginError.textContent = "* System: Please enter your email first.";
+                    return;
+                }
+
+                try {
+                    await sendPasswordResetEmail(auth, email);
+                    loginError.style.display = 'block';
+                    loginError.style.color = "#00FF00"; // Green for success
+                    loginError.textContent = "* Recovery Protocol Sent: Check your email.";
+                } catch (error) {
+                    loginError.style.display = 'block';
+                    loginError.style.color = "#FFD700";
+                    loginError.textContent = "* Error: " + error.message;
+                }
+            });
+        }
     </script>
 </body>
 </html>
