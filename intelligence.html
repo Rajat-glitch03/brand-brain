@@ -32,6 +32,30 @@
             line-height: 1.6;
         }
 
+        /* THE COMBO ANIMATION & STYLE */
+.btn-intel-combo {
+    background: var(--electric-blue); 
+    color: var(--deep-black);
+    border: 1px solid var(--electric-blue);
+    padding: 14px 35px; 
+    font-family: var(--font-main);
+    font-size: 0.75rem; 
+    font-weight: 700; 
+    letter-spacing: 3px;
+    text-transform: uppercase; 
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    white-space: nowrap;
+    box-shadow: 0 0 0px rgba(0, 157, 255, 0);
+}
+
+.btn-intel-combo:hover {
+    background: transparent; 
+    color: var(--electric-blue);
+    transform: scale(1.08); /* The "Get Started" pop animation */
+    box-shadow: 0 10px 40px rgba(0, 157, 255, 0.4); /* The glowing shadow */
+}
+
         /* --- NAVIGATION --- */
         nav {
             position: fixed;
@@ -151,9 +175,11 @@
     </nav>
 
     <!-- START CHAT ACTION BAR -->
-    <div class="top-action-bar">
-        <button id="startChatBtn">START CHAT</button>
-    </div>
+    <div style="width: 100%; padding: 30px; display: flex; justify-content: center; background: rgba(0, 157, 255, 0.03); border-bottom: 1px solid rgba(0, 157, 255, 0.1); margin-top: 100px;">
+    <button id="startChatBtn" class="btn-intel-combo">
+        START CHAT
+    </button>
+</div>
 
     <section class="hero">
         <h1>Meet Our Intelligence</h1>
